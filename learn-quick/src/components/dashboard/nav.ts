@@ -23,6 +23,7 @@ export const teacherNav = (t: T): NavItem[] => [
   { href: "/teacher/lessons", label: t("lessons"), icon: Video, ready: false },
   { href: "/teacher/earnings", label: t("earnings"), icon: Wallet, ready: false },
   { href: "/teacher/reviews", label: t("reviews"), icon: Star, ready: false },
+  { href: "/library", label: t("library"), icon: BookOpenText, ready: false },
   { href: "/teacher/messages", label: t("messages"), icon: MessageSquare, ready: false },
   { href: "/teacher/settings", label: t("settings"), icon: Settings, ready: false },
 ];

@@ -5,4 +5,4 @@ for building of websites and mobile apps
 
 | Folder | What it is |
 |---|---|
-| [`linguabridge/`](linguabridge/) | Live English & French tutoring website (Next.js): verified teachers, video lessons, MTN / Orange Money payments, translation practice library |
+| [`learn-quick/`](learn-quick/) | Live English & French tutoring website (Next.js): verified teachers, video lessons, MTN / Orange Money payments, translation practice library |

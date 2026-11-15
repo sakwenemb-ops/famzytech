@@ -13,7 +13,7 @@ export async function sendEmail(msg: Email) {
     method: "POST",
     headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
     body: JSON.stringify({
-      from: process.env.EMAIL_FROM ?? "LinguaBridge <no-reply@example.com>",
+      from: process.env.EMAIL_FROM ?? "Learn Quick <no-reply@example.com>",
       to: msg.to,
       subject: msg.subject,
       text: msg.text,

@@ -18,7 +18,7 @@ export async function SiteFooter() {
         </nav>
       </div>
       <p className="mx-auto max-w-6xl px-4 pb-8 text-xs text-muted">
-        © {new Date().getFullYear()} LinguaBridge. {t("rights")}
+        © {new Date().getFullYear()} Learn Quick. {t("rights")}
       </p>
     </footer>
   );

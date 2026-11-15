@@ -15,10 +15,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
   return {
     metadataBase: new URL(base),
-    title: { default: t("title"), template: "%s · LinguaBridge" },
+    title: { default: t("title"), template: "%s · Learn Quick" },
     description: t("description"),
     alternates: { languages: { fr: "/fr", en: "/en", "x-default": "/fr" } },
-    openGraph: { title: t("title"), description: t("description"), locale, type: "website", siteName: "LinguaBridge" },
+    openGraph: { title: t("title"), description: t("description"), locale, type: "website", siteName: "Learn Quick" },
   };
 }
 

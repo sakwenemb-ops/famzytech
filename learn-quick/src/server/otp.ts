@@ -46,8 +46,8 @@ export async function sendOtp(
 
   const text =
     user.locale === "fr"
-      ? `Votre code LinguaBridge : ${code}. Il expire dans ${TTL_MIN} minutes.`
-      : `Your LinguaBridge code: ${code}. It expires in ${TTL_MIN} minutes.`;
+      ? `Votre code Learn Quick : ${code}. Il expire dans ${TTL_MIN} minutes.`
+      : `Your Learn Quick code: ${code}. It expires in ${TTL_MIN} minutes.`;
   if (channel === "email") await sendEmail({ to, subject: text.split(":")[0], text });
   else await sendSms(to, text);
   return { ok: true };

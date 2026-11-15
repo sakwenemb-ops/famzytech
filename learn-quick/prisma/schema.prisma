@@ -1,4 +1,4 @@
-// LinguaBridge — full data model (Phase 0 design)
+// Learn Quick — full data model (Phase 0 design)
 // Money is stored as integers in XAF (no decimals in FCFA).
 
 generator client {

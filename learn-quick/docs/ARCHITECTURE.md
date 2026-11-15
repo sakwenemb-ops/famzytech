@@ -1,4 +1,4 @@
-# LinguaBridge: Phase 0 design
+# Learn Quick: Phase 0 design
 
 ## 1. System architecture
 
@@ -89,13 +89,20 @@ See [`prisma/schema.prisma`](../prisma/schema.prisma) (validated). Main groups:
 - **Grading:** Claude API (latest Sonnet model for cost and speed; a stronger model only for C1–C2 paragraphs).
 - **Hosting:** Vercel or a VPS with Docker for the app, a managed Postgres (Neon/Supabase) and Upstash Redis. Or put everything on one VPS with Docker Compose to start cheap.
 
-## 4. Open questions (answers change the build)
+## 4. Decisions made
 
-1. **Brand name and domain:** keep "LinguaBridge"?
+| Topic | Decision |
+|---|---|
+| Brand name | **Learn Quick** |
+| Translation library | **Free for every signed-in student and teacher.** No payment or booked lesson needed. Guests can see the library page but must sign up (free) to take a test, so progress can be saved. |
+| Library grading cost | Because grading uses a paid AI API, each account gets a daily fair-use limit of AI-graded answers (default 30 per day, changed in admin settings). Multiple-choice and fill-the-gap answers are scored without AI and have no limit. |
+| Code location | GitHub `sakwenemb-ops/famzytech`, folder `learn-quick/` |
+
+## 5. Open questions (answers change the build)
+
+1. **Domain:** which web address will Learn Quick use?
 2. **Countries:** Cameroon only at launch, or other XAF/XOF countries too (Gabon, Congo, Côte d'Ivoire, Senegal)? This changes currency handling and payment providers.
 3. **Payment provider:** do you already have a merchant account with MTN, Orange or an aggregator? If not, which business entity will sign up?
 4. **Commission:** is 18% right? Does the platform take a commission on trial lessons?
 5. **Who writes library content:** should I generate the 60 starter exercises with AI (reviewed by you), or do you have your own material?
-6. **Translation grading cost:** is the library free for all students, free for students with at least one paid lesson, or a paid subscription?
-7. **Hosting budget:** Vercel plus managed services (easier, about $50–100/month to start), or one VPS (cheaper, about $20/month, more maintenance)?
-8. **Where the code lives:** this session has no GitHub repository attached, and files here are lost when the session ends. Do you want me to push to a GitHub repo? If so, create or attach an empty repo and tell me its name.
+6. **Hosting budget:** Vercel plus managed services (easier, about $50–100/month to start), or one VPS (cheaper, about $20/month, more maintenance)?

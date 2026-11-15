@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "LinguaBridge — Live English & French lessons",
+    "title": "Learn Quick — Live English & French lessons",
     "description": "Learn English or French with verified teachers in live video lessons. Pay with MTN Mobile Money or Orange Money. Practise translation in our free library."
   },
   "nav": {
@@ -21,7 +21,7 @@
     "title": "Speak with confidence in both of Cameroon's languages",
     "subtitle": "One-to-one video lessons with verified teachers. Book in minutes, pay with Mobile Money, and practise translation between lessons.",
     "ctaStudent": "Find your teacher",
-    "ctaTeacher": "Teach on LinguaBridge",
+    "ctaTeacher": "Teach on Learn Quick",
     "payWith": "Pay with",
     "stats": {
       "verified": "Every teacher ID-checked",
@@ -111,7 +111,7 @@
     "useEmail": "Use my email instead",
     "usePhone": "Use my phone instead",
     "onboardingTitle": "Finish setting up your account",
-    "onboardingSubtitle": "Tell us how you will use LinguaBridge.",
+    "onboardingSubtitle": "Tell us how you will use Learn Quick.",
     "continue": "Continue",
     "teacherNote": "After sign-up you will fill in your teacher application. Students can book you once it is approved."
   },

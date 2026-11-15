@@ -10,6 +10,8 @@ const SETTINGS: Record<string, unknown> = {
   escrowReleaseHours: 24,
   minPayoutXaf: 5000,
   applicationReviewDays: 5,
+  // The library is free for students and teachers; this caps AI-graded answers per account per day
+  libraryAiGradesPerDay: 30,
 };
 
 async function main() {

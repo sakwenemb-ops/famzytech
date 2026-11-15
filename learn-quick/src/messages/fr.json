@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "LinguaBridge — Cours d'anglais et de français en direct",
+    "title": "Learn Quick — Cours d'anglais et de français en direct",
     "description": "Apprenez l'anglais ou le français avec des enseignants vérifiés, en cours vidéo en direct. Payez par MTN Mobile Money ou Orange Money. Entraînez-vous à la traduction dans notre bibliothèque gratuite."
   },
   "nav": {
@@ -21,7 +21,7 @@
     "title": "Parlez avec assurance les deux langues du Cameroun",
     "subtitle": "Des cours vidéo individuels avec des enseignants vérifiés. Réservez en quelques minutes, payez par Mobile Money et entraînez-vous à la traduction entre les cours.",
     "ctaStudent": "Trouver mon enseignant",
-    "ctaTeacher": "Enseigner sur LinguaBridge",
+    "ctaTeacher": "Enseigner sur Learn Quick",
     "payWith": "Payez avec",
     "stats": {
       "verified": "Identité de chaque enseignant vérifiée",
@@ -111,7 +111,7 @@
     "useEmail": "Utiliser mon e-mail",
     "usePhone": "Utiliser mon téléphone",
     "onboardingTitle": "Terminez la création de votre compte",
-    "onboardingSubtitle": "Dites-nous comment vous utiliserez LinguaBridge.",
+    "onboardingSubtitle": "Dites-nous comment vous utiliserez Learn Quick.",
     "continue": "Continuer",
     "teacherNote": "Après l'inscription, vous remplirez votre candidature d'enseignant. Les élèves pourront vous réserver une fois qu'elle sera approuvée."
   },

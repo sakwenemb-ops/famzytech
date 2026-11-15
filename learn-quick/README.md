@@ -1,4 +1,4 @@
-# LinguaBridge
+# Learn Quick
 
 Live English and French tutoring for Cameroon and beyond: verified teachers, live video lessons,
 MTN Mobile Money / Orange Money payments and a translation practice library.
