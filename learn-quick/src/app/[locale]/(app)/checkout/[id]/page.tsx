@@ -6,11 +6,13 @@ import { formatXaf } from "@/lib/utils";
 import { LESSON_MINUTES } from "@/lib/constants";
 import { requireRole } from "@/server/session";
 import { amountDue } from "@/server/booking";
-import { devPaymentsEnabled } from "@/server/booking-actions";
+import { paymentProvider } from "@/server/payments";
+import { balance } from "@/server/ledger";
 import { Alert } from "@/components/ui/alert";
 import { Avatar } from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";
-import { CancelHoldButton, DevPayButton, HoldTimer } from "@/components/booking/checkout-actions";
+import { CancelHoldButton, HoldTimer } from "@/components/booking/checkout-actions";
+import { PaymentPanel } from "@/components/booking/payment-panel";
 
 export default async function CheckoutPage({ params }: { params: Promise<{ locale: string; id: string }> }) {
   const { locale, id } = await params;
@@ -56,8 +58,13 @@ export default async function CheckoutPage({ params }: { params: Promise<{ local
             <HoldTimer expiresAt={b.holdExpiresAt!.toISOString()} />
             <section className="space-y-3">
               <h2 className="font-semibold">{t("payTitle")}</h2>
-              <p className="text-sm text-muted">{t("paySoon")}</p>
-              {(await devPaymentsEnabled()) && <DevPayButton bookingId={b.id} />}
+              <PaymentPanel
+                bookingId={b.id}
+                amountXaf={amountDue(b)}
+                defaultPhone={user.phone}
+                walletBalance={await balance({ type: "STUDENT_WALLET", userId: user.id })}
+                sandbox={paymentProvider().name === "sandbox"}
+              />
             </section>
             <CancelHoldButton bookingId={b.id} teacherHref={teacherHref} />
           </>

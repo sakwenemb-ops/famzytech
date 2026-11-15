@@ -14,7 +14,8 @@
     "db:deploy": "prisma migrate deploy",
     "db:seed": "prisma db seed",
     "jobs:purge-files": "tsx --conditions=react-server scripts/purge-files.ts",
-    "jobs:bookings": "tsx --conditions=react-server scripts/booking-jobs.ts"
+    "jobs:bookings": "tsx --conditions=react-server scripts/booking-jobs.ts",
+    "jobs:money": "tsx --conditions=react-server scripts/money-jobs.ts"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.3",

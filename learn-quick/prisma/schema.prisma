@@ -134,12 +134,15 @@ enum PayoutStatus {
   REJECTED
 }
 
+/// Every money movement is a LedgerTransaction whose lines add up to 0.
 enum LedgerAccountType {
-  STUDENT_WALLET
-  TEACHER_PENDING // escrow: earned but lesson not yet completed / dispute window open
-  TEACHER_AVAILABLE
-  PLATFORM_REVENUE
-  PLATFORM_CLEARING // money held for in-flight payments and payouts
+  STUDENT_WALLET // refunds and credit a student can spend or withdraw
+  TEACHER_PENDING // earned for a finished lesson, inside the 24-hour dispute window
+  TEACHER_AVAILABLE // a teacher can withdraw this
+  PLATFORM_REVENUE // platform fees
+  PLATFORM_CLEARING // ESCROW: paid by students for lessons that have not happened yet
+  EXTERNAL // the outside world (Mobile Money); its balance is minus the money held on the platform
+  PAYOUT_IN_FLIGHT // withdrawals sent to Mobile Money, waiting for confirmation
 }
 
 enum DisputeStatus {
@@ -613,6 +616,10 @@ model Payment {
   providerRef     String?             @unique // provider transaction id
   providerPayload Json?
   failureReason   String?
+  bookingId       String? // the booking this payment is for (kept after retries)
+  operator        String? // MTN or ORANGE, as reported by the provider
+  ussdCode        String? // code the payer can dial if the phone prompt does not appear
+  lastCheckedAt   DateTime? // last time we asked the provider for the status
   expiresAt       DateTime
   confirmedAt     DateTime?
   createdAt       DateTime            @default(now())
@@ -623,6 +630,7 @@ model Payment {
   webhooks WebhookEvent[]
 
   @@index([status, expiresAt])
+  @@index([bookingId])
 }
 
 model WebhookEvent {
@@ -662,6 +670,8 @@ model LedgerTransaction {
 
   lines LedgerLine[]
 
+  // The same event can never be posted twice (e.g. a refund for one booking)
+  @@unique([kind, referenceId])
   @@index([referenceId])
 }
 
@@ -678,8 +688,10 @@ model LedgerLine {
 
 model Payout {
   id          String              @id @default(cuid())
-  teacherId   String
-  teacher     TeacherProfile      @relation(fields: [teacherId], references: [id])
+  userId      String // who is paid: a teacher (earnings) or a student (wallet balance)
+  source      LedgerAccountType // TEACHER_AVAILABLE or STUDENT_WALLET
+  teacherId   String?
+  teacher     TeacherProfile?     @relation(fields: [teacherId], references: [id])
   amountXaf   Int
   provider    PaymentProviderName
   phone       String

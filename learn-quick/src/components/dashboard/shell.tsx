@@ -24,12 +24,12 @@ export async function DashboardShell({ nav, active, children }: { nav: NavItem[]
               <li key={href}>
                 {ready ? (
                   <Link href={href} className={cls} aria-current={isActive ? "page" : undefined}>
-                    <Icon className="size-4" aria-hidden />
+                    <Icon className="size-4 shrink-0" aria-hidden />
                     {label}
                   </Link>
                 ) : (
                   <span className={cls} title={t("soon")} aria-disabled>
-                    <Icon className="size-4" aria-hidden />
+                    <Icon className="size-4 shrink-0" aria-hidden />
                     {label}
                   </span>
                 )}

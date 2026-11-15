@@ -11,7 +11,7 @@ export const TEST_ENV = {
   STORAGE_DIR: process.env.TEST_STORAGE_DIR ?? `${process.cwd()}/storage-test`,
   SEED_ADMIN_EMAIL: "admin@learnquick.test",
   SEED_ADMIN_PASSWORD: "Admin12345",
-  DEV_PAYMENTS: "1",
+  PAYMENT_PROVIDER: "sandbox",
 };
 
 // The test process itself (database helpers, file checks) uses the same settings

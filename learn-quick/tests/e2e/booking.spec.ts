@@ -1,5 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
-import { createTeacher, createUser, db, login } from "./helpers";
+import { createTeacher, createUser, db, login, payInSandbox } from "./helpers";
 
 /** A published teacher who teaches every day, all day (Douala time), with a unique price for filtering. */
 async function bookableTeacher(price: number, opts: { trial?: number; pack5?: number; hours?: [number, number] } = {}) {
@@ -58,9 +58,9 @@ test("student books a trial lesson, pays (simulated) and both sides see it", asy
   await page.getByRole("button", { name: "Continuer" }).click();
 
   await expect(page).toHaveURL(/\/fr\/checkout\//);
-  await expect(page.getByText("2 500 FCFA")).toBeVisible();
+  await expect(page.getByText("2 500 FCFA", { exact: true })).toBeVisible();
   await expect(page.getByRole("timer")).toContainText(/réservé pendant 1[45]:/);
-  await page.getByRole("button", { name: /Simuler le paiement/ }).click();
+  await payInSandbox(page);
 
   await expect(page).toHaveURL(/\/fr\/student\/lessons\?booked=/);
   await expect(page.getByText("Votre cours est réservé !")).toBeVisible();
@@ -105,8 +105,8 @@ test("a pack of 5: pay once, book with credits, cancel gives the credit back", a
 
   await page.goto(`/fr/teachers/${teacher.id}`);
   await pickSlotAndContinue(page, /5 cours/);
-  await expect(page.getByText("20 000 FCFA")).toBeVisible(); // 5 000 × 0.8 × 5
-  await page.getByRole("button", { name: /Simuler le paiement/ }).click();
+  await expect(page.getByText("20 000 FCFA", { exact: true })).toBeVisible(); // 5 000 × 0.8 × 5
+  await payInSandbox(page);
   await expect(page.getByText("Tina Teacher : 4 cours restants sur 5")).toBeVisible();
 
   // Second lesson, next week, uses a credit: confirmed at once, no checkout

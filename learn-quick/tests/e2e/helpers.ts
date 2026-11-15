@@ -69,3 +69,10 @@ export async function login(page: Page, email: string, password = "secret123", l
   // Wait until the session cookie is set and we have left the login page
   await page.waitForURL((url) => !url.pathname.endsWith("/login"));
 }
+
+/** Checkout with the sandbox provider: enter an MTN number, pay, approve "on the phone". */
+export async function payInSandbox(page: Page, opts: { decline?: boolean; phone?: string } = {}) {
+  await page.getByLabel("Numéro Mobile Money").fill(opts.phone ?? "670000001");
+  await page.getByRole("button", { name: /^Payer / }).click();
+  await page.getByRole("button", { name: opts.decline ? "Refuser sur le téléphone" : "Valider sur le téléphone" }).click();
+}

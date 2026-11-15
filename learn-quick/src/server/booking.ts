@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { LESSON_MIN, freeSlots, isFreeSlot } from "@/lib/slots";
 import { getSetting } from "./settings";
 import { notify } from "./notify";
+import { earnLesson, refundCancelledLesson } from "./payments/lesson-money";
 
 export const HOLD_MIN = 15;
 export const PACK_SIZES = [5, 10, 20] as const;
@@ -247,11 +248,18 @@ export async function cancelBooking(user: User, id: string): Promise<{ ok: true;
   const { freeCancelHours } = await cancelPolicy();
   const early = b.startsAt.getTime() - now.getTime() >= freeCancelHours * 3_600_000;
   const refunded = role === "teacher" || early;
+  const releaseH = await getSetting("escrowReleaseHours");
 
   await db.$transaction(async (tx) => {
     await tx.booking.update({
       where: { id },
-      data: { status: role === "teacher" ? "CANCELLED_BY_TEACHER" : "CANCELLED_BY_STUDENT", cancelledAt: now, cancelledById: user.id },
+      data: {
+        status: role === "teacher" ? "CANCELLED_BY_TEACHER" : "CANCELLED_BY_STUDENT",
+        cancelledAt: now,
+        cancelledById: user.id,
+        // A late cancellation is paid to the teacher like a lesson, after the usual 24-hour window
+        releaseAt: refunded ? null : new Date(b.endsAt.getTime() + releaseH * 3_600_000),
+      },
     });
     // Lessons paid with a pack credit get the credit back
     if (refunded && b.packageId) await tx.lessonPackage.update({ where: { id: b.packageId }, data: { usedLessons: { decrement: 1 } } });
@@ -261,10 +269,13 @@ export async function cancelBooking(user: User, id: string): Promise<{ ok: true;
         action: "BOOKING_CANCELLED",
         targetType: "Booking",
         targetId: id,
-        meta: { by: role, refunded, refundDueXaf: refunded && !b.packageId ? b.priceXaf : 0, lateCancel: !early && role === "student" },
+        meta: { by: role, refunded, lateCancel: !early && role === "student" },
       },
     });
   });
+  // Money: back to the student's wallet, or to the teacher for a late cancellation
+  if (refunded) await refundCancelledLesson(b, b.student.userId);
+  else await earnLesson(b, b.teacher.userId);
 
   const other = role === "student" ? b.teacher.user : b.student.user;
   const when = new Intl.DateTimeFormat(other.locale === "fr" ? "fr-FR" : "en-GB", { dateStyle: "full", timeStyle: "short", timeZone: other.timeZone }).format(b.startsAt);

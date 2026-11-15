@@ -13,8 +13,8 @@ Design and data model: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 | 2 | Student learning profile, settings pages, public teacher profile, saved teachers | ✅ Done |
 | 3 | Teacher application wizard, uploads, admin review, badges | ✅ Done |
 | 4 | Teacher catalogue, availability calendar, booking | ✅ Done |
-| 5 | Payments (MTN / Orange), wallet, ledger, escrow, payouts | Next |
-| 6 | Live video classroom, attendance, reviews | |
+| 5 | Payments (MTN / Orange via Campay), wallet, ledger, escrow, payouts | ✅ Done |
+| 6 | Live video classroom, attendance, reviews | Next |
 | 7 | Translation library and AI grading | |
 | 8 | Admin tools, notifications, messaging, hardening | |
 
@@ -109,7 +109,42 @@ Run this every 10 minutes (for example with cron) to release unpaid holds and se
 npm run jobs:bookings
 ```
 
-**Until Phase 5**, checkout has no real payment. On a development computer, set `DEV_PAYMENTS=1` to get a "simulate payment" button. It never works on a live site.
+## Payments (Campay: MTN Mobile Money and Orange Money)
+
+**How a payment works:** the student enters their MTN or Orange number at checkout → Campay sends a request to their phone → they approve with their PIN → the page confirms the lesson by itself.
+
+**Where the money goes** (every movement is a balanced entry in the ledger):
+
+| Event | Money moves |
+|---|---|
+| Student pays | Mobile Money → held for the lesson |
+| Lesson ends | held → teacher "pending" (82 %) + platform fee (18 %) |
+| 24 hours later, no dispute | teacher "pending" → "available" |
+| Student cancels 12+ hours ahead, or teacher cancels | held → student wallet (pack lessons get their credit back instead) |
+| Student cancels later than that | held → teacher, as if the lesson happened |
+| Withdrawal | "available" (or wallet) → set aside → sent to Mobile Money after admin approval |
+
+**Safety:**
+- Webhooks are never trusted: they only tell the app which payment to re-check, and the real status and amount are always fetched from Campay with our own credentials. A forged webhook cannot confirm anything (there is a test for this).
+- Each payment is confirmed exactly once, even if the webhook, the checkout page and the background job all report it at the same time.
+- A payment for the wrong amount, or one approved after the time was taken, goes to the student's wallet instead of being lost.
+- Sending money out needs the person's password. Admin approval is on by default (`payoutRequiresApproval`).
+- **Admin → Payments** shows money held, revenue, withdrawals to approve, and whether the ledger is balanced.
+
+**Test mode:** `PAYMENT_PROVIDER=sandbox` (the default) simulates payments. Checkout then shows "approve / decline on phone" buttons. The sandbox refuses to run on a live site.
+
+**Going live with Campay:**
+
+1. Create an app at campay.net and enable **API withdrawals** in the app settings.
+2. Set `PAYMENT_PROVIDER=campay`, `CAMPAY_USERNAME`, `CAMPAY_PASSWORD` (or `CAMPAY_ACCESS_TOKEN`) and `CAMPAY_WEBHOOK_KEY`. Use `CAMPAY_BASE_URL=https://demo.campay.net` to test, then `https://www.campay.net`.
+3. In the Campay dashboard, set the webhook URL to `https://YOUR-SITE/api/webhooks/campay`.
+4. Make one small real payment and one small withdrawal before opening to students.
+
+Run this every 5 minutes (re-checks waiting payments, completes lessons, releases earnings, checks withdrawals):
+
+```bash
+npm run jobs:money
+```
 
 ## How sign-up works
 

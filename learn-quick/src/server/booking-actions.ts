@@ -8,7 +8,7 @@ import { parseWeeklySlots } from "@/lib/availability";
 import { zonedTimeToUtc } from "@/lib/slots";
 import { redirect } from "@/i18n/navigation";
 import { assertRole } from "./session";
-import { cancelBooking, confirmBooking, holdSlot, rescheduleBooking, teacherSlots, type BookingOption } from "./booking";
+import { cancelBooking, holdSlot, rescheduleBooking, teacherSlots, type BookingOption } from "./booking";
 import type { FormState } from "./auth-actions";
 
 const DAY = 86_400_000;
@@ -35,25 +35,6 @@ export async function holdAction(teacherId: string, startIso: string, option: Bo
   const locale = await getLocale();
   if (res.booking.status === "CONFIRMED") redirect({ href: `/student/lessons?booked=${res.booking.id}`, locale });
   redirect({ href: `/checkout/${res.booking.id}`, locale });
-}
-
-/**
- * Real Mobile Money payment arrives in Phase 5. Until then this confirms a booking
- * without payment, ONLY when DEV_PAYMENTS=1 and the site runs on localhost.
- */
-export async function devPaymentsEnabled() {
-  const local = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost").includes("localhost");
-  return process.env.DEV_PAYMENTS === "1" && (process.env.NODE_ENV !== "production" || local);
-}
-
-export async function devPayAction(bookingId: string) {
-  const user = await assertRole("STUDENT");
-  if (!(await devPaymentsEnabled())) throw new Error("FORBIDDEN");
-  const b = await db.booking.findUnique({ where: { id: bookingId }, include: { student: true } });
-  if (!b || b.student.userId !== user.id) throw new Error("NOT_FOUND");
-  const res = await confirmBooking(b.id);
-  if ("error" in res) return res;
-  redirect({ href: `/student/lessons?booked=${b.id}`, locale: await getLocale() });
 }
 
 export async function cancelAction(bookingId: string) {

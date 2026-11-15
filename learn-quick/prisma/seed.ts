@@ -15,6 +15,10 @@ const SETTINGS: Record<string, unknown> = {
   libraryAiGradesPerDay: 30,
   // Students cannot book a lesson starting sooner than this
   minBookingNoticeHours: 6,
+  // A teacher payout or wallet withdrawal waits for an admin to approve it
+  payoutRequiresApproval: true,
+  // How long a student has to approve a Mobile Money payment on their phone
+  paymentTimeoutMinutes: 5,
 };
 
 async function main() {
@@ -22,10 +26,10 @@ async function main() {
     await db.platformSetting.upsert({ where: { key }, create: { key, value: value as never }, update: {} });
   }
 
-  // Platform ledger accounts (no user)
-  for (const type of ["PLATFORM_REVENUE", "PLATFORM_CLEARING"] as const) {
-    const exists = await db.ledgerAccount.findFirst({ where: { userId: null, type } });
-    if (!exists) await db.ledgerAccount.create({ data: { type } });
+  // Platform ledger accounts (fixed ids, see src/server/ledger.ts)
+  for (const type of ["PLATFORM_REVENUE", "PLATFORM_CLEARING", "EXTERNAL", "PAYOUT_IN_FLIGHT"] as const) {
+    const id = `platform_${type.toLowerCase()}`;
+    await db.ledgerAccount.upsert({ where: { id }, create: { id, type }, update: {} });
   }
 
   const email = process.env.SEED_ADMIN_EMAIL;

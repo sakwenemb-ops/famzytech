@@ -163,7 +163,14 @@
     "trial_too_high": "The trial price can't be more than your lesson price.",
     "steps_incomplete": "Some steps are not finished yet.",
     "range_invalid": "The end date must be on or after the start date.",
-    "range_too_long": "Days off are limited to 3 months at a time."
+    "range_too_long": "Days off are limited to 3 months at a time.",
+    "amount_invalid": "Enter an amount in whole FCFA.",
+    "payout_amount_invalid": "Enter an amount in whole FCFA.",
+    "payout_below_minimum": "This is below the minimum withdrawal.",
+    "payout_insufficient": "Your balance is not enough.",
+    "payout_phone_invalid": "This phone number is not valid.",
+    "payout_operator_unsupported": "Only MTN and Orange Cameroon numbers can receive money.",
+    "payout_not_allowed": "You can't withdraw money from this account."
   },
   "dashboard": {
     "hello": "Hello, {name}",
@@ -742,9 +749,6 @@
     "expired": "Your reservation has expired. Choose a time again.",
     "backToTeacher": "Back to the teacher",
     "payTitle": "Payment",
-    "paySoon": "Payment with MTN Mobile Money and Orange Money is being set up.",
-    "devPay": "Simulate payment (development only)",
-    "devPayNote": "This button only exists on a development computer. It confirms the lesson without payment.",
     "cancel": "Cancel this reservation",
     "confirmed": "This lesson is confirmed."
   },
@@ -807,5 +811,118 @@
     "remove": "Remove",
     "noTimeOff": "No days off planned.",
     "upcoming": "Next lessons"
+  },
+  "pay": {
+    "phone": "Mobile Money number",
+    "phoneHint": "MTN MoMo or Orange Money. You will approve the payment on this phone.",
+    "payButton": "Pay {amount}",
+    "payWallet": "Pay with my wallet ({balance})",
+    "or": "or",
+    "secure": "You approve every payment on your phone with your PIN. We never see your PIN.",
+    "approveTitle": "Approve the payment on your phone",
+    "approveBody": "You will receive a request for {amount}. Enter your Mobile Money PIN to approve it. This page updates by itself.",
+    "ussd": "No request? Dial {code} on your phone to see pending approvals.",
+    "sandboxNote": "Test mode: no real money. Play the role of the phone:",
+    "sandboxApprove": "Approve on phone",
+    "sandboxDecline": "Decline on phone",
+    "errors": {
+      "phone_invalid": "This phone number is not valid.",
+      "operator_unsupported": "Only MTN and Orange Cameroon numbers can pay.",
+      "provider_unavailable": "Mobile Money is not responding right now. Please try again in a moment.",
+      "declined": "The payment was declined or cancelled on the phone. You can try again.",
+      "timeout": "The payment was not approved in time. You can try again.",
+      "expired": "Your reservation has expired. Choose a time again.",
+      "already_paid": "This lesson is already paid.",
+      "not_found": "This booking was not found.",
+      "insufficient_wallet": "Your wallet balance is not enough."
+    }
+  },
+  "money": {
+    "kinds": {
+      "PAYMENT_IN": "Payment received",
+      "WALLET_PAYMENT": "Lesson paid from wallet",
+      "UNBOOKED_REFUND": "Payment returned (time no longer free)",
+      "LESSON_REFUND": "Refund for a cancelled lesson",
+      "LESSON_EARNED": "Lesson earnings (pending)",
+      "EARNINGS_RELEASED": "Earnings available",
+      "PAYOUT_RESERVED": "Withdrawal",
+      "PAYOUT_SENT": "Withdrawal sent",
+      "PAYOUT_RETURNED": "Withdrawal returned"
+    },
+    "payoutStatus": {
+      "REQUESTED": "Waiting for approval",
+      "APPROVED": "Approved",
+      "PROCESSING": "Sending",
+      "PAID": "Sent",
+      "FAILED": "Failed",
+      "REJECTED": "Rejected"
+    },
+    "paymentStatus": {
+      "PENDING": "Waiting",
+      "SUCCESSFUL": "Paid",
+      "FAILED": "Failed",
+      "EXPIRED": "Not approved",
+      "REFUNDED": "Refunded"
+    },
+    "history": "History",
+    "noHistory": "Nothing yet.",
+    "withdraw": "Withdraw to Mobile Money",
+    "amount": "Amount (FCFA)",
+    "phone": "Mobile Money number",
+    "password": "Your password",
+    "passwordHint": "For your security, sending money needs your password.",
+    "withdrawButton": "Withdraw",
+    "payouts": "Withdrawals",
+    "payout_requested": "Your withdrawal request has been sent. We will notify you when the money is on its way.",
+    "payout_sent": "The money has been sent to your phone.",
+    "receipts": "Payments and receipts",
+    "receipt": "Receipt"
+  },
+  "wallet": {
+    "title": "Wallet",
+    "subtitle": "Refunds go here. Use them for your next lesson or withdraw them.",
+    "balance": "Wallet balance",
+    "useForLesson": "Your wallet can pay for a lesson at checkout."
+  },
+  "earnings": {
+    "title": "Earnings",
+    "subtitle": "You are paid for each lesson that took place, minus the {pct}% platform fee.",
+    "pending": "Pending",
+    "pendingHint": "Lessons from the last {hours} hours. Available after that, if there is no dispute.",
+    "available": "Available",
+    "availableHint": "You can withdraw this now (minimum {min}).",
+    "noWithdraw": "Nothing to withdraw yet."
+  },
+  "adminPay": {
+    "title": "Payments",
+    "subtitle": "Money held, platform revenue and withdrawals.",
+    "escrow": "Held for upcoming lessons",
+    "revenue": "Platform revenue",
+    "inFlight": "Withdrawals in progress",
+    "ledgerOk": "Ledger balanced",
+    "ledgerBad": "Ledger problem: check the accounts",
+    "toApprove": "Withdrawals to approve",
+    "noneToApprove": "No withdrawal is waiting.",
+    "approve": "Approve and send",
+    "reject": "Reject",
+    "rejectReason": "Reason for rejecting (shown to the person)",
+    "recent": "Recent payments",
+    "provider": "Provider: {name}",
+    "sandboxWarning": "Test mode: payments are simulated. Set PAYMENT_PROVIDER=campay to take real payments."
+  },
+  "receipt": {
+    "title": "Payment receipt",
+    "number": "Receipt no.",
+    "date": "Date",
+    "paidBy": "Paid by",
+    "method": "Method",
+    "for": "For",
+    "lessonWith": "Lesson with {name} on {date}",
+    "packWith": "Pack of {size} lessons with {name}",
+    "amount": "Amount paid",
+    "operatorRef": "Operator reference",
+    "print": "Print or save as PDF",
+    "wallet": "Learn Quick wallet",
+    "footer": "Learn Quick · Live English & French lessons"
   }
 }

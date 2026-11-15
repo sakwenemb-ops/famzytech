@@ -163,7 +163,14 @@
     "trial_too_high": "Le prix du cours d'essai ne peut pas dépasser celui d'un cours.",
     "steps_incomplete": "Certaines étapes ne sont pas encore terminées.",
     "range_invalid": "La date de fin doit être égale ou postérieure à la date de début.",
-    "range_too_long": "Les congés sont limités à 3 mois à la fois."
+    "range_too_long": "Les congés sont limités à 3 mois à la fois.",
+    "amount_invalid": "Saisissez un montant entier en FCFA.",
+    "payout_amount_invalid": "Saisissez un montant entier en FCFA.",
+    "payout_below_minimum": "Ce montant est inférieur au retrait minimum.",
+    "payout_insufficient": "Votre solde ne suffit pas.",
+    "payout_phone_invalid": "Ce numéro de téléphone n'est pas valide.",
+    "payout_operator_unsupported": "Seuls les numéros MTN et Orange Cameroun peuvent recevoir de l'argent.",
+    "payout_not_allowed": "Vous ne pouvez pas retirer d'argent de ce compte."
   },
   "dashboard": {
     "hello": "Bonjour, {name}",
@@ -742,9 +749,6 @@
     "expired": "Votre réservation a expiré. Choisissez à nouveau un créneau.",
     "backToTeacher": "Retour à l'enseignant",
     "payTitle": "Paiement",
-    "paySoon": "Le paiement par MTN Mobile Money et Orange Money est en cours de mise en place.",
-    "devPay": "Simuler le paiement (développement uniquement)",
-    "devPayNote": "Ce bouton n'existe que sur un ordinateur de développement. Il confirme le cours sans paiement.",
     "cancel": "Annuler cette réservation",
     "confirmed": "Ce cours est confirmé."
   },
@@ -807,5 +811,118 @@
     "remove": "Retirer",
     "noTimeOff": "Aucun congé prévu.",
     "upcoming": "Prochains cours"
+  },
+  "pay": {
+    "phone": "Numéro Mobile Money",
+    "phoneHint": "MTN MoMo ou Orange Money. Vous validerez le paiement sur ce téléphone.",
+    "payButton": "Payer {amount}",
+    "payWallet": "Payer avec mon portefeuille ({balance})",
+    "or": "ou",
+    "secure": "Vous validez chaque paiement sur votre téléphone avec votre code secret. Nous ne voyons jamais votre code.",
+    "approveTitle": "Validez le paiement sur votre téléphone",
+    "approveBody": "Vous allez recevoir une demande de {amount}. Saisissez votre code Mobile Money pour la valider. Cette page se met à jour toute seule.",
+    "ussd": "Pas de demande ? Composez le {code} sur votre téléphone pour voir les validations en attente.",
+    "sandboxNote": "Mode test : aucun argent réel. Jouez le rôle du téléphone :",
+    "sandboxApprove": "Valider sur le téléphone",
+    "sandboxDecline": "Refuser sur le téléphone",
+    "errors": {
+      "phone_invalid": "Ce numéro de téléphone n'est pas valide.",
+      "operator_unsupported": "Seuls les numéros MTN et Orange Cameroun peuvent payer.",
+      "provider_unavailable": "Le service Mobile Money ne répond pas pour le moment. Réessayez dans un instant.",
+      "declined": "Le paiement a été refusé ou annulé sur le téléphone. Vous pouvez réessayer.",
+      "timeout": "Le paiement n'a pas été validé à temps. Vous pouvez réessayer.",
+      "expired": "Votre réservation a expiré. Choisissez à nouveau un créneau.",
+      "already_paid": "Ce cours est déjà payé.",
+      "not_found": "Cette réservation est introuvable.",
+      "insufficient_wallet": "Le solde de votre portefeuille ne suffit pas."
+    }
+  },
+  "money": {
+    "kinds": {
+      "PAYMENT_IN": "Paiement reçu",
+      "WALLET_PAYMENT": "Cours payé avec le portefeuille",
+      "UNBOOKED_REFUND": "Paiement rendu (créneau plus libre)",
+      "LESSON_REFUND": "Remboursement d'un cours annulé",
+      "LESSON_EARNED": "Gains d'un cours (en attente)",
+      "EARNINGS_RELEASED": "Gains disponibles",
+      "PAYOUT_RESERVED": "Retrait",
+      "PAYOUT_SENT": "Retrait envoyé",
+      "PAYOUT_RETURNED": "Retrait rendu"
+    },
+    "payoutStatus": {
+      "REQUESTED": "En attente d'approbation",
+      "APPROVED": "Approuvé",
+      "PROCESSING": "Envoi en cours",
+      "PAID": "Envoyé",
+      "FAILED": "Échoué",
+      "REJECTED": "Refusé"
+    },
+    "paymentStatus": {
+      "PENDING": "En attente",
+      "SUCCESSFUL": "Payé",
+      "FAILED": "Échoué",
+      "EXPIRED": "Non validé",
+      "REFUNDED": "Remboursé"
+    },
+    "history": "Historique",
+    "noHistory": "Rien pour l'instant.",
+    "withdraw": "Retirer vers Mobile Money",
+    "amount": "Montant (FCFA)",
+    "phone": "Numéro Mobile Money",
+    "password": "Votre mot de passe",
+    "passwordHint": "Pour votre sécurité, un envoi d'argent demande votre mot de passe.",
+    "withdrawButton": "Retirer",
+    "payouts": "Retraits",
+    "payout_requested": "Votre demande de retrait a été envoyée. Nous vous préviendrons quand l'argent sera en route.",
+    "payout_sent": "L'argent a été envoyé sur votre téléphone.",
+    "receipts": "Paiements et reçus",
+    "receipt": "Reçu"
+  },
+  "wallet": {
+    "title": "Portefeuille",
+    "subtitle": "Les remboursements arrivent ici. Utilisez-les pour votre prochain cours ou retirez-les.",
+    "balance": "Solde du portefeuille",
+    "useForLesson": "Votre portefeuille peut payer un cours au moment du paiement."
+  },
+  "earnings": {
+    "title": "Gains",
+    "subtitle": "Vous êtes payé pour chaque cours qui a eu lieu, moins les frais de plateforme de {pct} %.",
+    "pending": "En attente",
+    "pendingHint": "Cours des dernières {hours} heures. Disponibles ensuite, s'il n'y a pas de litige.",
+    "available": "Disponible",
+    "availableHint": "Vous pouvez retirer ce montant maintenant (minimum {min}).",
+    "noWithdraw": "Rien à retirer pour l'instant."
+  },
+  "adminPay": {
+    "title": "Paiements",
+    "subtitle": "Argent conservé, revenus de la plateforme et retraits.",
+    "escrow": "Conservé pour les cours à venir",
+    "revenue": "Revenus de la plateforme",
+    "inFlight": "Retraits en cours",
+    "ledgerOk": "Comptabilité équilibrée",
+    "ledgerBad": "Problème de comptabilité : vérifiez les comptes",
+    "toApprove": "Retraits à approuver",
+    "noneToApprove": "Aucun retrait en attente.",
+    "approve": "Approuver et envoyer",
+    "reject": "Refuser",
+    "rejectReason": "Motif du refus (montré à la personne)",
+    "recent": "Paiements récents",
+    "provider": "Prestataire : {name}",
+    "sandboxWarning": "Mode test : les paiements sont simulés. Définissez PAYMENT_PROVIDER=campay pour encaisser de vrais paiements."
+  },
+  "receipt": {
+    "title": "Reçu de paiement",
+    "number": "Reçu n°",
+    "date": "Date",
+    "paidBy": "Payé par",
+    "method": "Moyen de paiement",
+    "for": "Objet",
+    "lessonWith": "Cours avec {name} le {date}",
+    "packWith": "Forfait de {size} cours avec {name}",
+    "amount": "Montant payé",
+    "operatorRef": "Référence opérateur",
+    "print": "Imprimer ou enregistrer en PDF",
+    "wallet": "Portefeuille Learn Quick",
+    "footer": "Learn Quick · Cours d'anglais et de français en direct"
   }
 }

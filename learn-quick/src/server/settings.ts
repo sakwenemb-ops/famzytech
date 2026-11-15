@@ -1,7 +1,7 @@
 import "server-only";
 import { db } from "@/lib/db";
 
-const DEFAULTS = { commissionPct: 18, freeCancelHours: 12, slotHoldMinutes: 15, escrowReleaseHours: 24, minPayoutXaf: 5000, applicationReviewDays: 5, libraryAiGradesPerDay: 30, minBookingNoticeHours: 6 };
+const DEFAULTS = { commissionPct: 18, freeCancelHours: 12, slotHoldMinutes: 15, escrowReleaseHours: 24, minPayoutXaf: 5000, applicationReviewDays: 5, libraryAiGradesPerDay: 30, minBookingNoticeHours: 6, payoutRequiresApproval: true, paymentTimeoutMinutes: 5 };
 export type SettingKey = keyof typeof DEFAULTS;
 
 /** Platform setting from the database, or its default. */
