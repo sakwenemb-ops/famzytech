@@ -1,0 +1,221 @@
+{
+  "meta": {
+    "title": "LinguaBridge — Live English & French lessons",
+    "description": "Learn English or French with verified teachers in live video lessons. Pay with MTN Mobile Money or Orange Money. Practise translation in our free library."
+  },
+  "nav": {
+    "findTeacher": "Find a teacher",
+    "library": "Library",
+    "becomeTeacher": "Become a teacher",
+    "howItWorks": "How it works",
+    "login": "Log in",
+    "register": "Sign up",
+    "dashboard": "Dashboard",
+    "logout": "Log out",
+    "language": "Language",
+    "menu": "Menu",
+    "skip": "Skip to content"
+  },
+  "home": {
+    "eyebrow": "English ⇄ French, taught live",
+    "title": "Speak with confidence in both of Cameroon's languages",
+    "subtitle": "One-to-one video lessons with verified teachers. Book in minutes, pay with Mobile Money, and practise translation between lessons.",
+    "ctaStudent": "Find your teacher",
+    "ctaTeacher": "Teach on LinguaBridge",
+    "payWith": "Pay with",
+    "stats": {
+      "verified": "Every teacher ID-checked",
+      "levels": "Levels A1 to C2",
+      "payments": "MTN & Orange Money"
+    },
+    "howTitle": "How it works",
+    "steps": {
+      "1": {
+        "title": "Choose a teacher",
+        "body": "Filter by language, price, availability and specialty. Watch their intro video."
+      },
+      "2": {
+        "title": "Book and pay",
+        "body": "Pick a time in your time zone and approve the payment on your phone."
+      },
+      "3": {
+        "title": "Learn live",
+        "body": "Join the lesson in your browser. No app to install. Works on mobile data."
+      }
+    },
+    "featuresTitle": "Built for learners in Cameroon and beyond",
+    "features": {
+      "verified": {
+        "title": "Verified teachers",
+        "body": "Teachers send their ID, certificates and an intro video. Our team reviews every application."
+      },
+      "money": {
+        "title": "Mobile Money payments",
+        "body": "Pay in FCFA with MTN MoMo or Orange Money. Your money is held safely until the lesson takes place."
+      },
+      "classroom": {
+        "title": "Live classroom",
+        "body": "Video, screen sharing, whiteboard and chat. It switches to audio only when the connection is weak."
+      },
+      "library": {
+        "title": "Translation library",
+        "body": "Practise English → French and French → English, from A1 to C2, with instant feedback on every answer."
+      }
+    },
+    "teacherTitle": "Are you a teacher?",
+    "teacherBody": "Set your own price and hours, teach students across Africa and get paid to your Mobile Money account.",
+    "teacherCta": "Apply to teach"
+  },
+  "footer": {
+    "tagline": "Live English and French lessons with verified teachers.",
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "contact": "Contact",
+    "rights": "All rights reserved."
+  },
+  "auth": {
+    "loginTitle": "Welcome back",
+    "loginSubtitle": "Log in with your email or phone number.",
+    "identifier": "Email or phone number",
+    "password": "Password",
+    "loginButton": "Log in",
+    "noAccount": "No account yet?",
+    "haveAccount": "Already have an account?",
+    "orContinue": "or",
+    "google": "Continue with Google",
+    "registerTitle": "Create your account",
+    "registerSubtitle": "Free to join. You only pay for lessons you book.",
+    "iAm": "I want to",
+    "roleStudent": "Learn",
+    "roleStudentHint": "Take lessons and practise",
+    "roleTeacher": "Teach",
+    "roleTeacherHint": "Give lessons and earn",
+    "name": "Full name",
+    "email": "Email",
+    "phone": "Mobile number",
+    "phoneHint": "e.g. 6 70 00 00 00. We send your code by SMS.",
+    "emailOrPhoneHint": "Give at least an email or a mobile number.",
+    "country": "Country",
+    "city": "City",
+    "optional": "optional",
+    "passwordHint": "At least 8 characters, with a letter and a number.",
+    "acceptTerms": "I accept the terms of use and the privacy policy",
+    "registerButton": "Create account",
+    "verifyTitle": "Confirm your {channel}",
+    "verifySubtitle": "We sent a 6-digit code to {to}.",
+    "channelPhone": "phone number",
+    "channelEmail": "email",
+    "code": "Code",
+    "verifyButton": "Confirm",
+    "resend": "Send a new code",
+    "useEmail": "Use my email instead",
+    "usePhone": "Use my phone instead",
+    "onboardingTitle": "Finish setting up your account",
+    "onboardingSubtitle": "Tell us how you will use LinguaBridge.",
+    "continue": "Continue",
+    "teacherNote": "After sign-up you will fill in your teacher application. Students can book you once it is approved."
+  },
+  "errors": {
+    "invalid": "Please check this field.",
+    "form": "Please check the form.",
+    "name_min": "Please enter your full name.",
+    "email_invalid": "This email address is not valid.",
+    "phone_invalid": "This phone number is not valid. Use the format 6XX XX XX XX or +237…",
+    "contact_required": "Give an email or a mobile number.",
+    "email_taken": "An account already uses this email.",
+    "phone_taken": "An account already uses this phone number.",
+    "password_min": "The password needs at least 8 characters.",
+    "password_letter": "The password needs at least one letter.",
+    "password_digit": "The password needs at least one number.",
+    "terms_required": "You must accept the terms to continue.",
+    "invalid_credentials": "Wrong email/phone or password.",
+    "session_expired": "Your session has expired. Please log in again.",
+    "code_invalid": "The code is 6 digits.",
+    "code_wrong": "This code is incorrect. Check it and try again.",
+    "code_expired": "This code has expired. Ask for a new one.",
+    "code_too_many": "Too many wrong tries. Ask for a new code.",
+    "code_cooldown": "Please wait a minute before asking for a new code.",
+    "code_no_contact": "No contact detail for this option.",
+    "code_sent": "A new code is on its way.",
+    "notFoundTitle": "Page not found",
+    "notFoundBody": "The page you are looking for does not exist.",
+    "backHome": "Back to home"
+  },
+  "dashboard": {
+    "hello": "Hello, {name}",
+    "overview": "Overview",
+    "lessons": "Lessons",
+    "teachers": "Teachers",
+    "messages": "Messages",
+    "wallet": "Wallet",
+    "library": "Library",
+    "settings": "Settings",
+    "application": "Application",
+    "calendar": "Calendar",
+    "earnings": "Earnings",
+    "students": "Students",
+    "reviews": "Reviews",
+    "users": "Users",
+    "applications": "Teacher applications",
+    "payments": "Payments",
+    "content": "Library content",
+    "auditLog": "Audit log",
+    "soon": "Coming soon",
+    "student": {
+      "subtitle": "Here is your learning at a glance.",
+      "upcoming": "Upcoming lessons",
+      "noUpcoming": "You have no lessons booked yet.",
+      "findTeacher": "Find a teacher",
+      "walletBalance": "Wallet balance",
+      "testsTaken": "Translation tests taken",
+      "practise": "Practise in the library",
+      "favorites": "Saved teachers",
+      "noFavorites": "Save teachers you like to find them again."
+    },
+    "teacher": {
+      "subtitle": "Manage your lessons and your profile.",
+      "applicationTitle": "Your teacher application",
+      "status": {
+        "DRAFT": "Not submitted yet",
+        "SUBMITTED": "Submitted — waiting for review",
+        "UNDER_REVIEW": "Under review",
+        "CHANGES_REQUESTED": "Changes requested",
+        "APPROVED": "Approved — your profile is live",
+        "REJECTED": "Not approved"
+      },
+      "statusHelp": {
+        "DRAFT": "Complete the 10 steps of your application. Students can book you once our team approves it.",
+        "SUBMITTED": "We usually review applications within 5 working days.",
+        "UNDER_REVIEW": "A reviewer is checking your application.",
+        "CHANGES_REQUESTED": "Please fix the sections marked by our reviewer and submit again.",
+        "APPROVED": "Students can now find and book you.",
+        "REJECTED": "Read the reviewer's comments for details."
+      },
+      "continueApplication": "Continue my application",
+      "stepsDone": "{done} of {total} steps done",
+      "upcoming": "Upcoming lessons",
+      "noUpcoming": "No lessons yet.",
+      "available": "Available earnings",
+      "pending": "Pending earnings"
+    },
+    "admin": {
+      "subtitle": "Platform overview.",
+      "totalUsers": "Users",
+      "students": "Students",
+      "teachers": "Teachers",
+      "pendingApplications": "Applications waiting",
+      "recentUsers": "Newest users",
+      "role": "Role",
+      "joined": "Joined",
+      "verified": "Verified",
+      "yes": "Yes",
+      "no": "No",
+      "name": "Name"
+    }
+  },
+  "roles": {
+    "STUDENT": "Student",
+    "TEACHER": "Teacher",
+    "ADMIN": "Admin"
+  }
+}

@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+/* Design tokens. System fonts on purpose: no font download on slow mobile data. */
+@theme {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --color-bg: #f8f7f4;
+  --color-surface: #ffffff;
+  --color-surface-2: #f1efe9;
+  --color-fg: #17181c;
+  --color-muted: #5d6070;
+  --color-border: #e2dfd6;
+  --color-ring: #2148c0;
+
+  --color-primary: #2148c0;       /* ink blue */
+  --color-primary-hover: #1a3a9e;
+  --color-primary-fg: #ffffff;
+  --color-primary-soft: #e8edfb;
+
+  --color-accent: #e8a317;        /* saffron, used sparingly */
+  --color-accent-soft: #fcf1d8;
+
+  --color-success: #13804b;
+  --color-success-soft: #e3f4ea;
+  --color-warning: #a35a00;
+  --color-warning-soft: #fdf0dc;
+  --color-danger: #c4282d;
+  --color-danger-soft: #fbe6e6;
+
+  --color-mtn: #ffcc00;
+  --color-orange: #ff7900;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --shadow-card: 0 1px 2px rgb(23 24 28 / 0.05), 0 2px 8px rgb(23 24 28 / 0.04);
+}
+
+@layer base {
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-bg: #111216;
+      --color-surface: #1a1c22;
+      --color-surface-2: #23262e;
+      --color-fg: #ecebe7;
+      --color-muted: #a3a6b4;
+      --color-border: #30333d;
+      --color-ring: #8aa4f0;
+      --color-primary: #6f8ff0;
+      --color-primary-hover: #8aa4f0;
+      --color-primary-fg: #0d1022;
+      --color-primary-soft: #1e2643;
+      --color-accent-soft: #3a2e12;
+      --color-success: #4cc488;
+      --color-success-soft: #17301f;
+      --color-warning: #f0b45a;
+      --color-warning-soft: #36280f;
+      --color-danger: #f07a7d;
+      --color-danger-soft: #3a1a1b;
+      --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3);
+    }
+  }
+
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  :focus-visible { outline: 2px solid var(--color-ring); outline-offset: 2px; }
+  h1, h2, h3 { text-wrap: balance; letter-spacing: -0.015em; }
+  p { text-wrap: pretty; }
+}
