@@ -32,7 +32,14 @@ export default async function TeacherDashboard({ params }: { params: Promise<{ l
   const app = teacher?.application;
   const status = app?.status ?? "DRAFT";
   const [upcoming, pending, available] = await Promise.all([
-    teacher ? db.booking.count({ where: { teacherId: teacher.id, status: "CONFIRMED", startsAt: { gte: new Date() } } }) : 0,
+    teacher
+      ? db.booking.findMany({
+          where: { teacherId: teacher.id, status: "CONFIRMED", endsAt: { gt: new Date() } },
+          orderBy: { startsAt: "asc" },
+          take: 5,
+          include: { student: { include: { user: { select: { name: true } } } } },
+        })
+      : [],
     db.ledgerAccount.findUnique({ where: { userId_type: { userId: user.id, type: "TEACHER_PENDING" } } }),
     db.ledgerAccount.findUnique({ where: { userId_type: { userId: user.id, type: "TEACHER_AVAILABLE" } } }),
   ]);
@@ -76,7 +83,7 @@ export default async function TeacherDashboard({ params }: { params: Promise<{ l
       </Card>
 
       <div className="mt-4 grid gap-4 sm:grid-cols-3">
-        <Stat label={t("teacher.upcoming")} value={upcoming} />
+        <Stat label={t("teacher.upcoming")} value={upcoming.length} />
         <Stat label={t("teacher.pending")} value={formatXaf(pending?.balanceXaf ?? 0, loc)} />
         <Stat label={t("teacher.available")} value={formatXaf(available?.balanceXaf ?? 0, loc)} />
       </div>
@@ -86,7 +93,20 @@ export default async function TeacherDashboard({ params }: { params: Promise<{ l
           <CardTitle>{t("teacher.upcoming")}</CardTitle>
         </CardHeader>
         <CardBody>
-          <EmptyState text={t("teacher.noUpcoming")} />
+          {upcoming.length === 0 ? (
+            <EmptyState text={t("teacher.noUpcoming")} />
+          ) : (
+            <ul className="divide-y divide-border text-sm">
+              {upcoming.map((b) => (
+                <li key={b.id} className="flex justify-between gap-3 py-2.5">
+                  <span className="font-medium capitalize">
+                    {new Intl.DateTimeFormat(locale, { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", timeZone: user.timeZone }).format(b.startsAt)}
+                  </span>
+                  <span className="text-muted">{b.student.user.name}</span>
+                </li>
+              ))}
+            </ul>
+          )}
         </CardBody>
       </Card>
     </DashboardShell>

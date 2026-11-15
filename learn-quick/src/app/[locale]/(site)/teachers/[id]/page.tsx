@@ -13,9 +13,11 @@ import { getTeacherProfile, localized } from "@/server/teachers";
 import { Alert } from "@/components/ui/alert";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Stars } from "@/components/ui/stars";
 import { FavoriteButton } from "@/components/teacher/favorite-button";
+import { BookingWidget } from "@/components/booking/booking-widget";
+import { packWithCredit, priceFor, trialAvailable, type BookingOption } from "@/server/booking";
 
 type Params = { params: Promise<{ locale: string; id: string }> };
 
@@ -58,6 +60,11 @@ export default async function TeacherProfilePage({ params }: Params) {
   const isSaved = studentProfile
     ? Boolean(await db.favoriteTeacher.findUnique({ where: { studentId_teacherId: { studentId: studentProfile.id, teacherId: teacher.id } } }))
     : false;
+
+  // Booking options: trial (first lesson with this teacher only), single lesson, packs
+  const canTrial = teacher.trialRateXaf != null && (!studentProfile || (await trialAvailable(studentProfile.id, teacher.id)));
+  const credit = studentProfile ? await packWithCredit(studentProfile.id, teacher.id) : null;
+  const bookingOptions = ([...(canTrial ? ["TRIAL"] : []), "SINGLE", "PACK_5", "PACK_10", "PACK_20"] as BookingOption[]).map((o) => ({ option: o, ...priceFor(teacher, o) }));
 
   const headline = localized(locale, teacher.headlineEn, teacher.headlineFr);
   const bio = localized(locale, teacher.bioEn, teacher.bioFr);
@@ -128,18 +135,26 @@ export default async function TeacherProfilePage({ params }: Params) {
                 <span className="font-semibold tabular-nums">{formatXaf(teacher.trialRateXaf, loc)}</span>
               </p>
             )}
-            <div className="mt-5 space-y-2.5">
-              {/* Booking is built in Phase 4 */}
-              <Button block disabled aria-describedby="booking-soon">{t("bookTrial")}</Button>
-              <p id="booking-soon" className="text-center text-xs text-muted">{t("bookingSoon")}</p>
-              {studentProfile ? (
-                <FavoriteButton teacherId={teacher.id} initialSaved={isSaved} />
-              ) : !viewer ? (
-                <Link href="/login" className={buttonVariants({ variant: "secondary", block: true })}>
-                  {t("loginToSave")}
-                </Link>
-              ) : null}
+            <div className="mt-5 border-t border-border pt-5">
+              {teacher.isPublished ? (
+                <BookingWidget
+                  teacherId={teacher.id}
+                  viewer={!viewer ? "anon" : viewer.role === "STUDENT" ? "student" : "other"}
+                  timeZone={viewer?.timeZone ?? null}
+                  creditsLeft={credit ? credit.totalLessons - credit.usedLessons : 0}
+                  options={bookingOptions}
+                />
+              ) : (
+                <p className="text-sm text-muted">{t("bookingSoon")}</p>
+              )}
             </div>
+            {studentProfile ? (
+              <div className="mt-3"><FavoriteButton teacherId={teacher.id} initialSaved={isSaved} /></div>
+            ) : !viewer ? (
+              <Link href="/login" className={buttonVariants({ variant: "ghost", block: true, className: "mt-3" })}>
+                {t("loginToSave")}
+              </Link>
+            ) : null}
           </div>
         </aside>
 

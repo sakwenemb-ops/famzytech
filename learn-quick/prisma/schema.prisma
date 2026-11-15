@@ -508,6 +508,10 @@ model Booking {
   cancelledAt     DateTime?
   cancelReason    String?
   releaseAt       DateTime? // when escrow releases to the teacher (completion + 24h)
+  packageSize     Int? // set when this booking buys a pack of 5, 10 or 20 lessons; the pack is created on payment
+  reminder24SentAt DateTime?
+  reminder1SentAt  DateTime?
+  cancelledById   String?
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
 

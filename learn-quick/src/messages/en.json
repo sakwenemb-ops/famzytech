@@ -161,7 +161,9 @@
     "price_invalid": "Enter a whole number.",
     "price_range": "The price must be between 1 000 and 100 000 FCFA.",
     "trial_too_high": "The trial price can't be more than your lesson price.",
-    "steps_incomplete": "Some steps are not finished yet."
+    "steps_incomplete": "Some steps are not finished yet.",
+    "range_invalid": "The end date must be on or after the start date.",
+    "range_too_long": "Days off are limited to 3 months at a time."
   },
   "dashboard": {
     "hello": "Hello, {name}",
@@ -655,5 +657,155 @@
       "APPROVED": "Approved",
       "REJECTED": "Rejected"
     }
+  },
+  "catalogue": {
+    "title": "Find your teacher",
+    "subtitle": "{count, plural, =0 {No teachers match} one {# teacher} other {# teachers}}",
+    "filters": "Filters",
+    "learn": "I want to learn",
+    "any": "Any",
+    "price": "Price per lesson",
+    "priceMin": "Min (FCFA)",
+    "priceMax": "Max (FCFA)",
+    "when": "Available",
+    "days": "Days",
+    "times": "Time of day",
+    "buckets": {
+      "morning": "Morning (6–12)",
+      "afternoon": "Afternoon (12–18)",
+      "evening": "Evening (18–24)",
+      "night": "Night (0–6)"
+    },
+    "timesHint": "In your time zone ({tz}).",
+    "specialty": "Specialty",
+    "native": "Native speaker",
+    "certified": "Certified teacher",
+    "country": "Country",
+    "sort": "Sort by",
+    "sorts": {
+      "relevance": "Best match",
+      "price_asc": "Price: low to high",
+      "price_desc": "Price: high to low",
+      "rating": "Rating",
+      "lessons": "Number of lessons"
+    },
+    "apply": "Show teachers",
+    "reset": "Clear filters",
+    "empty": "No teacher matches these filters. Try removing some.",
+    "viewProfile": "View profile",
+    "trialFrom": "Trial {price}",
+    "page": "Page {n} of {total}",
+    "prev": "Previous",
+    "next": "Next"
+  },
+  "booking": {
+    "title": "Book a lesson",
+    "yourTime": "Times shown in your time zone: {tz}",
+    "prevWeek": "Earlier",
+    "nextWeek": "Later",
+    "noSlots": "No free times this week.",
+    "loading": "Loading times…",
+    "chooseTime": "Choose a time",
+    "selected": "Selected: {when}",
+    "chooseOption": "Choose what to book",
+    "options": {
+      "TRIAL": "Trial lesson",
+      "SINGLE": "Single lesson",
+      "PACK": "{size} lessons",
+      "CREDIT": "Use a lesson from my pack"
+    },
+    "packSave": "Save {pct}%",
+    "perLesson": "{price} per lesson",
+    "creditsLeft": "{count, plural, one {# lesson left} other {# lessons left}}",
+    "continue": "Continue",
+    "confirmCredit": "Book this lesson",
+    "loginToBook": "Log in to book",
+    "studentsOnly": "Only student accounts can book lessons.",
+    "errors": {
+      "not_bookable": "This teacher can't be booked right now.",
+      "slot_taken": "Sorry, this time was just taken. Please choose another.",
+      "student_busy": "You already have a lesson at this time.",
+      "trial_used": "You've already had a trial lesson with this teacher.",
+      "no_credit": "Your pack has no lessons left.",
+      "own_profile": "You can't book your own lessons."
+    }
+  },
+  "checkout": {
+    "title": "Checkout",
+    "lessonWith": "Lesson with {name}",
+    "when": "When",
+    "type": "Lesson",
+    "duration": "{minutes} minutes",
+    "pack": "Pack of {size} lessons ({price} each). The first lesson is the one you chose; book the others later.",
+    "total": "Total",
+    "holdTimer": "This time is reserved for you for {time}.",
+    "expired": "Your reservation has expired. Choose a time again.",
+    "backToTeacher": "Back to the teacher",
+    "payTitle": "Payment",
+    "paySoon": "Payment with MTN Mobile Money and Orange Money is being set up.",
+    "devPay": "Simulate payment (development only)",
+    "devPayNote": "This button only exists on a development computer. It confirms the lesson without payment.",
+    "cancel": "Cancel this reservation",
+    "confirmed": "This lesson is confirmed."
+  },
+  "lessons": {
+    "title": "My lessons",
+    "upcoming": "Upcoming",
+    "past": "Past and cancelled",
+    "none": "No lessons yet.",
+    "bookedBanner": "Your lesson is booked! We've sent you a confirmation.",
+    "with": "with {name}",
+    "addToCalendar": "Add to calendar",
+    "join": "Join lesson",
+    "joinSoon": "The classroom opens 10 minutes before the lesson.",
+    "cancel": "Cancel",
+    "reschedule": "Change time",
+    "rescheduleTitle": "Choose a new time",
+    "keep": "Keep this time",
+    "confirmCancelFree": "Cancel this lesson? You will get a full refund.",
+    "confirmCancelLate": "This lesson starts in less than {hours} hours. If you cancel now you will NOT be refunded. Cancel anyway?",
+    "confirmCancelTeacher": "Cancel this lesson? The student will be refunded in full.",
+    "policy": "Free cancellation or change up to {hours} hours before the lesson.",
+    "tooLateToChange": "Less than {hours} hours to go: this lesson can no longer be moved.",
+    "credits": "Lesson packs",
+    "creditsWith": "{name}: {left} of {total} lessons left",
+    "bookNext": "Book",
+    "status": {
+      "HELD": "Awaiting payment",
+      "CONFIRMED": "Confirmed",
+      "COMPLETED": "Completed",
+      "CANCELLED_BY_STUDENT": "Cancelled by the student",
+      "CANCELLED_BY_TEACHER": "Cancelled by the teacher",
+      "NO_SHOW_STUDENT": "Student absent",
+      "NO_SHOW_TEACHER": "Teacher absent",
+      "DISPUTED": "In dispute",
+      "EXPIRED": "Not paid"
+    },
+    "types": {
+      "TRIAL": "Trial",
+      "SINGLE": "Lesson",
+      "PACKAGE": "Pack lesson"
+    },
+    "student": "Student",
+    "errors": {
+      "not_found": "This lesson was not found.",
+      "not_allowed": "This lesson can't be changed.",
+      "too_late": "It's too late to move this lesson.",
+      "slot_taken": "This time is no longer free. Choose another."
+    }
+  },
+  "calendar": {
+    "title": "Calendar",
+    "subtitle": "Your weekly hours, days off and upcoming lessons.",
+    "weekly": "Weekly hours",
+    "weeklyHint": "Changes apply straight away. Lessons already booked are not affected.",
+    "timeOff": "Days off",
+    "timeOffHint": "Students can't book you on these days.",
+    "from": "From",
+    "to": "To (included)",
+    "addTimeOff": "Add days off",
+    "remove": "Remove",
+    "noTimeOff": "No days off planned.",
+    "upcoming": "Next lessons"
   }
 }

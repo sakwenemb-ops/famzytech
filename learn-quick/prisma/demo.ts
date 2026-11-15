@@ -194,5 +194,15 @@ export async function seedDemo(db: PrismaClient) {
       });
     }
   }
+  // Weekly hours for demo teachers that don't have any yet (evenings and Saturday mornings)
+  const demoTeachers = await db.teacherProfile.findMany({ where: { user: { email: { endsWith: "@demo.learnquick.test" } }, availability: { none: {} } } });
+  for (const t of demoTeachers) {
+    await db.availabilityRule.createMany({
+      data: [
+        ...[1, 2, 3, 4, 5].map((weekday) => ({ teacherId: t.id, weekday, startMin: 17 * 60, endMin: 21 * 60 })),
+        { teacherId: t.id, weekday: 6, startMin: 8 * 60, endMin: 13 * 60 },
+      ],
+    });
+  }
   console.log(`Demo data ready: ${TEACHERS.length} teachers, 1 student (password Demo12345, emails @demo.learnquick.test)`);
 }

@@ -161,7 +161,9 @@
     "price_invalid": "Saisissez un nombre entier.",
     "price_range": "Le prix doit être compris entre 1 000 et 100 000 FCFA.",
     "trial_too_high": "Le prix du cours d'essai ne peut pas dépasser celui d'un cours.",
-    "steps_incomplete": "Certaines étapes ne sont pas encore terminées."
+    "steps_incomplete": "Certaines étapes ne sont pas encore terminées.",
+    "range_invalid": "La date de fin doit être égale ou postérieure à la date de début.",
+    "range_too_long": "Les congés sont limités à 3 mois à la fois."
   },
   "dashboard": {
     "hello": "Bonjour, {name}",
@@ -655,5 +657,155 @@
       "APPROVED": "Approuvée",
       "REJECTED": "Refusée"
     }
+  },
+  "catalogue": {
+    "title": "Trouvez votre enseignant",
+    "subtitle": "{count, plural, =0 {Aucun enseignant ne correspond} one {# enseignant} other {# enseignants}}",
+    "filters": "Filtres",
+    "learn": "Je veux apprendre",
+    "any": "Tous",
+    "price": "Prix par cours",
+    "priceMin": "Min (FCFA)",
+    "priceMax": "Max (FCFA)",
+    "when": "Disponible",
+    "days": "Jours",
+    "times": "Moment de la journée",
+    "buckets": {
+      "morning": "Matin (6–12 h)",
+      "afternoon": "Après-midi (12–18 h)",
+      "evening": "Soir (18–24 h)",
+      "night": "Nuit (0–6 h)"
+    },
+    "timesHint": "Dans votre fuseau horaire ({tz}).",
+    "specialty": "Spécialité",
+    "native": "Langue maternelle",
+    "certified": "Enseignant certifié",
+    "country": "Pays",
+    "sort": "Trier par",
+    "sorts": {
+      "relevance": "Pertinence",
+      "price_asc": "Prix croissant",
+      "price_desc": "Prix décroissant",
+      "rating": "Note",
+      "lessons": "Nombre de cours"
+    },
+    "apply": "Afficher les enseignants",
+    "reset": "Effacer les filtres",
+    "empty": "Aucun enseignant ne correspond à ces filtres. Essayez d'en retirer.",
+    "viewProfile": "Voir le profil",
+    "trialFrom": "Essai {price}",
+    "page": "Page {n} sur {total}",
+    "prev": "Précédent",
+    "next": "Suivant"
+  },
+  "booking": {
+    "title": "Réserver un cours",
+    "yourTime": "Horaires dans votre fuseau horaire : {tz}",
+    "prevWeek": "Plus tôt",
+    "nextWeek": "Plus tard",
+    "noSlots": "Aucun créneau libre cette semaine.",
+    "loading": "Chargement des créneaux…",
+    "chooseTime": "Choisissez un créneau",
+    "selected": "Choisi : {when}",
+    "chooseOption": "Choisissez votre formule",
+    "options": {
+      "TRIAL": "Cours d'essai",
+      "SINGLE": "Cours à l'unité",
+      "PACK": "{size} cours",
+      "CREDIT": "Utiliser un cours de mon forfait"
+    },
+    "packSave": "−{pct} %",
+    "perLesson": "{price} par cours",
+    "creditsLeft": "{count, plural, one {# cours restant} other {# cours restants}}",
+    "continue": "Continuer",
+    "confirmCredit": "Réserver ce cours",
+    "loginToBook": "Connectez-vous pour réserver",
+    "studentsOnly": "Seuls les comptes élèves peuvent réserver des cours.",
+    "errors": {
+      "not_bookable": "Cet enseignant ne peut pas être réservé pour le moment.",
+      "slot_taken": "Désolé, ce créneau vient d'être pris. Choisissez-en un autre.",
+      "student_busy": "Vous avez déjà un cours à cette heure-là.",
+      "trial_used": "Vous avez déjà eu un cours d'essai avec cet enseignant.",
+      "no_credit": "Votre forfait n'a plus de cours.",
+      "own_profile": "Vous ne pouvez pas réserver vos propres cours."
+    }
+  },
+  "checkout": {
+    "title": "Paiement",
+    "lessonWith": "Cours avec {name}",
+    "when": "Quand",
+    "type": "Cours",
+    "duration": "{minutes} minutes",
+    "pack": "Forfait de {size} cours ({price} chacun). Le premier cours est celui que vous avez choisi ; réservez les autres plus tard.",
+    "total": "Total",
+    "holdTimer": "Ce créneau vous est réservé pendant {time}.",
+    "expired": "Votre réservation a expiré. Choisissez à nouveau un créneau.",
+    "backToTeacher": "Retour à l'enseignant",
+    "payTitle": "Paiement",
+    "paySoon": "Le paiement par MTN Mobile Money et Orange Money est en cours de mise en place.",
+    "devPay": "Simuler le paiement (développement uniquement)",
+    "devPayNote": "Ce bouton n'existe que sur un ordinateur de développement. Il confirme le cours sans paiement.",
+    "cancel": "Annuler cette réservation",
+    "confirmed": "Ce cours est confirmé."
+  },
+  "lessons": {
+    "title": "Mes cours",
+    "upcoming": "À venir",
+    "past": "Passés et annulés",
+    "none": "Aucun cours pour l'instant.",
+    "bookedBanner": "Votre cours est réservé ! Nous vous avons envoyé une confirmation.",
+    "with": "avec {name}",
+    "addToCalendar": "Ajouter au calendrier",
+    "join": "Rejoindre le cours",
+    "joinSoon": "La salle de cours ouvre 10 minutes avant le cours.",
+    "cancel": "Annuler",
+    "reschedule": "Changer l'horaire",
+    "rescheduleTitle": "Choisissez un nouvel horaire",
+    "keep": "Garder cet horaire",
+    "confirmCancelFree": "Annuler ce cours ? Vous serez remboursé intégralement.",
+    "confirmCancelLate": "Ce cours commence dans moins de {hours} heures. Si vous annulez maintenant, vous ne serez PAS remboursé. Annuler quand même ?",
+    "confirmCancelTeacher": "Annuler ce cours ? L'élève sera remboursé intégralement.",
+    "policy": "Annulation ou changement gratuit jusqu'à {hours} heures avant le cours.",
+    "tooLateToChange": "Moins de {hours} heures avant le cours : il ne peut plus être déplacé.",
+    "credits": "Forfaits de cours",
+    "creditsWith": "{name} : {left} cours restants sur {total}",
+    "bookNext": "Réserver",
+    "status": {
+      "HELD": "En attente de paiement",
+      "CONFIRMED": "Confirmé",
+      "COMPLETED": "Terminé",
+      "CANCELLED_BY_STUDENT": "Annulé par l'élève",
+      "CANCELLED_BY_TEACHER": "Annulé par l'enseignant",
+      "NO_SHOW_STUDENT": "Élève absent",
+      "NO_SHOW_TEACHER": "Enseignant absent",
+      "DISPUTED": "En litige",
+      "EXPIRED": "Non payé"
+    },
+    "types": {
+      "TRIAL": "Essai",
+      "SINGLE": "Cours",
+      "PACKAGE": "Cours du forfait"
+    },
+    "student": "Élève",
+    "errors": {
+      "not_found": "Ce cours est introuvable.",
+      "not_allowed": "Ce cours ne peut pas être modifié.",
+      "too_late": "Il est trop tard pour déplacer ce cours.",
+      "slot_taken": "Ce créneau n'est plus libre. Choisissez-en un autre."
+    }
+  },
+  "calendar": {
+    "title": "Calendrier",
+    "subtitle": "Vos heures hebdomadaires, vos jours de congé et vos prochains cours.",
+    "weekly": "Heures hebdomadaires",
+    "weeklyHint": "Les changements s'appliquent immédiatement. Les cours déjà réservés ne sont pas modifiés.",
+    "timeOff": "Jours de congé",
+    "timeOffHint": "Les élèves ne peuvent pas vous réserver ces jours-là.",
+    "from": "Du",
+    "to": "Au (inclus)",
+    "addTimeOff": "Ajouter des jours de congé",
+    "remove": "Retirer",
+    "noTimeOff": "Aucun congé prévu.",
+    "upcoming": "Prochains cours"
   }
 }

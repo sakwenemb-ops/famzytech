@@ -2,9 +2,7 @@ import { createHash } from "node:crypto";
 import bcrypt from "bcryptjs";
 import type { Page } from "@playwright/test";
 import { PrismaClient } from "@prisma/client";
-import { config } from "dotenv";
-
-config({ quiet: true });
+import "./test-env";
 export const db = new PrismaClient();
 
 /**

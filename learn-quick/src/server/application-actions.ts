@@ -6,6 +6,7 @@ import { z } from "zod";
 import type { ApplicationSection, DocumentKind } from "@prisma/client";
 import { db } from "@/lib/db";
 import { fieldErrors } from "@/lib/validation";
+import { parseWeeklySlots } from "@/lib/availability";
 import { LANGUAGES, LEVELS, SPECIALTIES } from "@/lib/constants";
 import { COUNTRIES } from "@/lib/countries";
 import { redirect } from "@/i18n/navigation";
@@ -230,28 +231,11 @@ export async function saveDescriptionAction(_: FormState, fd: FormData): Promise
 
 // ─── Step 7: availability ───
 
-const slotSchema = z
-  .array(
-    z
-      .object({ weekday: z.number().int().min(0).max(6), startMin: z.number().int().min(0).max(1440), endMin: z.number().int().min(0).max(1440) })
-      .refine((s) => s.startMin % 30 === 0 && s.endMin % 30 === 0 && s.endMin - s.startMin >= 60, "slot_invalid"),
-  )
-  .min(1, "slot_required")
-  .max(70);
-
 export async function saveAvailabilityAction(_: FormState, fd: FormData): Promise<FormState> {
   const { t } = await editable("AVAILABILITY");
-  let raw: unknown = [];
-  try {
-    raw = JSON.parse(str(fd, "slots") || "[]");
-  } catch {}
-  const parsed = slotSchema.safeParse(raw);
-  if (!parsed.success) return { errors: { slots: parsed.error.issues[0]?.message ?? "slot_invalid" } };
-
-  const slots = [...parsed.data].sort((a, b) => a.weekday - b.weekday || a.startMin - b.startMin);
-  for (let i = 1; i < slots.length; i++) {
-    if (slots[i].weekday === slots[i - 1].weekday && slots[i].startMin < slots[i - 1].endMin) return { errors: { slots: "slot_overlap" } };
-  }
+  const parsed = parseWeeklySlots(str(fd, "slots"));
+  if ("error" in parsed) return { errors: { slots: parsed.error } };
+  const { slots } = parsed;
   await db.$transaction([
     db.availabilityRule.deleteMany({ where: { teacherId: t.id } }),
     db.availabilityRule.createMany({ data: slots.map((s) => ({ ...s, teacherId: t.id })) }),

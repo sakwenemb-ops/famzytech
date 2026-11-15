@@ -13,6 +13,8 @@ const SETTINGS: Record<string, unknown> = {
   applicationReviewDays: 5,
   // The library is free for students and teachers; this caps AI-graded answers per account per day
   libraryAiGradesPerDay: 30,
+  // Students cannot book a lesson starting sooner than this
+  minBookingNoticeHours: 6,
 };
 
 async function main() {

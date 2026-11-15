@@ -12,8 +12,8 @@ Design and data model: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 | 1 | Project setup, data model, auth & roles, English/French, layout & design system | ✅ Done |
 | 2 | Student learning profile, settings pages, public teacher profile, saved teachers | ✅ Done |
 | 3 | Teacher application wizard, uploads, admin review, badges | ✅ Done |
-| 4 | Teacher catalogue, availability calendar, booking | Next |
-| 5 | Payments (MTN / Orange), wallet, ledger, escrow, payouts | |
+| 4 | Teacher catalogue, availability calendar, booking | ✅ Done |
+| 5 | Payments (MTN / Orange), wallet, ledger, escrow, payouts | Next |
 | 6 | Live video classroom, attendance, reviews | |
 | 7 | Translation library and AI grading | |
 | 8 | Admin tools, notifications, messaging, hardening | |
@@ -63,6 +63,12 @@ In development you can set `OTP_FIXED_CODE="123456"` in `.env` so every code is 
 npm test
 ```
 
+Browser tests use their own database (`learnquick_test`) and upload folder (`storage-test/`), so test accounts never mix with your data. Create the database once:
+
+```bash
+createdb -O lq learnquick_test
+```
+
 ```bash
 npm run build && npm run test:e2e
 ```
@@ -87,6 +93,23 @@ npm run jobs:purge-files
 5. "Approve and publish" makes the profile public and awards badges: Verified ID always, Certified when a certificate was checked, Professional when the admin ticks it.
 
 The teacher is notified by email (or SMS) at each decision.
+
+## Booking lessons
+
+- Students find teachers at `/teachers` (filters: language, price, days, time of day, specialty, country, native speaker, certified).
+- Times are shown in the student's time zone and stored in UTC. Lessons last 50 minutes and start on the hour or half hour, at least 6 hours ahead.
+- Options: trial lesson (first lesson with a teacher only), single lesson, or packs of 5, 10 or 20 with the teacher's discount. Later lessons from a pack are booked with a credit, without paying again.
+- A chosen time is held for 15 minutes during checkout. **The database itself refuses overlapping lessons**, so two students can never get the same time.
+- Students can cancel or move a lesson for free until 12 hours before it. Later cancellations are not refunded. Teachers can always cancel; the student is refunded in full. (Money movements arrive with payments in Phase 5; cancellations already record what is owed.)
+- Teachers change their weekly hours and add days off at `/teacher/calendar`.
+
+Run this every 10 minutes (for example with cron) to release unpaid holds and send reminders 24 hours and 1 hour before each lesson:
+
+```bash
+npm run jobs:bookings
+```
+
+**Until Phase 5**, checkout has no real payment. On a development computer, set `DEV_PAYMENTS=1` to get a "simulate payment" button. It never works on a live site.
 
 ## How sign-up works
 

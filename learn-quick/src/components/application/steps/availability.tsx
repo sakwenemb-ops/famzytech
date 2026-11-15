@@ -9,17 +9,31 @@ import { Select } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useErrorText } from "@/components/auth/use-error";
 import { FieldError, StepButtons } from "../step-buttons";
+import type { FormState } from "@/server/auth-actions";
 
 type Slot = { weekday: number; startMin: number; endMin: number };
 const ORDER = [1, 2, 3, 4, 5, 6, 0]; // Monday first
 const TIMES = Array.from({ length: 49 }, (_, i) => i * 30); // 00:00 … 24:00
 const hhmm = (m: number) => `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
 
-export function AvailabilityStep({ defaults, timeZone }: { defaults: Slot[]; timeZone: string }) {
+type SaveAction = (state: FormState, fd: FormData) => Promise<FormState>;
+
+/** Weekly hours editor. Used in the application (with "Save and continue") and on the teacher calendar. */
+export function AvailabilityStep({
+  defaults,
+  timeZone,
+  action = saveAvailabilityAction,
+  standalone = false,
+}: {
+  defaults: Slot[];
+  timeZone: string;
+  action?: SaveAction;
+  standalone?: boolean;
+}) {
   const t = useTranslations("application.availability");
   const locale = useLocale();
   const err = useErrorText();
-  const [state, onSubmit, pending] = useKeepFormAction(saveAvailabilityAction, undefined);
+  const [state, onSubmit, pending] = useKeepFormAction(action, undefined);
   const [slots, setSlots] = useState<Slot[]>(defaults);
 
   // Weekday names in the interface language (1 Jan 2023 was a Sunday)
@@ -78,7 +92,7 @@ export function AvailabilityStep({ defaults, timeZone }: { defaults: Slot[]; tim
         <Button type="button" variant="secondary" size="sm" onClick={copyMonday}>{t("copy")}</Button>
       )}
       <FieldError message={err(state?.errors?.slots)} />
-      <StepButtons pending={pending} state={state} />
+      <StepButtons pending={pending} state={state} last={standalone} />
     </form>
   );
 }

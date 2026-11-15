@@ -1,9 +1,11 @@
 import { defineConfig, devices } from "@playwright/test";
+import { TEST_ENV } from "./tests/e2e/test-env";
 
 const port = Number(process.env.E2E_PORT ?? 3100);
 
 export default defineConfig({
   testDir: "tests/e2e",
+  globalSetup: "./tests/e2e/global-setup.ts",
   fullyParallel: false,
   retries: 0,
   use: {
@@ -20,6 +22,8 @@ export default defineConfig({
     // Needs a production build first (npm run build)
     command: `npx next start -p ${port}`,
     port,
-    reuseExistingServer: true,
+    // Never reuse a server started by hand: it would be connected to the development database
+    reuseExistingServer: false,
+    env: TEST_ENV,
   },
 });

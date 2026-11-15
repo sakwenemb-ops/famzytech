@@ -8,8 +8,8 @@ type T = (key: string) => string;
 
 export const studentNav = (t: T): NavItem[] => [
   { href: "/student", label: t("overview"), icon: LayoutDashboard, ready: true },
-  { href: "/student/lessons", label: t("lessons"), icon: Video, ready: false },
-  { href: "/teachers", label: t("teachers"), icon: Users, ready: false },
+  { href: "/student/lessons", label: t("lessons"), icon: Video, ready: true },
+  { href: "/teachers", label: t("teachers"), icon: Users, ready: true },
   { href: "/student/messages", label: t("messages"), icon: MessageSquare, ready: false },
   { href: "/student/wallet", label: t("wallet"), icon: Wallet, ready: false },
   { href: "/library", label: t("library"), icon: BookOpenText, ready: false },
@@ -19,8 +19,8 @@ export const studentNav = (t: T): NavItem[] => [
 export const teacherNav = (t: T): NavItem[] => [
   { href: "/teacher", label: t("overview"), icon: LayoutDashboard, ready: true },
   { href: "/teacher/application", label: t("application"), icon: ClipboardCheck, ready: true },
-  { href: "/teacher/calendar", label: t("calendar"), icon: CalendarDays, ready: false },
-  { href: "/teacher/lessons", label: t("lessons"), icon: Video, ready: false },
+  { href: "/teacher/calendar", label: t("calendar"), icon: CalendarDays, ready: true },
+  { href: "/teacher/lessons", label: t("lessons"), icon: Video, ready: true },
   { href: "/teacher/earnings", label: t("earnings"), icon: Wallet, ready: false },
   { href: "/teacher/reviews", label: t("reviews"), icon: Star, ready: false },
   { href: "/library", label: t("library"), icon: BookOpenText, ready: false },
