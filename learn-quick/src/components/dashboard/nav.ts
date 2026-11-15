@@ -13,7 +13,7 @@ export const studentNav = (t: T): NavItem[] => [
   { href: "/student/messages", label: t("messages"), icon: MessageSquare, ready: false },
   { href: "/student/wallet", label: t("wallet"), icon: Wallet, ready: false },
   { href: "/library", label: t("library"), icon: BookOpenText, ready: false },
-  { href: "/student/settings", label: t("settings"), icon: Settings, ready: false },
+  { href: "/student/settings", label: t("settings"), icon: Settings, ready: true },
 ];
 
 export const teacherNav = (t: T): NavItem[] => [
@@ -25,7 +25,7 @@ export const teacherNav = (t: T): NavItem[] => [
   { href: "/teacher/reviews", label: t("reviews"), icon: Star, ready: false },
   { href: "/library", label: t("library"), icon: BookOpenText, ready: false },
   { href: "/teacher/messages", label: t("messages"), icon: MessageSquare, ready: false },
-  { href: "/teacher/settings", label: t("settings"), icon: Settings, ready: false },
+  { href: "/teacher/settings", label: t("settings"), icon: Settings, ready: true },
 ];
 
 export const adminNav = (t: T): NavItem[] => [

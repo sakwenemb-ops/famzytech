@@ -139,7 +139,12 @@
     "code_sent": "Un nouveau code vous a été envoyé.",
     "notFoundTitle": "Page introuvable",
     "notFoundBody": "La page que vous cherchez n'existe pas.",
-    "backHome": "Retour à l'accueil"
+    "backHome": "Retour à l'accueil",
+    "language_required": "Choisissez au moins une langue.",
+    "level_required": "Choisissez votre niveau.",
+    "timezone_invalid": "Choisissez un fuseau horaire dans la liste.",
+    "password_mismatch": "Les deux mots de passe ne sont pas identiques.",
+    "current_password_wrong": "Votre mot de passe actuel n'est pas correct."
   },
   "dashboard": {
     "hello": "Bonjour, {name}",
@@ -170,7 +175,8 @@
       "testsTaken": "Tests de traduction passés",
       "practise": "S'entraîner dans la bibliothèque",
       "favorites": "Enseignants enregistrés",
-      "noFavorites": "Enregistrez les enseignants qui vous plaisent pour les retrouver."
+      "noFavorites": "Enregistrez les enseignants qui vous plaisent pour les retrouver.",
+      "noFavoritesCta": "Trouver un enseignant"
     },
     "teacher": {
       "subtitle": "Gérez vos cours et votre profil.",
@@ -217,5 +223,141 @@
     "STUDENT": "Élève",
     "TEACHER": "Enseignant",
     "ADMIN": "Administrateur"
+  },
+  "options": {
+    "languages": {
+      "ENGLISH": "Anglais",
+      "FRENCH": "Français"
+    },
+    "levels": {
+      "A1": {
+        "name": "A1 · Débutant",
+        "can": "Je connais quelques mots et phrases simples."
+      },
+      "A2": {
+        "name": "A2 · Élémentaire",
+        "can": "Je me débrouille dans des échanges simples du quotidien."
+      },
+      "B1": {
+        "name": "B1 · Intermédiaire",
+        "can": "Je parle de sujets familiers et de situations de voyage."
+      },
+      "B2": {
+        "name": "B2 · Intermédiaire avancé",
+        "can": "Je discute de la plupart des sujets avec une certaine aisance."
+      },
+      "C1": {
+        "name": "C1 · Avancé",
+        "can": "Je m'exprime couramment au travail et dans mes études."
+      },
+      "C2": {
+        "name": "C2 · Maîtrise",
+        "can": "Je comprends et j'exprime presque tout avec facilité."
+      }
+    },
+    "goals": {
+      "CONVERSATION": "Conversation courante",
+      "SCHOOL": "École ou université",
+      "BUSINESS": "Travail et affaires",
+      "TRAVEL": "Voyages",
+      "DELF_DALF": "Examen DELF / DALF",
+      "TCF_TEF": "Examen TCF / TEF",
+      "IELTS": "Examen IELTS",
+      "TOEFL": "Examen TOEFL",
+      "TRANSLATION": "Traduction"
+    },
+    "specialties": {
+      "CONVERSATION": "Conversation",
+      "EXAM_PREP": "Préparation aux examens",
+      "BUSINESS": "Affaires",
+      "KIDS": "Enfants",
+      "GRAMMAR": "Grammaire",
+      "PRONUNCIATION": "Prononciation",
+      "TRANSLATION": "Traduction"
+    },
+    "badges": {
+      "VERIFIED_ID": "Identité vérifiée",
+      "CERTIFIED": "Certifié",
+      "PROFESSIONAL": "Professionnel",
+      "TOP_RATED": "Très bien noté"
+    }
+  },
+  "learning": {
+    "welcomeTitle": "Bienvenue sur Learn Quick !",
+    "welcomeSubtitle": "Dites-nous ce que vous voulez apprendre. Cela nous aide à vous proposer des enseignants et des exercices adaptés.",
+    "title": "Préférences d'apprentissage",
+    "languagesLabel": "Je veux apprendre",
+    "levelLabel": "Mon niveau en {language}",
+    "levelHint": "Vous hésitez ? Choisissez au mieux. Vous pourrez passer un test de niveau dans la bibliothèque.",
+    "goalsLabel": "Mes objectifs",
+    "goalsHint": "Choisissez-en autant que vous voulez.",
+    "availabilityLabel": "Quand êtes-vous généralement disponible ?",
+    "availabilityPlaceholder": "ex. en semaine après 18 h, le samedi matin",
+    "save": "Enregistrer",
+    "saveContinue": "Enregistrer et continuer",
+    "skip": "Plus tard",
+    "reminderTitle": "Complétez votre profil d'apprentissage",
+    "reminderBody": "Cela prend une minute et nous aide à vous proposer les bons enseignants.",
+    "reminderCta": "Compléter mon profil",
+    "summary": "J'apprends : {languages}"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "subtitle": "Vos informations de compte et vos préférences.",
+    "account": "Compte",
+    "accountHint": "Votre nom est visible par les enseignants et les élèves.",
+    "interfaceLanguage": "Langue de l'interface",
+    "timeZone": "Fuseau horaire",
+    "timeZoneHint": "Les horaires des cours s'affichent dans ce fuseau horaire.",
+    "contact": "Coordonnées",
+    "contactHint": "Pour changer votre e-mail ou votre numéro, contactez le support.",
+    "verified": "Vérifié",
+    "notVerified": "Non vérifié",
+    "none": "Non renseigné",
+    "password": "Mot de passe",
+    "setPasswordHint": "Votre compte utilise la connexion Google. Définissez un mot de passe pour pouvoir aussi vous connecter avec votre e-mail ou votre téléphone.",
+    "currentPassword": "Mot de passe actuel",
+    "newPassword": "Nouveau mot de passe",
+    "confirmPassword": "Répétez le nouveau mot de passe",
+    "changePassword": "Changer le mot de passe",
+    "saveChanges": "Enregistrer les modifications",
+    "saved": "Modifications enregistrées.",
+    "password_changed": "Votre mot de passe a été changé."
+  },
+  "teacherProfile": {
+    "notPublishedPreview": "Aperçu : les élèves ne verront ce profil qu'après l'approbation de votre candidature.",
+    "from": "À partir de",
+    "perLesson": "par cours de {minutes} minutes",
+    "trial": "Cours d'essai",
+    "lessonsDone": "{count, plural, =0 {Aucun cours pour l'instant} one {# cours} other {# cours}}",
+    "reviewsCount": "{count, plural, =0 {Aucun avis} one {# avis} other {# avis}}",
+    "newTeacher": "Nouvel enseignant",
+    "teaches": "Enseigne",
+    "speaks": "Parle",
+    "native": "Langue maternelle",
+    "about": "À propos de moi",
+    "experience": "Expérience d'enseignement",
+    "specialties": "Spécialités",
+    "certificates": "Certificats",
+    "education": "Formation",
+    "verifiedDoc": "Vérifié par Learn Quick",
+    "reviews": "Ce que disent les élèves",
+    "noReviews": "Aucun avis pour l'instant. Soyez le premier à prendre un cours !",
+    "book": "Réserver un cours",
+    "bookTrial": "Réserver un cours d'essai",
+    "bookingSoon": "La réservation ouvre bientôt.",
+    "save": "Enregistrer l'enseignant",
+    "saved": "Enregistré",
+    "loginToSave": "Connectez-vous pour enregistrer cet enseignant",
+    "video": "Vidéo de présentation",
+    "translatedNote": "Affiché en {language} car cet enseignant n'a pas encore de texte dans votre langue.",
+    "viewPublic": "Voir mon profil public",
+    "preview": "Aperçu de mon profil",
+    "badgeHelp": {
+      "VERIFIED_ID": "Pièce d'identité vérifiée par notre équipe.",
+      "CERTIFIED": "Certificat d'enseignement vérifié par notre équipe.",
+      "PROFESSIONAL": "Diplôme ou au moins 2 ans d'expérience d'enseignement.",
+      "TOP_RATED": "Note de 4,8 ou plus après plus de 20 cours."
+    }
   }
 }

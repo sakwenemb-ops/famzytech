@@ -139,7 +139,12 @@
     "code_sent": "A new code is on its way.",
     "notFoundTitle": "Page not found",
     "notFoundBody": "The page you are looking for does not exist.",
-    "backHome": "Back to home"
+    "backHome": "Back to home",
+    "language_required": "Choose at least one language.",
+    "level_required": "Choose your level.",
+    "timezone_invalid": "Choose a time zone from the list.",
+    "password_mismatch": "The two passwords are not the same.",
+    "current_password_wrong": "Your current password is not correct."
   },
   "dashboard": {
     "hello": "Hello, {name}",
@@ -170,7 +175,8 @@
       "testsTaken": "Translation tests taken",
       "practise": "Practise in the library",
       "favorites": "Saved teachers",
-      "noFavorites": "Save teachers you like to find them again."
+      "noFavorites": "Save teachers you like to find them again.",
+      "noFavoritesCta": "Find a teacher"
     },
     "teacher": {
       "subtitle": "Manage your lessons and your profile.",
@@ -217,5 +223,141 @@
     "STUDENT": "Student",
     "TEACHER": "Teacher",
     "ADMIN": "Admin"
+  },
+  "options": {
+    "languages": {
+      "ENGLISH": "English",
+      "FRENCH": "French"
+    },
+    "levels": {
+      "A1": {
+        "name": "A1 · Beginner",
+        "can": "I know a few words and simple phrases."
+      },
+      "A2": {
+        "name": "A2 · Elementary",
+        "can": "I can handle simple, everyday exchanges."
+      },
+      "B1": {
+        "name": "B1 · Intermediate",
+        "can": "I can talk about familiar topics and travel situations."
+      },
+      "B2": {
+        "name": "B2 · Upper intermediate",
+        "can": "I can discuss most topics fairly fluently."
+      },
+      "C1": {
+        "name": "C1 · Advanced",
+        "can": "I express myself fluently at work and in studies."
+      },
+      "C2": {
+        "name": "C2 · Mastery",
+        "can": "I understand and express almost everything with ease."
+      }
+    },
+    "goals": {
+      "CONVERSATION": "Everyday conversation",
+      "SCHOOL": "School or university",
+      "BUSINESS": "Work and business",
+      "TRAVEL": "Travel",
+      "DELF_DALF": "DELF / DALF exam",
+      "TCF_TEF": "TCF / TEF exam",
+      "IELTS": "IELTS exam",
+      "TOEFL": "TOEFL exam",
+      "TRANSLATION": "Translation skills"
+    },
+    "specialties": {
+      "CONVERSATION": "Conversation",
+      "EXAM_PREP": "Exam preparation",
+      "BUSINESS": "Business",
+      "KIDS": "Children",
+      "GRAMMAR": "Grammar",
+      "PRONUNCIATION": "Pronunciation",
+      "TRANSLATION": "Translation"
+    },
+    "badges": {
+      "VERIFIED_ID": "Verified ID",
+      "CERTIFIED": "Certified",
+      "PROFESSIONAL": "Professional",
+      "TOP_RATED": "Top rated"
+    }
+  },
+  "learning": {
+    "welcomeTitle": "Welcome to Learn Quick!",
+    "welcomeSubtitle": "Tell us what you want to learn. We use this to suggest teachers and practice exercises.",
+    "title": "Learning preferences",
+    "languagesLabel": "I want to learn",
+    "levelLabel": "My {language} level",
+    "levelHint": "Not sure? Choose your best guess. You can take a placement test in the library later.",
+    "goalsLabel": "My goals",
+    "goalsHint": "Choose as many as you like.",
+    "availabilityLabel": "When are you usually free?",
+    "availabilityPlaceholder": "e.g. weekday evenings after 6 pm, Saturday mornings",
+    "save": "Save",
+    "saveContinue": "Save and continue",
+    "skip": "Skip for now",
+    "reminderTitle": "Complete your learning profile",
+    "reminderBody": "It takes one minute and helps us suggest the right teachers.",
+    "reminderCta": "Complete my profile",
+    "summary": "Learning {languages}"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Your account details and preferences.",
+    "account": "Account",
+    "accountHint": "Your name is shown to teachers and students.",
+    "interfaceLanguage": "Interface language",
+    "timeZone": "Time zone",
+    "timeZoneHint": "Lesson times are shown in this time zone.",
+    "contact": "Contact details",
+    "contactHint": "To change your email or phone number, contact support.",
+    "verified": "Verified",
+    "notVerified": "Not verified",
+    "none": "Not set",
+    "password": "Password",
+    "setPasswordHint": "Your account uses Google sign-in. Set a password to also log in with your email or phone.",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Repeat new password",
+    "changePassword": "Change password",
+    "saveChanges": "Save changes",
+    "saved": "Changes saved.",
+    "password_changed": "Your password has been changed."
+  },
+  "teacherProfile": {
+    "notPublishedPreview": "Preview: students cannot see this profile until your application is approved.",
+    "from": "From",
+    "perLesson": "per {minutes}-minute lesson",
+    "trial": "Trial lesson",
+    "lessonsDone": "{count, plural, =0 {No lessons yet} one {# lesson} other {# lessons}}",
+    "reviewsCount": "{count, plural, =0 {No reviews yet} one {# review} other {# reviews}}",
+    "newTeacher": "New teacher",
+    "teaches": "Teaches",
+    "speaks": "Speaks",
+    "native": "Native",
+    "about": "About me",
+    "experience": "Teaching experience",
+    "specialties": "Specialties",
+    "certificates": "Certificates",
+    "education": "Education",
+    "verifiedDoc": "Checked by Learn Quick",
+    "reviews": "What students say",
+    "noReviews": "No reviews yet. Be the first to take a lesson!",
+    "book": "Book a lesson",
+    "bookTrial": "Book a trial lesson",
+    "bookingSoon": "Booking opens soon.",
+    "save": "Save teacher",
+    "saved": "Saved",
+    "loginToSave": "Log in to save this teacher",
+    "video": "Introduction video",
+    "translatedNote": "Shown in {language} because this teacher has no text in your language yet.",
+    "viewPublic": "View my public profile",
+    "preview": "Preview my profile",
+    "badgeHelp": {
+      "VERIFIED_ID": "Identity document checked by our team.",
+      "CERTIFIED": "Teaching certificate checked by our team.",
+      "PROFESSIONAL": "Degree or at least 2 years of teaching experience.",
+      "TOP_RATED": "Rated 4.8 or more after 20+ lessons."
+    }
   }
 }

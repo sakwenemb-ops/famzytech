@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { isEmail, normalizePhone } from "./phone";
+import { GOALS, LANGUAGES, LEVELS } from "./constants";
 
 export const ROLES_SELF_SERVE = ["STUDENT", "TEACHER"] as const;
 
@@ -70,3 +71,41 @@ export function fieldErrors(err: z.ZodError): Record<string, string> {
   }
   return out;
 }
+
+// ─── Phase 2: learning profile, account settings, password ───
+
+
+/** FormData sends checkbox groups as repeated keys; callers pass arrays for these. */
+export const learningSchema = z
+  .object({
+    learningLanguages: z.array(z.enum(LANGUAGES)).min(1, "language_required"),
+    englishLevel: z.enum(LEVELS).optional(),
+    frenchLevel: z.enum(LEVELS).optional(),
+    goals: z.array(z.enum(GOALS)).max(GOALS.length).default([]),
+    availabilityNote: z.string().trim().max(300).optional(),
+  })
+  .refine((v) => !v.learningLanguages.includes("ENGLISH") || v.englishLevel, { message: "level_required", path: ["englishLevel"] })
+  .refine((v) => !v.learningLanguages.includes("FRENCH") || v.frenchLevel, { message: "level_required", path: ["frenchLevel"] });
+
+export const accountSchema = z.object({
+  name: z.string().trim().min(2, "name_min").max(80),
+  country: z.string().length(2),
+  city: z.string().trim().max(80).optional(),
+  timeZone: z.string().max(64).refine((tz) => {
+    try {
+      new Intl.DateTimeFormat("en", { timeZone: tz });
+      return true;
+    } catch {
+      return false;
+    }
+  }, "timezone_invalid"),
+  locale: z.enum(["en", "fr"]),
+});
+
+export const passwordChangeSchema = z
+  .object({
+    currentPassword: z.string().max(128).optional(),
+    newPassword: passwordSchema,
+    confirmPassword: z.string(),
+  })
+  .refine((v) => v.newPassword === v.confirmPassword, { message: "password_mismatch", path: ["confirmPassword"] });

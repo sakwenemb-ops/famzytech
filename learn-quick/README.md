@@ -10,8 +10,8 @@ Design and data model: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 | Phase | Scope | State |
 |---|---|---|
 | 1 | Project setup, data model, auth & roles, English/French, layout & design system | ✅ Done |
-| 2 | Student and teacher onboarding details, profile pages | Next |
-| 3 | Teacher application wizard, uploads, admin review, badges | |
+| 2 | Student learning profile, settings pages, public teacher profile, saved teachers | ✅ Done |
+| 3 | Teacher application wizard, uploads, admin review, badges | Next |
 | 4 | Teacher catalogue, availability calendar, booking | |
 | 5 | Payments (MTN / Orange), wallet, ledger, escrow, payouts | |
 | 6 | Live video classroom, attendance, reviews | |
@@ -46,6 +46,12 @@ npm run db:seed
 
 ```bash
 npm run dev
+```
+
+Optional: add three demo teachers and a demo student (password `Demo12345`, emails ending in `@demo.learnquick.test`):
+
+```bash
+SEED_DEMO=1 npm run db:seed
 ```
 
 Open http://localhost:3000. Without email/SMS keys, verification codes are printed in the terminal.

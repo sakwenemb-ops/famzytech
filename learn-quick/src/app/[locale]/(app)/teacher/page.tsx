@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { ApplicationStatus } from "@prisma/client";
 import { db } from "@/lib/db";
+import { Link } from "@/i18n/navigation";
 import { formatXaf } from "@/lib/utils";
 import { requireRole } from "@/server/session";
 import { buttonVariants } from "@/components/ui/button";
@@ -24,6 +25,7 @@ export default async function TeacherDashboard({ params }: { params: Promise<{ l
   setRequestLocale(locale);
   const user = await requireRole("TEACHER");
   const t = await getTranslations("dashboard");
+  const tp = await getTranslations("teacherProfile");
   const loc = locale as "en" | "fr";
 
   const teacher = await db.teacherProfile.findUnique({ where: { userId: user.id }, include: { application: true } });
@@ -47,6 +49,11 @@ export default async function TeacherDashboard({ params }: { params: Promise<{ l
             <Badge tone={tone[status]}>{t(`teacher.status.${status}`)}</Badge>
           </div>
           <p className="mt-2 text-sm text-muted">{t(`teacher.statusHelp.${status}`)}</p>
+          {teacher && (
+            <Link href={`/teachers/${teacher.id}`} className={buttonVariants({ variant: "link", className: "mt-2 text-sm" })}>
+              {teacher.isPublished ? tp("viewPublic") : tp("preview")}
+            </Link>
+          )}
           {(status === "DRAFT" || status === "CHANGES_REQUESTED") && (
             <>
               <div className="mt-4 h-2 overflow-hidden rounded-full bg-surface-2" role="progressbar" aria-valuemin={0} aria-valuemax={TOTAL_STEPS} aria-valuenow={done}>

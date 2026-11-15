@@ -28,6 +28,8 @@ test("student signs up with phone, confirms code, sees dashboard, logs out and i
 
   await page.getByLabel("Code").fill(await setKnownCode({ phone: `+237${phone}` }));
   await page.getByRole("button", { name: "Confirmer" }).click();
+  await expect(page).toHaveURL(/\/fr\/student\/welcome$/);
+  await page.getByRole("link", { name: "Plus tard" }).click();
   await expect(page).toHaveURL(/\/fr\/student$/);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Bonjour, Awa");
 

@@ -115,7 +115,7 @@ export async function verifyAction(_: FormState, fd: FormData): Promise<FormStat
   if (!res.ok) return { errors: { code: `code_${res.error}` } };
 
   const locale = await getLocale();
-  redirect({ href: dashboardPath(user.role), locale });
+  redirect({ href: user.role === "STUDENT" ? "/student/welcome" : dashboardPath(user.role), locale });
 }
 
 export async function resendCodeAction(_: FormState, fd: FormData): Promise<FormState> {
@@ -149,5 +149,6 @@ export async function onboardingAction(_: FormState, fd: FormData): Promise<Form
     await createProfiles(tx, user.id, d.role);
   });
 
-  redirect({ href: isVerified(user) ? dashboardPath(d.role) : "/verify", locale });
+  const next = d.role === "STUDENT" ? "/student/welcome" : dashboardPath(d.role);
+  redirect({ href: isVerified(user) ? next : "/verify", locale });
 }

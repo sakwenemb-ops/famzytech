@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import { seedDemo } from "./demo";
 
 const db = new PrismaClient();
 
@@ -43,6 +44,11 @@ async function main() {
     console.log(`Admin user ready: ${email}`);
   } else {
     console.log("SEED_ADMIN_EMAIL / SEED_ADMIN_PASSWORD not set: no admin user created.");
+  }
+
+  if (process.env.SEED_DEMO === "1") {
+    if (process.env.NODE_ENV === "production") throw new Error("Refusing to create demo data in production");
+    await seedDemo(db);
   }
 }
 
