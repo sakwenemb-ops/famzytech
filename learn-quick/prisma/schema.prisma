@@ -342,6 +342,13 @@ model TeacherApplication {
   currentStep      ApplicationSection @default(ABOUT)
   completedSteps   ApplicationSection[]
   noCertificate    Boolean           @default(false)
+  noEducation      Boolean           @default(false)
+  round            Int               @default(1) // review round; +1 each time the teacher resubmits after changes
+  // Identity documents (Document ids; private, encrypted, purged 90 days after a decision)
+  idDocumentType   String? // CNI, PASSPORT, RESIDENCE_PERMIT
+  idFrontDocId     String?
+  idBackDocId      String?
+  idSelfieDocId    String?
   termsAcceptedAt  DateTime?
   submittedAt      DateTime?
   decidedAt        DateTime?

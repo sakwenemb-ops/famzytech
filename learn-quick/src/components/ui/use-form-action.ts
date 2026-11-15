@@ -11,7 +11,9 @@ export function useKeepFormAction<S>(action: (state: Awaited<S>, fd: FormData) =
   const [state, dispatch, pending] = useActionState(action, initial);
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const fd = new FormData(e.currentTarget);
+    // Include the button that was clicked (e.g. name="continue" value="1")
+    const submitter = (e.nativeEvent as SubmitEvent).submitter as HTMLButtonElement | null;
+    const fd = new FormData(e.currentTarget, submitter);
     startTransition(() => dispatch(fd));
   };
   return [state, onSubmit, pending] as const;

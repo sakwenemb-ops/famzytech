@@ -144,7 +144,24 @@
     "level_required": "Choisissez votre niveau.",
     "timezone_invalid": "Choisissez un fuseau horaire dans la liste.",
     "password_mismatch": "Les deux mots de passe ne sont pas identiques.",
-    "current_password_wrong": "Votre mot de passe actuel n'est pas correct."
+    "current_password_wrong": "Votre mot de passe actuel n'est pas correct.",
+    "subject_required": "Choisissez au moins une langue à enseigner.",
+    "spoken_required": "Ajoutez au moins une langue que vous parlez.",
+    "spoken_duplicate": "Chaque langue ne peut être ajoutée qu'une fois.",
+    "subject_level_low": "Vous devez parler chaque langue enseignée au niveau C1 ou plus. Ajoutez-la à vos langues avec ce niveau.",
+    "required": "Ce champ est obligatoire.",
+    "file_required": "Ajoutez le fichier.",
+    "headline_short": "Votre titre est trop court.",
+    "bio_short": "Votre texte est trop court.",
+    "specialty_required": "Choisissez au moins une spécialité.",
+    "no_contact_details": "Retirez les numéros, e-mails, liens ou WhatsApp de ce texte.",
+    "slot_required": "Ajoutez au moins un créneau.",
+    "slot_invalid": "Chaque créneau doit durer au moins 1 heure et commencer à l'heure pile ou à la demie.",
+    "slot_overlap": "Deux de vos créneaux se chevauchent le même jour.",
+    "price_invalid": "Saisissez un nombre entier.",
+    "price_range": "Le prix doit être compris entre 1 000 et 100 000 FCFA.",
+    "trial_too_high": "Le prix du cours d'essai ne peut pas dépasser celui d'un cours.",
+    "steps_incomplete": "Certaines étapes ne sont pas encore terminées."
   },
   "dashboard": {
     "hello": "Bonjour, {name}",
@@ -202,7 +219,8 @@
       "upcoming": "Prochains cours",
       "noUpcoming": "Aucun cours pour l'instant.",
       "available": "Gains disponibles",
-      "pending": "Gains en attente"
+      "pending": "Gains en attente",
+      "viewApplication": "Voir ma candidature"
     },
     "admin": {
       "subtitle": "Vue d'ensemble de la plateforme.",
@@ -358,6 +376,284 @@
       "CERTIFIED": "Certificat d'enseignement vérifié par notre équipe.",
       "PROFESSIONAL": "Diplôme ou au moins 2 ans d'expérience d'enseignement.",
       "TOP_RATED": "Note de 4,8 ou plus après plus de 20 cours."
+    }
+  },
+  "application": {
+    "title": "Candidature d'enseignant",
+    "subtitle": "Complétez chaque étape. Votre progression est enregistrée au fur et à mesure.",
+    "stepOf": "Étape {n} sur {total}",
+    "save": "Enregistrer",
+    "saveContinue": "Enregistrer et continuer",
+    "continue": "Continuer",
+    "saved": "Enregistré.",
+    "previous": "Étape précédente",
+    "locked": "Cette partie ne peut pas être modifiée pendant l'examen de votre candidature.",
+    "lockedApproved": "Cette section a été approuvée. Vous n'avez pas besoin de la modifier.",
+    "reviewerSays": "Commentaire de l'examinateur",
+    "needsChanges": "À modifier",
+    "approved": "Approuvé",
+    "rejected": "Non accepté",
+    "done": "Terminé",
+    "sections": {
+      "ABOUT": {
+        "title": "À propos de vous",
+        "desc": "Les langues que vous enseignez et parlez."
+      },
+      "PHOTO": {
+        "title": "Photo de profil",
+        "desc": "Une photo nette et souriante de votre visage."
+      },
+      "CERTIFICATION": {
+        "title": "Certificats d'enseignement",
+        "desc": "TEFL, TESOL, CELTA, examinateur DELF/DALF, etc."
+      },
+      "EDUCATION": {
+        "title": "Formation",
+        "desc": "Vos diplômes universitaires."
+      },
+      "DESCRIPTION": {
+        "title": "Description du profil",
+        "desc": "Présentez-vous en anglais et en français."
+      },
+      "VIDEO": {
+        "title": "Vidéo de présentation",
+        "desc": "Une courte vidéo pour que les élèves vous découvrent."
+      },
+      "AVAILABILITY": {
+        "title": "Disponibilités",
+        "desc": "Les heures où vous pouvez enseigner chaque semaine."
+      },
+      "PRICING": {
+        "title": "Tarifs",
+        "desc": "Le prix de vos cours et de votre cours d'essai."
+      },
+      "IDENTITY": {
+        "title": "Vérification d'identité",
+        "desc": "Votre pièce d'identité et un selfie, vus uniquement par notre équipe."
+      },
+      "AGREEMENT": {
+        "title": "Vérifier et envoyer",
+        "desc": "Acceptez les conditions et envoyez votre candidature."
+      }
+    },
+    "about": {
+      "subjects": "Quelles langues allez-vous enseigner ?",
+      "spoken": "Langues que vous parlez",
+      "spokenHint": "Ajoutez chaque langue que vous parlez et votre niveau. Vous devez parler chaque langue enseignée au niveau C1 ou plus.",
+      "language": "Langue",
+      "level": "Niveau",
+      "native": "Langue maternelle",
+      "otherLanguage": "Autre langue",
+      "otherLanguagePlaceholder": "ex. ewondo, duala, fulfulde",
+      "add": "Ajouter une langue",
+      "remove": "Retirer",
+      "countryOfBirth": "Pays de naissance",
+      "otherCountry": "Autre pays"
+    },
+    "photo": {
+      "goodTitle": "Votre photo doit",
+      "good": [
+        "Montrer votre visage et vos épaules, face à l'objectif",
+        "Être bien éclairée, en couleur et nette",
+        "Vous montrer souriant et accueillant",
+        "Avoir un arrière-plan simple et rangé"
+      ],
+      "badTitle": "À éviter",
+      "bad": [
+        "Lunettes de soleil, chapeaux ou filtres",
+        "D'autres personnes ou des logos sur la photo",
+        "Des numéros de téléphone ou du texte sur l'image",
+        "Des photos floues ou trop sombres"
+      ],
+      "upload": "Ajouter une photo",
+      "change": "Changer de photo",
+      "hint": "JPG, PNG ou WebP, 5 Mo maximum."
+    },
+    "cert": {
+      "none": "Je n'ai pas de certificat d'enseignement",
+      "noneHint": "Vous pouvez quand même postuler, mais vous n'aurez pas le badge Certifié.",
+      "add": "Ajouter un certificat",
+      "name": "Nom du certificat",
+      "namePlaceholder": "ex. TEFL (120 heures)",
+      "issuer": "Délivré par",
+      "yearFrom": "Année de début",
+      "yearTo": "Année d'obtention",
+      "file": "Fichier du certificat",
+      "fileHint": "PDF, JPG ou PNG, 10 Mo maximum. Seule notre équipe d'examen peut le voir.",
+      "remove": "Retirer",
+      "openFile": "Ouvrir le fichier",
+      "list": "Vos certificats"
+    },
+    "edu": {
+      "none": "Je n'ai pas de diplôme universitaire",
+      "noneHint": "Un diplôme n'est pas obligatoire, mais il peut vous donner le badge Professionnel.",
+      "add": "Ajouter un diplôme",
+      "university": "Université ou école",
+      "degree": "Diplôme",
+      "degreePlaceholder": "ex. Licence, Master",
+      "field": "Domaine d'études",
+      "file": "Diplôme (fichier)",
+      "fileHint": "Facultatif. PDF, JPG ou PNG, 10 Mo maximum. Les diplômes avec fichier sont affichés comme vérifiés.",
+      "list": "Vos diplômes"
+    },
+    "desc": {
+      "headlineEn": "Titre en anglais",
+      "headlineFr": "Titre en français",
+      "headlineHint": "Une phrase affichée sous votre nom, de {min} à {max} caractères.",
+      "bioEn": "À propos de moi, en anglais",
+      "bioFr": "À propos de moi, en français",
+      "bioHint": "Au moins {min} caractères. Dites qui vous êtes, comment vous enseignez et qui vous aidez.",
+      "experienceEn": "Expérience d'enseignement, en anglais",
+      "experienceFr": "Expérience d'enseignement, en français",
+      "specialties": "Spécialités",
+      "chars": "{count} / {max} caractères",
+      "noContact": "N'indiquez ni numéro de téléphone, ni e-mail, ni lien, ni WhatsApp. Les élèves vous contactent via Learn Quick."
+    },
+    "video": {
+      "goodTitle": "Votre vidéo doit",
+      "good": [
+        "Durer de 30 secondes à 2 minutes",
+        "Être filmée à l'horizontale, avec une bonne lumière",
+        "Avoir un son clair, sans bruit de fond",
+        "Être dans la langue que vous enseignez (les deux si vous enseignez les deux)"
+      ],
+      "badTitle": "À éviter",
+      "bad": [
+        "Coordonnées, liens ou logos",
+        "Diaporamas ou vidéos où l'on ne vous voit pas",
+        "Une musique qui couvre votre voix"
+      ],
+      "upload": "Ajouter votre vidéo",
+      "change": "Changer de vidéo",
+      "hint": "MP4, WebM ou MOV, 100 Mo maximum. Sur téléphone, vous pouvez la filmer directement."
+    },
+    "availability": {
+      "intro": "Indiquez les heures où vous pouvez habituellement enseigner chaque semaine, dans votre fuseau horaire ({tz}). Les élèves ne pourront réserver que pendant ces heures.",
+      "add": "Ajouter des heures",
+      "from": "De",
+      "to": "À",
+      "remove": "Retirer",
+      "off": "Indisponible",
+      "copy": "Mêmes heures chaque jour de semaine"
+    },
+    "pricing": {
+      "rate": "Prix du cours (FCFA)",
+      "rateHint": "Pour un cours de {minutes} minutes. Entre {min} et {max} FCFA.",
+      "trial": "Prix du cours d'essai (FCFA)",
+      "trialHint": "Généralement plus bas, pour attirer de nouveaux élèves. Il ne peut pas dépasser le prix d'un cours.",
+      "packages": "Réductions sur les forfaits",
+      "packagesHint": "Réductions facultatives quand un élève achète plusieurs cours à la fois (0 à 30 %).",
+      "package5": "5 cours",
+      "package10": "10 cours",
+      "package20": "20 cours",
+      "youReceive": "Vous recevez {amount} par cours après les frais de plateforme de {pct} %."
+    },
+    "identity": {
+      "privacy": "Vos documents sont chiffrés et vus uniquement par notre équipe d'examen. Ils sont supprimés 90 jours après notre décision sur votre candidature.",
+      "type": "Type de document",
+      "types": {
+        "CNI": "Carte nationale d'identité (CNI)",
+        "PASSPORT": "Passeport",
+        "RESIDENCE_PERMIT": "Titre de séjour"
+      },
+      "front": "Recto du document",
+      "back": "Verso du document",
+      "selfie": "Selfie avec votre document",
+      "selfieHint": "Tenez le document à côté de votre visage. Les deux doivent être bien visibles.",
+      "fileHint": "Photo ou scan (JPG, PNG, WebP ou PDF), 10 Mo maximum.",
+      "uploaded": "Envoyé",
+      "replace": "Remplacer"
+    },
+    "agreement": {
+      "intro": "Vérifiez que chaque étape est terminée, puis acceptez les conditions et envoyez votre candidature.",
+      "acceptTerms": "J'accepte les conditions des enseignants Learn Quick",
+      "acceptConduct": "Je respecterai le code de conduite : respect, ponctualité, et aucun contact ni paiement en dehors de Learn Quick",
+      "acceptPayouts": "Je comprends que je suis payé après chaque cours terminé, moins les frais de plateforme",
+      "submit": "Envoyer ma candidature",
+      "resubmit": "Envoyer mes corrections",
+      "missing": "Terminez ces étapes avant d'envoyer :",
+      "reviewTime": "Nous examinons généralement les candidatures sous 5 jours ouvrables."
+    },
+    "upload": {
+      "choose": "Choisir un fichier",
+      "uploading": "Envoi en cours… {pct} %",
+      "too_large": "Ce fichier est trop lourd. Le maximum est de {max}.",
+      "wrong_type": "Ce type de fichier n'est pas accepté.",
+      "empty": "Ce fichier est vide.",
+      "failed": "L'envoi a échoué. Vérifiez votre connexion et réessayez."
+    },
+    "status": {
+      "title": "Et maintenant ?",
+      "SUBMITTED": "Votre candidature a été envoyée. Nous examinons généralement les candidatures sous 5 jours ouvrables.",
+      "UNDER_REVIEW": "Un examinateur vérifie votre candidature.",
+      "APPROVED": "Votre candidature est approuvée et votre profil est en ligne.",
+      "REJECTED": "Votre candidature n'a pas été approuvée. Les commentaires de l'examinateur sont affichés sur chaque section.",
+      "CHANGES_REQUESTED": "Corrigez les sections marquées « À modifier », puis envoyez vos corrections depuis la dernière étape."
+    }
+  },
+  "review": {
+    "listTitle": "Candidatures d'enseignants",
+    "listSubtitle": "Examinez les nouveaux enseignants avant qu'ils puissent être réservés.",
+    "filters": {
+      "waiting": "À examiner",
+      "changes": "Modifications demandées",
+      "approved": "Approuvées",
+      "rejected": "Refusées",
+      "draft": "Brouillons",
+      "all": "Toutes"
+    },
+    "empty": "Aucune candidature ici.",
+    "teacher": "Enseignant",
+    "subjects": "Enseigne",
+    "submitted": "Envoyée le",
+    "round": "Tour {n}",
+    "open": "Ouvrir",
+    "back": "Toutes les candidatures",
+    "start": "Commencer l'examen",
+    "startHint": "Commencez l'examen pour enregistrer vos décisions. L'enseignant verra que sa candidature est en cours d'examen.",
+    "decision": {
+      "APPROVED": "Approuver",
+      "NEEDS_CHANGES": "Demander des modifications",
+      "REJECTED": "Refuser"
+    },
+    "decided": {
+      "PENDING": "Non examiné",
+      "APPROVED": "Approuvé",
+      "NEEDS_CHANGES": "Modifications demandées",
+      "REJECTED": "Refusé"
+    },
+    "comment": "Commentaire pour l'enseignant",
+    "commentPlaceholder": "Dites précisément quoi corriger, ex. « Votre visage est trop sombre, utilisez une photo prise à la lumière du jour. »",
+    "saveDecision": "Enregistrer la décision",
+    "previousRound": "Commentaire du tour {n}",
+    "final": "Décision finale",
+    "professional": "Attribuer le badge Professionnel (diplôme ou au moins 2 ans d'expérience d'enseignement)",
+    "approve": "Approuver et publier le profil",
+    "requestChanges": "Envoyer les demandes de modification",
+    "reject": "Refuser la candidature",
+    "progress": "{done} sections examinées sur {total}",
+    "openFile": "Ouvrir le fichier",
+    "noFile": "Aucun fichier",
+    "none": "Aucun",
+    "noCertificate": "Indique ne pas avoir de certificat d'enseignement",
+    "noEducation": "Indique ne pas avoir de diplôme universitaire",
+    "previewProfile": "Aperçu du profil public",
+    "errors": {
+      "comment_required": "Écrivez un commentaire pour que l'enseignant sache quoi corriger.",
+      "all_sections_must_be_approved": "Approuvez chaque section avant d'approuver la candidature.",
+      "no_changes_marked": "Marquez d'abord au moins une section « Demander des modifications ».",
+      "use_reject": "Une section est refusée : refusez la candidature, ou changez cette décision.",
+      "no_rejection_marked": "Refusez au moins une section, avec un commentaire expliquant pourquoi.",
+      "not_under_review": "Cette candidature n'est pas en cours d'examen."
+    },
+    "confirmReject": "Refuser cette candidature ? L'enseignant sera prévenu, et cette action est définitive.",
+    "status": {
+      "DRAFT": "Brouillon",
+      "SUBMITTED": "À examiner",
+      "UNDER_REVIEW": "En cours d'examen",
+      "CHANGES_REQUESTED": "Modifications demandées",
+      "APPROVED": "Approuvée",
+      "REJECTED": "Refusée"
     }
   }
 }

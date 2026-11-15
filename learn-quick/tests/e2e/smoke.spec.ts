@@ -31,3 +31,14 @@ test("dashboards redirect to login when signed out", async ({ page }) => {
     await expect(page).toHaveURL(/\/login$/);
   }
 });
+
+test("no horizontal scroll on the teacher application", async ({ page }) => {
+  const { createUser, login } = await import("./helpers");
+  const u = await createUser("TEACHER");
+  await login(page, u.email);
+  for (const step of ["about", "availability", "identity"]) {
+    await page.goto(`/fr/teacher/application/${step}`);
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(overflow, step).toBeLessThanOrEqual(0);
+  }
+});

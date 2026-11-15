@@ -144,7 +144,24 @@
     "level_required": "Choose your level.",
     "timezone_invalid": "Choose a time zone from the list.",
     "password_mismatch": "The two passwords are not the same.",
-    "current_password_wrong": "Your current password is not correct."
+    "current_password_wrong": "Your current password is not correct.",
+    "subject_required": "Choose at least one language to teach.",
+    "spoken_required": "Add at least one language you speak.",
+    "spoken_duplicate": "Each language can only be added once.",
+    "subject_level_low": "You must speak each language you teach at C1 level or higher. Add it to your languages with that level.",
+    "required": "This field is required.",
+    "file_required": "Add the file.",
+    "headline_short": "Your headline is too short.",
+    "bio_short": "Your text is too short.",
+    "specialty_required": "Choose at least one specialty.",
+    "no_contact_details": "Remove phone numbers, emails, links or WhatsApp from this text.",
+    "slot_required": "Add at least one time slot.",
+    "slot_invalid": "Each slot must last at least 1 hour and start on the hour or half hour.",
+    "slot_overlap": "Two of your time slots overlap on the same day.",
+    "price_invalid": "Enter a whole number.",
+    "price_range": "The price must be between 1 000 and 100 000 FCFA.",
+    "trial_too_high": "The trial price can't be more than your lesson price.",
+    "steps_incomplete": "Some steps are not finished yet."
   },
   "dashboard": {
     "hello": "Hello, {name}",
@@ -202,7 +219,8 @@
       "upcoming": "Upcoming lessons",
       "noUpcoming": "No lessons yet.",
       "available": "Available earnings",
-      "pending": "Pending earnings"
+      "pending": "Pending earnings",
+      "viewApplication": "View my application"
     },
     "admin": {
       "subtitle": "Platform overview.",
@@ -358,6 +376,284 @@
       "CERTIFIED": "Teaching certificate checked by our team.",
       "PROFESSIONAL": "Degree or at least 2 years of teaching experience.",
       "TOP_RATED": "Rated 4.8 or more after 20+ lessons."
+    }
+  },
+  "application": {
+    "title": "Teacher application",
+    "subtitle": "Complete each step. Your progress is saved as you go.",
+    "stepOf": "Step {n} of {total}",
+    "save": "Save",
+    "saveContinue": "Save and continue",
+    "continue": "Continue",
+    "saved": "Saved.",
+    "previous": "Previous step",
+    "locked": "This part can't be changed while your application is being reviewed.",
+    "lockedApproved": "This section was approved. You don't need to change it.",
+    "reviewerSays": "Reviewer's comment",
+    "needsChanges": "Needs changes",
+    "approved": "Approved",
+    "rejected": "Not accepted",
+    "done": "Done",
+    "sections": {
+      "ABOUT": {
+        "title": "About you",
+        "desc": "The languages you teach and speak."
+      },
+      "PHOTO": {
+        "title": "Profile photo",
+        "desc": "A clear, friendly photo of your face."
+      },
+      "CERTIFICATION": {
+        "title": "Teaching certificates",
+        "desc": "TEFL, TESOL, CELTA, DELF/DALF examiner and similar."
+      },
+      "EDUCATION": {
+        "title": "Education",
+        "desc": "Your university degrees."
+      },
+      "DESCRIPTION": {
+        "title": "Profile description",
+        "desc": "Introduce yourself in English and French."
+      },
+      "VIDEO": {
+        "title": "Introduction video",
+        "desc": "A short video so students can meet you."
+      },
+      "AVAILABILITY": {
+        "title": "Availability",
+        "desc": "The hours you can teach each week."
+      },
+      "PRICING": {
+        "title": "Pricing",
+        "desc": "Your lesson and trial prices."
+      },
+      "IDENTITY": {
+        "title": "Identity check",
+        "desc": "Your ID and a selfie, seen only by our review team."
+      },
+      "AGREEMENT": {
+        "title": "Review and submit",
+        "desc": "Accept the terms and send your application."
+      }
+    },
+    "about": {
+      "subjects": "Which languages will you teach?",
+      "spoken": "Languages you speak",
+      "spokenHint": "Add each language you speak and your level. You must speak each language you teach at C1 level or higher.",
+      "language": "Language",
+      "level": "Level",
+      "native": "Native",
+      "otherLanguage": "Other language",
+      "otherLanguagePlaceholder": "e.g. Ewondo, Duala, Fulfulde",
+      "add": "Add a language",
+      "remove": "Remove",
+      "countryOfBirth": "Country of birth",
+      "otherCountry": "Other country"
+    },
+    "photo": {
+      "goodTitle": "Your photo should",
+      "good": [
+        "Show your face and shoulders, facing the camera",
+        "Be well lit, in colour, and in focus",
+        "Show you smiling and looking friendly",
+        "Have a plain, tidy background"
+      ],
+      "badTitle": "Avoid",
+      "bad": [
+        "Sunglasses, hats or filters",
+        "Other people or logos in the photo",
+        "Phone numbers or text on the image",
+        "Blurry or very dark pictures"
+      ],
+      "upload": "Upload a photo",
+      "change": "Change photo",
+      "hint": "JPG, PNG or WebP, up to 5 MB."
+    },
+    "cert": {
+      "none": "I don't have a teaching certificate",
+      "noneHint": "You can still apply, but you won't get the Certified badge.",
+      "add": "Add a certificate",
+      "name": "Certificate name",
+      "namePlaceholder": "e.g. TEFL (120 hours)",
+      "issuer": "Issued by",
+      "yearFrom": "Year started",
+      "yearTo": "Year completed",
+      "file": "Certificate file",
+      "fileHint": "PDF, JPG or PNG, up to 10 MB. Only our review team can see it.",
+      "remove": "Remove",
+      "openFile": "Open file",
+      "list": "Your certificates"
+    },
+    "edu": {
+      "none": "I don't have a university degree",
+      "noneHint": "A degree is not required, but it can earn you the Professional badge.",
+      "add": "Add a degree",
+      "university": "University or school",
+      "degree": "Degree",
+      "degreePlaceholder": "e.g. Bachelor, Master",
+      "field": "Field of study",
+      "file": "Diploma",
+      "fileHint": "Optional. PDF, JPG or PNG, up to 10 MB. Degrees with a diploma are shown as checked.",
+      "list": "Your degrees"
+    },
+    "desc": {
+      "headlineEn": "Headline in English",
+      "headlineFr": "Headline in French",
+      "headlineHint": "One sentence shown under your name, {min} to {max} characters.",
+      "bioEn": "About me, in English",
+      "bioFr": "About me, in French",
+      "bioHint": "At least {min} characters. Say who you are, how you teach and who you help.",
+      "experienceEn": "Teaching experience, in English",
+      "experienceFr": "Teaching experience, in French",
+      "specialties": "Specialties",
+      "chars": "{count} / {max} characters",
+      "noContact": "Don't include phone numbers, emails, links or WhatsApp. Students contact you through Learn Quick."
+    },
+    "video": {
+      "goodTitle": "Your video should",
+      "good": [
+        "Be 30 seconds to 2 minutes long",
+        "Be filmed horizontally, in good light",
+        "Have clear sound and no background noise",
+        "Be spoken in the language you teach (both if you teach both)"
+      ],
+      "badTitle": "Avoid",
+      "bad": [
+        "Contact details, links or logos",
+        "Slideshows or videos without you on camera",
+        "Music that covers your voice"
+      ],
+      "upload": "Upload your video",
+      "change": "Change video",
+      "hint": "MP4, WebM or MOV, up to 100 MB. On a phone you can record it directly."
+    },
+    "availability": {
+      "intro": "Set the hours you can usually teach each week, in your time zone ({tz}). Students will only be able to book inside these hours.",
+      "add": "Add hours",
+      "from": "From",
+      "to": "To",
+      "remove": "Remove",
+      "off": "Not available",
+      "copy": "Same hours every weekday"
+    },
+    "pricing": {
+      "rate": "Lesson price (FCFA)",
+      "rateHint": "For one {minutes}-minute lesson. Between {min} and {max} FCFA.",
+      "trial": "Trial lesson price (FCFA)",
+      "trialHint": "Usually lower, to attract new students. It can't be more than your lesson price.",
+      "packages": "Package discounts",
+      "packagesHint": "Optional discounts when a student buys several lessons at once (0 to 30%).",
+      "package5": "5 lessons",
+      "package10": "10 lessons",
+      "package20": "20 lessons",
+      "youReceive": "You receive {amount} per lesson after the {pct}% platform fee."
+    },
+    "identity": {
+      "privacy": "Your documents are encrypted and seen only by our review team. They are deleted 90 days after we decide on your application.",
+      "type": "Document type",
+      "types": {
+        "CNI": "National ID card (CNI)",
+        "PASSPORT": "Passport",
+        "RESIDENCE_PERMIT": "Residence permit"
+      },
+      "front": "Front of the document",
+      "back": "Back of the document",
+      "selfie": "Selfie holding your document",
+      "selfieHint": "Hold the document next to your face. Both must be clearly visible.",
+      "fileHint": "Photo or scan (JPG, PNG, WebP or PDF), up to 10 MB.",
+      "uploaded": "Uploaded",
+      "replace": "Replace"
+    },
+    "agreement": {
+      "intro": "Check that every step is complete, then accept the terms and send your application.",
+      "acceptTerms": "I accept the Learn Quick teacher terms",
+      "acceptConduct": "I will follow the code of conduct: respectful, punctual, and no contact or payments outside Learn Quick",
+      "acceptPayouts": "I understand that I am paid after each completed lesson, minus the platform fee",
+      "submit": "Submit my application",
+      "resubmit": "Send my corrections",
+      "missing": "Finish these steps before submitting:",
+      "reviewTime": "We usually review applications within 5 working days."
+    },
+    "upload": {
+      "choose": "Choose a file",
+      "uploading": "Uploading… {pct}%",
+      "too_large": "This file is too big. The maximum is {max}.",
+      "wrong_type": "This type of file is not accepted.",
+      "empty": "This file is empty.",
+      "failed": "The upload failed. Check your connection and try again."
+    },
+    "status": {
+      "title": "What happens next",
+      "SUBMITTED": "Your application has been sent. We usually review applications within 5 working days.",
+      "UNDER_REVIEW": "A reviewer is checking your application.",
+      "APPROVED": "Your application is approved and your profile is live.",
+      "REJECTED": "Your application was not approved. The reviewer's comments are shown on each section.",
+      "CHANGES_REQUESTED": "Fix the sections marked \"Needs changes\", then send your corrections from the last step."
+    }
+  },
+  "review": {
+    "listTitle": "Teacher applications",
+    "listSubtitle": "Review new teachers before they can be booked.",
+    "filters": {
+      "waiting": "Waiting for review",
+      "changes": "Changes requested",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "draft": "Drafts",
+      "all": "All"
+    },
+    "empty": "No applications here.",
+    "teacher": "Teacher",
+    "subjects": "Teaches",
+    "submitted": "Submitted",
+    "round": "Round {n}",
+    "open": "Open",
+    "back": "All applications",
+    "start": "Start the review",
+    "startHint": "Start the review to record your decisions. The teacher will see that their application is under review.",
+    "decision": {
+      "APPROVED": "Approve",
+      "NEEDS_CHANGES": "Ask for changes",
+      "REJECTED": "Reject"
+    },
+    "decided": {
+      "PENDING": "Not reviewed",
+      "APPROVED": "Approved",
+      "NEEDS_CHANGES": "Changes asked",
+      "REJECTED": "Rejected"
+    },
+    "comment": "Comment for the teacher",
+    "commentPlaceholder": "Say exactly what to fix, e.g. \"Your face is too dark, please use a photo taken in daylight.\"",
+    "saveDecision": "Save decision",
+    "previousRound": "Comment from round {n}",
+    "final": "Final decision",
+    "professional": "Award the Professional badge (degree or at least 2 years of teaching experience)",
+    "approve": "Approve and publish profile",
+    "requestChanges": "Send change requests",
+    "reject": "Reject application",
+    "progress": "{done} of {total} sections reviewed",
+    "openFile": "Open file",
+    "noFile": "No file",
+    "none": "None",
+    "noCertificate": "Says they have no teaching certificate",
+    "noEducation": "Says they have no university degree",
+    "previewProfile": "Preview public profile",
+    "errors": {
+      "comment_required": "Write a comment so the teacher knows what to fix.",
+      "all_sections_must_be_approved": "Approve every section before approving the application.",
+      "no_changes_marked": "Mark at least one section \"Ask for changes\" first.",
+      "use_reject": "A section is rejected: reject the application instead, or change that decision.",
+      "no_rejection_marked": "Reject at least one section, with a comment explaining why.",
+      "not_under_review": "This application is not under review."
+    },
+    "confirmReject": "Reject this application? The teacher will be told, and this cannot be undone.",
+    "status": {
+      "DRAFT": "Draft",
+      "SUBMITTED": "Waiting for review",
+      "UNDER_REVIEW": "Under review",
+      "CHANGES_REQUESTED": "Changes requested",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected"
     }
   }
 }

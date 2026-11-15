@@ -11,8 +11,8 @@ Design and data model: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 |---|---|---|
 | 1 | Project setup, data model, auth & roles, English/French, layout & design system | ✅ Done |
 | 2 | Student learning profile, settings pages, public teacher profile, saved teachers | ✅ Done |
-| 3 | Teacher application wizard, uploads, admin review, badges | Next |
-| 4 | Teacher catalogue, availability calendar, booking | |
+| 3 | Teacher application wizard, uploads, admin review, badges | ✅ Done |
+| 4 | Teacher catalogue, availability calendar, booking | Next |
 | 5 | Payments (MTN / Orange), wallet, ledger, escrow, payouts | |
 | 6 | Live video classroom, attendance, reviews | |
 | 7 | Translation library and AI grading | |
@@ -66,6 +66,27 @@ npm test
 ```bash
 npm run build && npm run test:e2e
 ```
+
+## Uploaded files
+
+- Files are stored on the server's disk in `storage/` (set `STORAGE_DIR` to change it). Back this folder up.
+- ID documents, certificates and diplomas are **encrypted** with `FILE_ENCRYPTION_KEY` and only the owner and admins can open them. Set this key before the first upload and never change it.
+- The real file type is checked from the file's content, not its name. Size limits: photos 5 MB, documents 10 MB, videos 100 MB.
+- ID documents are deleted 90 days after an application is approved or rejected. Run this once a day (for example with cron):
+
+```bash
+npm run jobs:purge-files
+```
+
+## Teacher applications
+
+1. A teacher fills in 10 steps at `/teacher/application`. Progress is saved after every step.
+2. On submit, the application waits in **Admin → Teacher applications**.
+3. The admin starts the review and approves, asks for changes on, or rejects each section, with a comment.
+4. "Send change requests" lets the teacher edit only the sections marked for changes; approved sections stay approved in the next round.
+5. "Approve and publish" makes the profile public and awards badges: Verified ID always, Certified when a certificate was checked, Professional when the admin ticks it.
+
+The teacher is notified by email (or SMS) at each decision.
 
 ## How sign-up works
 

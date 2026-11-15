@@ -18,7 +18,7 @@ export const studentNav = (t: T): NavItem[] => [
 
 export const teacherNav = (t: T): NavItem[] => [
   { href: "/teacher", label: t("overview"), icon: LayoutDashboard, ready: true },
-  { href: "/teacher/application", label: t("application"), icon: ClipboardCheck, ready: false },
+  { href: "/teacher/application", label: t("application"), icon: ClipboardCheck, ready: true },
   { href: "/teacher/calendar", label: t("calendar"), icon: CalendarDays, ready: false },
   { href: "/teacher/lessons", label: t("lessons"), icon: Video, ready: false },
   { href: "/teacher/earnings", label: t("earnings"), icon: Wallet, ready: false },
@@ -30,7 +30,7 @@ export const teacherNav = (t: T): NavItem[] => [
 
 export const adminNav = (t: T): NavItem[] => [
   { href: "/admin", label: t("overview"), icon: LayoutDashboard, ready: true },
-  { href: "/admin/applications", label: t("applications"), icon: ClipboardCheck, ready: false },
+  { href: "/admin/applications", label: t("applications"), icon: ClipboardCheck, ready: true },
   { href: "/admin/users", label: t("users"), icon: Users, ready: false },
   { href: "/admin/payments", label: t("payments"), icon: CreditCard, ready: false },
   { href: "/admin/library", label: t("content"), icon: Library, ready: false },

@@ -54,6 +54,11 @@ export default async function TeacherDashboard({ params }: { params: Promise<{ l
               {teacher.isPublished ? tp("viewPublic") : tp("preview")}
             </Link>
           )}
+          {status !== "DRAFT" && status !== "CHANGES_REQUESTED" && (
+            <Link href="/teacher/application" className={buttonVariants({ variant: "link", className: "ml-4 mt-2 text-sm" })}>
+              {t("teacher.viewApplication")}
+            </Link>
+          )}
           {(status === "DRAFT" || status === "CHANGES_REQUESTED") && (
             <>
               <div className="mt-4 h-2 overflow-hidden rounded-full bg-surface-2" role="progressbar" aria-valuemin={0} aria-valuemax={TOTAL_STEPS} aria-valuenow={done}>
@@ -61,10 +66,9 @@ export default async function TeacherDashboard({ params }: { params: Promise<{ l
               </div>
               <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
                 <span className="text-sm text-muted">{t("teacher.stepsDone", { done, total: TOTAL_STEPS })}</span>
-                {/* The application wizard is built in Phase 3 */}
-                <span className={buttonVariants({ size: "sm", className: "pointer-events-none opacity-60" })} aria-disabled title={t("soon")}>
+                <Link href="/teacher/application" className={buttonVariants({ size: "sm" })}>
                   {t("teacher.continueApplication")}
-                </span>
+                </Link>
               </div>
             </>
           )}
