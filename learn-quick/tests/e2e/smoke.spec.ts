@@ -43,12 +43,12 @@ test("no horizontal scroll on the teacher application", async ({ page }) => {
   }
 });
 
-test("no horizontal scroll on the catalogue, a profile, and the lessons page", async ({ page }) => {
+test("no horizontal scroll on the catalogue, a profile, the lessons page and the library", async ({ page }) => {
   const { createTeacher, createUser, login } = await import("./helpers");
   const { teacher } = await createTeacher({ published: true });
   const s = await createUser("STUDENT", { learning: true });
   await login(page, s.email);
-  for (const path of ["/fr/teachers", `/fr/teachers/${teacher.id}`, "/fr/student/lessons"]) {
+  for (const path of ["/fr/teachers", `/fr/teachers/${teacher.id}`, "/fr/student/lessons", "/fr/library", "/fr/library/history"]) {
     await page.goto(path);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, path).toBeLessThanOrEqual(0);

@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { seedDemo } from "./demo";
+import { LIBRARY } from "./library-content";
 
 const db = new PrismaClient();
 
@@ -31,6 +32,32 @@ async function main() {
     const id = `platform_${type.toLowerCase()}`;
     await db.ledgerAccount.upsert({ where: { id }, create: { id, type }, update: {} });
   }
+
+  // Translation library: starter exercises (published) and one timed exam per level
+  for (const e of LIBRARY) {
+    const data = {
+      type: e.type,
+      direction: e.direction,
+      level: e.level,
+      topic: e.topic,
+      sourceText: e.sourceText,
+      references: e.references,
+      gapTemplate: e.gapTemplate ?? null,
+      options: e.options ?? undefined,
+      keyVocabulary: e.keyVocabulary ?? undefined,
+      commonMistakes: e.commonMistakes ?? null,
+    };
+    await db.exercise.upsert({ where: { code: e.code }, create: { code: e.code, status: "PUBLISHED", ...data }, update: data });
+  }
+  for (const level of ["A1", "A2", "B1", "B2", "C1", "C2"] as const) {
+    const title = `exam:${level}`;
+    if (await db.test.findFirst({ where: { title } })) continue;
+    const items = await db.exercise.findMany({ where: { level, code: { not: null }, status: "PUBLISHED" }, orderBy: { code: "asc" } });
+    await db.test.create({
+      data: { title, level, isTimedExam: true, timeLimitMin: 30, passMark: 70, status: "PUBLISHED", items: { create: items.map((ex, i) => ({ exerciseId: ex.id, position: i + 1, points: 10 })) } },
+    });
+  }
+  console.log(`Library ready: ${LIBRARY.length} exercises, 6 exams.`);
 
   const email = process.env.SEED_ADMIN_EMAIL;
   const password = process.env.SEED_ADMIN_PASSWORD;

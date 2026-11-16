@@ -12,6 +12,9 @@ export const TEST_ENV = {
   SEED_ADMIN_EMAIL: "admin@learnquick.test",
   SEED_ADMIN_PASSWORD: "Admin12345",
   PAYMENT_PROVIDER: "sandbox",
+  // AI grading goes to a local fake Anthropic API (tests/e2e/fake-anthropic.mjs): real code path, no cost
+  ANTHROPIC_BASE_URL: "http://localhost:3199",
+  ANTHROPIC_API_KEY: "test-key",
 };
 
 // The test process itself (database helpers, file checks) uses the same settings

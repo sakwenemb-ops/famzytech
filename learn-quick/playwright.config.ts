@@ -23,12 +23,16 @@ export default defineConfig({
     { name: "desktop", use: { ...devices["Desktop Chrome"] } },
     { name: "mobile", use: { ...devices["Pixel 7"] }, testMatch: /smoke/ },
   ],
-  webServer: {
-    // Needs a production build first (npm run build)
-    command: `npx next start -p ${port}`,
-    port,
-    // Never reuse a server started by hand: it would be connected to the development database
-    reuseExistingServer: false,
-    env: TEST_ENV,
-  },
+  webServer: [
+    {
+      // Needs a production build first (npm run build)
+      command: `npx next start -p ${port}`,
+      port,
+      // Never reuse a server started by hand: it would be connected to the development database
+      reuseExistingServer: false,
+      env: TEST_ENV,
+    },
+    { command: "node tests/e2e/fake-anthropic.mjs", port: 3199, reuseExistingServer: false },
+  ],
+
 });

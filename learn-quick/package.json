@@ -15,9 +15,11 @@
     "db:seed": "prisma db seed",
     "jobs:purge-files": "tsx --conditions=react-server scripts/purge-files.ts",
     "jobs:bookings": "tsx --conditions=react-server scripts/booking-jobs.ts",
-    "jobs:money": "tsx --conditions=react-server scripts/money-jobs.ts"
+    "jobs:money": "tsx --conditions=react-server scripts/money-jobs.ts",
+    "jobs:library": "tsx --conditions=react-server scripts/library-jobs.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^1.8.0",
     "@auth/prisma-adapter": "^2.11.3",
     "@prisma/client": "^6.19.3",
     "bcryptjs": "^3.0.3",

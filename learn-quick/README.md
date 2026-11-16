@@ -15,8 +15,8 @@ Design and data model: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 | 4 | Teacher catalogue, availability calendar, booking | ✅ Done |
 | 5 | Payments (MTN / Orange via Campay), wallet, ledger, escrow, payouts | ✅ Done |
 | 6 | Live classroom (video, chat, whiteboard, notes, files), attendance, reviews | ✅ Done |
-| 7 | Translation library and AI grading | Next |
-| 8 | Admin tools, notifications, messaging, hardening | |
+| 7 | Translation library and AI grading | ✅ Done |
+| 8 | Admin tools, notifications, messaging, hardening | Next |
 
 ## Run it locally
 
@@ -160,6 +160,38 @@ Lessons happen at `/lesson/<booking id>`. The **Join** button appears on "My les
 - Add a **TURN server** (`TURN_URL`, `TURN_USERNAME`, `TURN_CREDENTIAL`). Without one, calls fail on networks that block direct connections, which includes some mobile networks. Managed TURN services cost little.
 - The live messages (chat, whiteboard, signalling) are kept in the memory of one server process. Run **one** app server, or add Redis pub/sub before running several.
 - Lesson recording is not built: it needs a media server (such as LiveKit) and storage.
+
+## Translation library (free for students and teachers)
+
+The library is at `/library`. Visitors can see it; practising needs a free account (student or teacher).
+
+- **60 exercises** from A1 to C2, English → French and French → English: sentences, paragraphs, fill-the-gap and multiple choice, on everyday topics, travel, business, health, law and more.
+- **Practice:** choose a direction and level (and optionally a topic) and get 5 random exercises. Answers save as you type. French accent buttons insert characters at the cursor.
+- **Hints:** "Show key words" reveals vocabulary but lowers that question's score by 20 %.
+- **Exams A1–C2:** 10 questions, 30 minutes, the page submits by itself when time runs out (the server also closes late exams). 70 % or more gives a printable **practice certificate** (`LQ-B2-…`), which clearly says it is not an official diploma.
+- **Results:** a score per question, mistakes highlighted in the student's own text with an explanation and the correct words, a corrected version, scores for meaning / grammar / vocabulary / style, and model translations.
+- **Progress** (`/library/history`): a score chart, averages by direction and level, the most frequent mistake types and the suggested next level.
+
+**How grading works**
+
+| Exercise | Graded by |
+|---|---|
+| Multiple choice, fill-the-gap | The app, at once (a gap answer right except for an accent gets 80 %) |
+| Sentences and paragraphs | Claude (AI), when `ANTHROPIC_API_KEY` is set; otherwise a basic similarity score against the model translations |
+
+- AI grading runs in the background after submitting; the results page updates by itself, usually within a few seconds.
+- The **total is always calculated by the app** from the four part scores (meaning 40 %, grammar 25 %, vocabulary 20 %, style 15 %), so the AI cannot invent a score. The student's text is treated as text to grade, never as instructions.
+- If the AI is unavailable, the student sees the basic score at once and the AI correction is retried up to 3 times by the background job.
+- Each person gets at most `libraryAiGradesPerDay` AI corrections per day (30, editable in settings); after that the basic score is used.
+- The model is `claude-opus-5-5` (change with `GRADER_MODEL`). If the model declines a request, the API retries on a fallback model in the same call. `LIBRARY_GRADER=basic` turns AI grading off.
+
+**Adding exercises:** admins use **Library → Manage** (`/library/manage`) to write, check and publish exercises, or import a JSON list. Approved teachers can propose exercises; they stay drafts until an admin publishes them. `npx prisma db seed` adds or updates the built-in 60 exercises and the 6 exams.
+
+Run this every 5 minutes (retries AI corrections, closes exams whose time is up):
+
+```bash
+npm run jobs:library
+```
 
 ## How sign-up works
 

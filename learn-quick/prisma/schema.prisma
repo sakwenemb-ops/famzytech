@@ -707,6 +707,7 @@ model Payout {
 
 model Exercise {
   id              String               @id @default(cuid())
+  code            String?              @unique // stable id for seeded / imported content, e.g. "en-fr-a1-01"
   type            ExerciseType
   direction       TranslationDirection
   level           CefrLevel
