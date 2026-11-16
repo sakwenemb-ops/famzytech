@@ -235,6 +235,8 @@ npm run jobs:library
 
 ## Going live checklist
 
+**Step-by-step server guide: [docs/DEPLOY.md](docs/DEPLOY.md)** (one VPS with Docker: database, site, background jobs and automatic HTTPS, plus backups). The list below is what must be ready.
+
 1. A server (or platform) running Node.js 20+ and **PostgreSQL 16**. Run `npx prisma migrate deploy` and `npx prisma db seed` (creates the admin, settings and library).
 2. Set `NEXT_PUBLIC_SITE_URL=https://your-domain`, a strong `AUTH_SECRET`, `FILE_ENCRYPTION_KEY` (and keep a copy safe), `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD`.
 3. Email (`RESEND_API_KEY`, `EMAIL_FROM`) and SMS (`AT_USERNAME`, `AT_API_KEY`, `AT_SENDER_ID`).
