@@ -161,7 +161,7 @@ export default async function TeacherProfilePage({ params }: Params) {
             {studentProfile ? (
               <div className="mt-3"><FavoriteButton teacherId={teacher.id} initialSaved={isSaved} /></div>
             ) : !viewer ? (
-              <Link href="/login" className={buttonVariants({ variant: "ghost", block: true, className: "mt-3" })}>
+              <Link href="/login" className={buttonVariants({ variant: "ghost", block: true, className: "mt-3 h-auto min-h-11 whitespace-normal py-2 text-center" })}>
                 {t("loginToSave")}
               </Link>
             ) : null}

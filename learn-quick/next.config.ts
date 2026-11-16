@@ -3,7 +3,7 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 const dev = process.env.NODE_ENV !== "production";
-const https = (process.env.NEXT_PUBLIC_SITE_URL ?? "").startsWith("https://");
+const https = (process.env.NEXT_PUBLIC_SITE_URL || "").startsWith("https://");
 
 /**
  * Content Security Policy: only this site's own scripts, styles and connections.

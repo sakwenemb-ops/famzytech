@@ -37,7 +37,7 @@ export async function notify(userId: string, n: { type: string; title: Text; bod
   }
   if (!(await wantsExternal(userId, n.type))) return;
 
-  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const base = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
   const link = n.link ? `${base}/${l}${n.link}` : undefined;
   const text = `${n.body[l]}${link ? `\n\n${link}` : ""}`;
   try {

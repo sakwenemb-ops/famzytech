@@ -9,7 +9,7 @@ const hits: Map<string, number[]> = (g.__lqLimits ??= new Map());
 
 /** RATE_LIMITS=off is for automated tests on a local computer only; it is ignored on a live site. */
 function limitsDisabled() {
-  const local = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost").includes("localhost");
+  const local = (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost").includes("localhost");
   return process.env.RATE_LIMITS === "off" && (process.env.NODE_ENV !== "production" || local);
 }
 

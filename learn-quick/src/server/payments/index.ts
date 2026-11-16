@@ -7,7 +7,7 @@ let instance: PaymentProvider | undefined;
 
 /** The sandbox only runs on a local computer, never on a live site. */
 export function sandboxAllowed() {
-  const local = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost").includes("localhost");
+  const local = (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost").includes("localhost");
   return process.env.NODE_ENV !== "production" || local;
 }
 

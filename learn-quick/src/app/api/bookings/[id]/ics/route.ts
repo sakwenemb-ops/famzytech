@@ -16,7 +16,7 @@ export async function GET(_: Request, { params }: { params: Promise<{ id: string
     return new Response("Not found", { status: 404 });
   }
   const other = b.student.userId === user.id ? b.teacher.user.name : b.student.user.name;
-  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const base = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
   const link = `${base}/${user.locale}/${b.student.userId === user.id ? "student" : "teacher"}/lessons`;
   const summary = user.locale === "fr" ? `Cours Learn Quick avec ${other}` : `Learn Quick lesson with ${other}`;
   const ics = [
