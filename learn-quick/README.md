@@ -14,8 +14,8 @@ Design and data model: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 | 3 | Teacher application wizard, uploads, admin review, badges | ✅ Done |
 | 4 | Teacher catalogue, availability calendar, booking | ✅ Done |
 | 5 | Payments (MTN / Orange via Campay), wallet, ledger, escrow, payouts | ✅ Done |
-| 6 | Live video classroom, attendance, reviews | Next |
-| 7 | Translation library and AI grading | |
+| 6 | Live classroom (video, chat, whiteboard, notes, files), attendance, reviews | ✅ Done |
+| 7 | Translation library and AI grading | Next |
 | 8 | Admin tools, notifications, messaging, hardening | |
 
 ## Run it locally
@@ -145,6 +145,21 @@ Run this every 5 minutes (re-checks waiting payments, completes lessons, release
 ```bash
 npm run jobs:money
 ```
+
+## Live classroom
+
+Lessons happen at `/lesson/<booking id>`. The **Join** button appears on "My lessons" 10 minutes before the start; the room closes 30 minutes after the end. Only the lesson's student and teacher can enter (admins can read the lesson record but not join the call).
+
+- **Before joining:** camera preview, microphone level, device choice and a speaker test. People without a camera can join with audio only, or with nothing.
+- **In the lesson:** video and audio, mute, camera on/off, screen sharing (on computers), an **audio-only** switch that saves mobile data (suggested automatically when the connection is weak), a connection-quality badge, chat with file sharing, a shared whiteboard and shared notes. Chat, whiteboard and notes are saved with the lesson.
+- **Video technology:** WebRTC, directly between the two browsers. Video is limited to about 400 kbit/s. The server only introduces the two browsers to each other and carries chat, whiteboard, notes and presence (Server-Sent Events).
+- **Attendance decides the money:** both joined → completed; only the teacher → student absent, teacher paid; teacher absent → student refunded (or pack credit returned).
+- **After the lesson:** the student rates it (1–5 stars and a review on the teacher's profile; "Top rated" at 4.8+ with 20+ lessons); the teacher writes notes and homework, which the student sees.
+
+**Before going live:**
+- Add a **TURN server** (`TURN_URL`, `TURN_USERNAME`, `TURN_CREDENTIAL`). Without one, calls fail on networks that block direct connections, which includes some mobile networks. Managed TURN services cost little.
+- The live messages (chat, whiteboard, signalling) are kept in the memory of one server process. Run **one** app server, or add Redis pub/sub before running several.
+- Lesson recording is not built: it needs a media server (such as LiveKit) and storage.
 
 ## How sign-up works
 

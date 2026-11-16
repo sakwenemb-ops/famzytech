@@ -39,6 +39,8 @@ export const FILE_RULES: Partial<Record<DocumentKind, FileRule>> = {
   ID_FRONT: { types: DOCS, maxBytes: 10 * MB, private: true, encrypt: true },
   ID_BACK: { types: DOCS, maxBytes: 10 * MB, private: true, encrypt: true },
   ID_SELFIE: { types: IMAGES, maxBytes: 10 * MB, private: true, encrypt: true },
+  // Shared in a lesson's chat; only the lesson's student and teacher (and admins) can open it
+  LESSON_FILE: { types: DOCS, maxBytes: 10 * MB, private: true, encrypt: false },
 };
 
 /** The `accept` attribute for file inputs. */

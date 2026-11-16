@@ -11,8 +11,13 @@ export default defineConfig({
   use: {
     baseURL: `http://localhost:${port}`,
     trace: "off",
-    // Use a preinstalled Chromium when one is provided (e.g. in CI images)
-    launchOptions: process.env.PW_CHROMIUM_PATH ? { executablePath: process.env.PW_CHROMIUM_PATH } : {},
+    // Use a preinstalled Chromium when one is provided (e.g. in CI images).
+    // Fake camera and microphone, so classroom tests make real video calls.
+    launchOptions: {
+      ...(process.env.PW_CHROMIUM_PATH ? { executablePath: process.env.PW_CHROMIUM_PATH } : {}),
+      args: ["--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream"],
+    },
+    permissions: ["camera", "microphone"],
   },
   projects: [
     { name: "desktop", use: { ...devices["Desktop Chrome"] } },

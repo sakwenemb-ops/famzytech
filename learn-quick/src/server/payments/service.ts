@@ -6,7 +6,7 @@ import { amountDue, confirmBooking } from "../booking";
 import { getSetting } from "../settings";
 import { notify } from "../notify";
 import { ESCROW, EXTERNAL, LedgerError, balance, post } from "../ledger";
-import { earnLesson } from "./lesson-money";
+import { earnLesson, refundCancelledLesson } from "./lesson-money";
 import { paymentProvider } from "./index";
 import { ProviderError, type ProviderTransaction } from "./types";
 
@@ -231,27 +231,61 @@ async function refundToWallet(p: Payment, amount: number, reason: string) {
 }
 
 /**
- * Background job. Lessons that ended become COMPLETED and their price moves to the teacher's
- * pending earnings; 24 hours later (no dispute) it becomes available to withdraw.
- * Phase 6 adds attendance, so a no-show is handled differently.
+ * Background job. When a lesson has ended, attendance decides what happens:
+ * - both joined → COMPLETED; the teacher earns it (pending, then available after 24 h)
+ * - only the teacher joined → NO_SHOW_STUDENT; the teacher still earns it
+ * - the teacher did not join → NO_SHOW_TEACHER; the student is refunded (or gets the pack credit back)
+ * "Joined" = connected to the lesson room between 10 minutes before the start and the end.
  */
 export async function settleLessons(now = new Date()) {
   const releaseH = await getSetting("escrowReleaseHours");
-  const ended = await db.booking.findMany({ where: { status: "CONFIRMED", endsAt: { lte: now } }, include: { teacher: true } });
+  const ended = await db.booking.findMany({
+    where: { status: "CONFIRMED", endsAt: { lte: now } },
+    include: { teacher: true, student: true, lesson: { include: { attendance: true } } },
+  });
   for (const b of ended) {
+    const opens = new Date(b.startsAt.getTime() - 10 * 60_000);
+    const attended = (userId: string) =>
+      (b.lesson?.attendance ?? []).some((a) => a.userId === userId && a.joinedAt <= b.endsAt && (!a.leftAt || a.leftAt >= opens));
+    const teacherHere = attended(b.teacher.userId);
+    const studentHere = attended(b.student.userId);
+    const status = !teacherHere ? "NO_SHOW_TEACHER" : studentHere ? "COMPLETED" : "NO_SHOW_STUDENT";
+
     const claimed = await db.booking.updateMany({
       where: { id: b.id, status: "CONFIRMED" },
-      data: { status: "COMPLETED", releaseAt: new Date(b.endsAt.getTime() + releaseH * 3_600_000) },
+      data: { status, releaseAt: status === "NO_SHOW_TEACHER" ? null : new Date(b.endsAt.getTime() + releaseH * 3_600_000) },
     });
     if (!claimed.count) continue;
-    await db.teacherProfile.update({ where: { id: b.teacherId }, data: { lessonsCompleted: { increment: 1 } } });
+    await db.lesson.updateMany({ where: { bookingId: b.id, endedAt: null }, data: { endedAt: b.endsAt } });
+
+    if (status === "NO_SHOW_TEACHER") {
+      if (b.packageId) await db.lessonPackage.update({ where: { id: b.packageId }, data: { usedLessons: { decrement: 1 } } });
+      else await refundCancelledLesson(b, b.student.userId);
+      await notify(b.student.userId, {
+        type: "LESSON_NO_SHOW_TEACHER",
+        title: { en: "Your teacher did not join", fr: "Votre enseignant ne s'est pas connecté" },
+        body: {
+          en: "We're sorry: your teacher did not join the lesson. You have been refunded (wallet or pack credit).",
+          fr: "Nous sommes désolés : votre enseignant ne s'est pas connecté au cours. Vous avez été remboursé (portefeuille ou crédit de forfait).",
+        },
+        link: "/student/lessons",
+      });
+      await notify(b.teacher.userId, {
+        type: "LESSON_NO_SHOW_TEACHER",
+        title: { en: "Missed lesson", fr: "Cours manqué" },
+        body: { en: "You did not join a booked lesson. The student has been refunded.", fr: "Vous ne vous êtes pas connecté à un cours réservé. L'élève a été remboursé." },
+        link: "/teacher/lessons",
+      });
+      continue;
+    }
+    if (status === "COMPLETED") await db.teacherProfile.update({ where: { id: b.teacherId }, data: { lessonsCompleted: { increment: 1 } } });
     await earnLesson(b, b.teacher.userId);
   }
 
   // Release pending earnings whose dispute window has passed. Late cancellations
   // (status CANCELLED_BY_STUDENT with LESSON_EARNED posted) are released the same way.
   const due = await db.booking.findMany({
-    where: { releaseAt: { lte: now }, status: { in: ["COMPLETED", "CANCELLED_BY_STUDENT"] }, dispute: null },
+    where: { releaseAt: { lte: now }, status: { in: ["COMPLETED", "NO_SHOW_STUDENT", "CANCELLED_BY_STUDENT"] }, dispute: null },
     include: { teacher: true },
   });
   let released = 0;

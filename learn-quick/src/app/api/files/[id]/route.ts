@@ -15,7 +15,18 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     // Private files (ID, certificates): only the owner and admins. Others get 404, not 403,
     // so the response does not reveal that the file exists.
     const user = await getCurrentUser();
-    if (!user || (user.id !== doc.ownerId && user.role !== "ADMIN")) return notFound();
+    if (!user) return notFound();
+    let allowed = user.id === doc.ownerId || user.role === "ADMIN";
+    if (!allowed && doc.kind === "LESSON_FILE") {
+      // A file shared in a lesson: the other participant of that lesson may open it
+      const msg = await db.lessonChatMessage.findFirst({
+        where: { fileKey: doc.id },
+        include: { lesson: { include: { booking: { include: { student: true, teacher: true } } } } },
+      });
+      const bk = msg?.lesson.booking;
+      allowed = Boolean(bk && (bk.student.userId === user.id || bk.teacher.userId === user.id));
+    }
+    if (!allowed) return notFound();
   }
 
   const data = await readDocument(doc);

@@ -97,6 +97,8 @@ See [`prisma/schema.prisma`](../prisma/schema.prisma) (validated). Main groups:
 | Translation library | **Free for every signed-in student and teacher.** No payment or booked lesson needed. Guests can see the library page but must sign up (free) to take a test, so progress can be saved. |
 | Library grading cost | Because grading uses a paid AI API, each account gets a daily fair-use limit of AI-graded answers (default 30 per day, changed in admin settings). Multiple-choice and fill-the-gap answers are scored without AI and have no limit. |
 | Code location | GitHub `sakwenemb-ops/famzytech`, folder `learn-quick/` |
+| Payments | Campay (MTN Mobile Money + Orange Money), behind a provider interface |
+| Video | Browser-to-browser WebRTC with our own signalling (no third-party account). LiveKit remains an option for group lessons, recording or very poor networks. Needs a TURN server in production. |
 
 ## 5. Open questions (answers change the build)
 

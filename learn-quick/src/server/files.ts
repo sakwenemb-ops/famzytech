@@ -10,7 +10,8 @@ export type UploadError = "kind_not_allowed" | "too_large" | "wrong_type" | "emp
 
 /** Which kinds each role may upload (only teachers, for their application, in this phase). */
 const UPLOADERS: Record<string, DocumentKind[]> = {
-  TEACHER: ["PROFILE_PHOTO", "INTRO_VIDEO", "CERTIFICATE", "DEGREE", "ID_FRONT", "ID_BACK", "ID_SELFIE"],
+  TEACHER: ["PROFILE_PHOTO", "INTRO_VIDEO", "CERTIFICATE", "DEGREE", "ID_FRONT", "ID_BACK", "ID_SELFIE", "LESSON_FILE"],
+  STUDENT: ["LESSON_FILE"],
 };
 
 export async function saveUpload(user: User, kind: DocumentKind, file: File) {

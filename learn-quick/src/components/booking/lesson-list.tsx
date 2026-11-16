@@ -9,12 +9,17 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardBody, CardHeader, CardTitle } from "@/components/ui/card";
 import { EmptyState } from "@/components/dashboard/shell";
 import { LessonActions } from "./lesson-actions";
+import { JoinButton } from "./join-button";
+import { NotesForm, ReviewForm } from "./after-lesson";
+import { CLOSE_AFTER_MIN, roomWindow } from "@/server/lesson-room";
 
-const tone = { CONFIRMED: "success", COMPLETED: "neutral", HELD: "warning" } as const;
+const tone = { CONFIRMED: "success", COMPLETED: "neutral", HELD: "warning", NO_SHOW_STUDENT: "warning", NO_SHOW_TEACHER: "danger" } as const;
 
 /** Upcoming and past lessons for a student or a teacher. */
 export async function LessonList({ user, role }: { user: User; role: "student" | "teacher" }) {
   const t = await getTranslations("lessons");
+  const ta = await getTranslations("afterLesson");
+  const tc = await getTranslations("classroom");
   const profile =
     role === "student"
       ? await db.studentProfile.findUnique({ where: { userId: user.id }, select: { id: true } })
@@ -22,11 +27,13 @@ export async function LessonList({ user, role }: { user: User; role: "student" |
   if (!profile) return null;
   const mine = role === "student" ? { studentId: profile.id } : { teacherId: profile.id };
   const now = new Date();
-  const include = { student: { include: { user: true } }, teacher: { include: { user: true } } } as const;
+  const include = { student: { include: { user: true } }, teacher: { include: { user: true } }, lesson: true, review: true } as const;
+  // A lesson stays in "upcoming" until its classroom closes (30 minutes after the end)
+  const roomClosed = new Date(now.getTime() - CLOSE_AFTER_MIN * 60_000);
   const [upcoming, past] = await Promise.all([
-    db.booking.findMany({ where: { ...mine, status: "CONFIRMED", endsAt: { gt: now } }, orderBy: { startsAt: "asc" }, include }),
+    db.booking.findMany({ where: { ...mine, status: "CONFIRMED", endsAt: { gt: roomClosed } }, orderBy: { startsAt: "asc" }, include }),
     db.booking.findMany({
-      where: { ...mine, OR: [{ status: { in: ["COMPLETED", "CANCELLED_BY_STUDENT", "CANCELLED_BY_TEACHER", "NO_SHOW_STUDENT", "NO_SHOW_TEACHER", "DISPUTED"] } }, { status: "CONFIRMED", endsAt: { lte: now } }] },
+      where: { ...mine, OR: [{ status: { in: ["COMPLETED", "CANCELLED_BY_STUDENT", "CANCELLED_BY_TEACHER", "NO_SHOW_STUDENT", "NO_SHOW_TEACHER", "DISPUTED"] } }, { status: "CONFIRMED", endsAt: { lte: roomClosed } }] },
       orderBy: { startsAt: "desc" },
       take: 30,
       include,
@@ -59,17 +66,36 @@ export async function LessonList({ user, role }: { user: User; role: "student" |
                 <CalendarPlus className="size-4" aria-hidden />
                 {t("addToCalendar")}
               </a>
-              <span className="text-muted">{t("joinSoon")}</span>
+              <JoinButton bookingId={b.id} opensAt={roomWindow(b).opensAt.toISOString()} closesAt={roomWindow(b).closesAt.toISOString()} />
             </div>
-            <LessonActions
+            {b.startsAt > now && <LessonActions
               bookingId={b.id}
               teacherId={b.teacherId}
               role={role}
               startsAt={b.startsAt.toISOString()}
               freeCancelHours={freeCancelHours}
               timeZone={user.timeZone}
-            />
+            />}
           </>
+        )}
+        {!isUpcoming && b.lesson && ["COMPLETED", "NO_SHOW_STUDENT", "NO_SHOW_TEACHER"].includes(b.status) && (
+          <div className="space-y-3 text-sm">
+            {b.status === "NO_SHOW_TEACHER" && <p className="text-muted">{ta(role === "student" ? "noShowTeacher" : "noShowTeacherTeacher")}</p>}
+            {b.status === "NO_SHOW_STUDENT" && <p className="text-muted">{role === "student" ? ta("noShowStudent") : ta("noShowStudentTeacher")}</p>}
+            <Link href={`/lesson/${b.id}`} className="inline-block text-primary hover:underline">{ta("viewRecord")}</Link>
+            {role === "student" && b.lesson.homework && (
+              <p className="rounded-[var(--radius-md)] bg-primary-soft px-3 py-2"><span className="font-medium">{tc("homework")} :</span> {b.lesson.homework}</p>
+            )}
+            {role === "student" && b.status === "COMPLETED" && !b.review && now.getTime() - b.endsAt.getTime() < 30 * 86_400_000 && (
+              <ReviewForm bookingId={b.id} teacherName={b.teacher.user.name} />
+            )}
+            {role === "student" && b.review && (
+              <p className="text-muted">{ta("yourReview")} : {"★".repeat(b.review.rating)}{"☆".repeat(5 - b.review.rating)}</p>
+            )}
+            {role === "teacher" && b.status !== "NO_SHOW_TEACHER" && (
+              <NotesForm bookingId={b.id} studentName={b.student.user.name} defaults={{ teacherNotes: b.lesson.teacherNotes ?? "", homework: b.lesson.homework ?? "" }} />
+            )}
+          </div>
         )}
       </li>
     );

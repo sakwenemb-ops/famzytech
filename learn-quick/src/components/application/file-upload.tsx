@@ -25,7 +25,7 @@ export function FileUpload({
   kind: DocumentKind;
   label: string;
   hint?: string;
-  onUploaded: (doc: { id: string; url: string }) => void;
+  onUploaded: (doc: { id: string; url: string; name: string }) => void;
   variant?: "primary" | "secondary";
   capture?: "user" | "environment";
 }) {
@@ -51,7 +51,7 @@ export function FileUpload({
       try {
         res = JSON.parse(xhr.responseText);
       } catch {}
-      if (xhr.status === 200 && res.id && res.url) onUploaded({ id: res.id, url: res.url });
+      if (xhr.status === 200 && res.id && res.url) onUploaded({ id: res.id, url: res.url, name: file.name });
       else setError(res.error && t.has(res.error) ? t(res.error, { max: mb(max) }) : t("failed"));
     };
     xhr.onerror = () => {

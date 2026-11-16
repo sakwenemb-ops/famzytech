@@ -129,7 +129,13 @@ test("lesson happens → teacher pending → available after 24 h → payout app
 
   // The lesson took place yesterday (moved into the past for the test)
   const b = await db.booking.findFirstOrThrow({ where: { teacherId: teacher.id, status: "CONFIRMED" } });
-  await db.booking.update({ where: { id: b.id }, data: { startsAt: new Date(Date.now() - 3 * 3_600_000), endsAt: new Date(Date.now() - 3 * 3_600_000 + 50 * 60_000) } });
+  const startsAt = new Date(Date.now() - 3 * 3_600_000);
+  await db.booking.update({ where: { id: b.id }, data: { startsAt, endsAt: new Date(startsAt.getTime() + 50 * 60_000) } });
+  // Both joined the classroom
+  const lesson = await db.lesson.findUniqueOrThrow({ where: { bookingId: b.id } });
+  for (const [userId, role] of [[tu.id, "TEACHER"], [student.id, "STUDENT"]] as const) {
+    await db.lessonAttendance.create({ data: { lessonId: lesson.id, userId, role, joinedAt: new Date(startsAt.getTime() + 60_000), leftAt: new Date(startsAt.getTime() + 49 * 60_000) } });
+  }
   runMoneyJobs();
   expect((await db.booking.findUniqueOrThrow({ where: { id: b.id } })).status).toBe("COMPLETED");
   expect(await account("TEACHER_PENDING", tu.id)).toBe(8200); // 10 000 − 18 %
