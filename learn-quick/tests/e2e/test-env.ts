@@ -15,6 +15,8 @@ export const TEST_ENV = {
   // AI grading goes to a local fake Anthropic API (tests/e2e/fake-anthropic.mjs): real code path, no cost
   ANTHROPIC_BASE_URL: "http://localhost:3199",
   ANTHROPIC_API_KEY: "test-key",
+  // Many sign-ins from one computer would trip the login limits (tested in unit tests instead)
+  RATE_LIMITS: "off",
 };
 
 // The test process itself (database helpers, file checks) uses the same settings

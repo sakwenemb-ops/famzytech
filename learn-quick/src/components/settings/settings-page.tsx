@@ -6,11 +6,17 @@ import { Card, CardBody, CardHeader, CardTitle } from "@/components/ui/card";
 import { PageTitle } from "@/components/dashboard/shell";
 import { AccountForm } from "./account-form";
 import { PasswordForm } from "./password-form";
+import { NotificationPrefs } from "./notification-prefs";
+import { db } from "@/lib/db";
+import { CATEGORIES } from "@/lib/notification-categories";
 
 /** Shared settings content for every role. `extra` adds role-specific sections (e.g. learning preferences). */
 export async function SettingsContent({ user, extra }: { user: User; extra?: React.ReactNode }) {
   const t = await getTranslations("settings");
   const ta = await getTranslations("auth");
+  const tn = await getTranslations("notifications");
+  const prefs = await db.notificationPreference.findMany({ where: { userId: user.id, channel: "EMAIL" } });
+  const enabled = Object.fromEntries(CATEGORIES.map((c) => [c, prefs.find((p) => p.type === c)?.enabled ?? true])) as Record<(typeof CATEGORIES)[number], boolean>;
 
   const contact = [
     { label: ta("phone"), value: user.phone, verified: Boolean(user.phoneVerified) },
@@ -50,6 +56,15 @@ export async function SettingsContent({ user, extra }: { user: User; extra?: Rea
             <p className="mt-3 text-[13px] text-muted">{t("contactHint")}</p>
           </CardBody>
         </Card>
+
+        {user.role !== "ADMIN" && (
+          <Card id="notifications">
+            <CardHeader><CardTitle>{tn("prefsTitle")}</CardTitle></CardHeader>
+            <CardBody>
+              <NotificationPrefs enabled={enabled} via={user.email ? "email" : "sms"} />
+            </CardBody>
+          </Card>
+        )}
 
         <Card>
           <CardHeader><CardTitle>{t("password")}</CardTitle></CardHeader>

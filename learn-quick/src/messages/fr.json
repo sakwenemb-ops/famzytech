@@ -177,7 +177,8 @@
     "references_required": "Ajoutez au moins une réponse acceptée.",
     "gap_invalid": "Mettez exactement un ___ à l'endroit du blanc.",
     "options_invalid": "Donnez au moins 2 choix et marquez exactement un avec *.",
-    "json_invalid": "Ce n'est pas une liste d'exercices valide."
+    "json_invalid": "Ce n'est pas une liste d'exercices valide.",
+    "too_many_attempts": "Trop de tentatives. Patientez quelques minutes et réessayez."
   },
   "dashboard": {
     "hello": "Bonjour, {name}",
@@ -250,8 +251,15 @@
       "verified": "Vérifié",
       "yes": "Oui",
       "no": "Non",
-      "name": "Nom"
-    }
+      "name": "Nom",
+      "todo": "À faire",
+      "todoApplications": "{count, plural, one {# candidature à examiner} other {# candidatures à examiner}}",
+      "todoDisputes": "{count, plural, one {# litige à trancher} other {# litiges à trancher}}",
+      "todoReports": "{count, plural, one {# conversation signalée} other {# conversations signalées}}",
+      "todoPayouts": "{count, plural, one {# retrait à approuver} other {# retraits à approuver}}"
+    },
+    "disputes": "Litiges",
+    "reports": "Signalements"
   },
   "roles": {
     "STUDENT": "Élève",
@@ -392,7 +400,8 @@
       "CERTIFIED": "Certificat d'enseignement vérifié par notre équipe.",
       "PROFESSIONAL": "Diplôme ou au moins 2 ans d'expérience d'enseignement.",
       "TOP_RATED": "Note de 4,8 ou plus après plus de 20 cours."
-    }
+    },
+    "sendMessage": "Envoyer un message"
   },
   "application": {
     "title": "Candidature d'enseignant",
@@ -803,7 +812,8 @@
       "not_allowed": "Ce cours ne peut pas être modifié.",
       "too_late": "Il est trop tard pour déplacer ce cours.",
       "slot_taken": "Ce créneau n'est plus libre. Choisissez-en un autre."
-    }
+    },
+    "message": "Écrire à {name}"
   },
   "calendar": {
     "title": "Calendrier",
@@ -1156,5 +1166,282 @@
     "teacherNote": "Vos exercices sont enregistrés comme brouillons. Un administrateur les vérifie et les publie.",
     "filterAll": "Tous",
     "empty": "Aucun exercice."
+  },
+  "notifications": {
+    "title": "Notifications",
+    "subtitle": "{count, plural, =0 {Vous êtes à jour.} one {# non lue} other {# non lues}}",
+    "preferences": "Choisir ce que vous recevez aussi par e-mail ou SMS",
+    "markAllRead": "Tout marquer comme lu",
+    "empty": "Aucune notification pour l'instant.",
+    "unread": "non lue",
+    "pages": "Pages",
+    "newer": "Plus récentes",
+    "older": "Plus anciennes",
+    "messagesLabel": "Messages ({count} non lus)",
+    "bellLabel": "Notifications ({count} non lues)",
+    "prefsTitle": "Notifications",
+    "prefsHint": "Vous voyez toujours les notifications sur le site. Choisissez celles qui sont aussi envoyées par {via, select, email {e-mail} other {SMS}}.",
+    "prefsSaved": "Préférences enregistrées.",
+    "savePrefs": "Enregistrer",
+    "alwaysSent": "Toujours envoyées : importantes pour votre compte.",
+    "categories": {
+      "lessons": "Cours",
+      "messages": "Messages",
+      "payments": "Paiements et gains",
+      "account": "Compte et candidature"
+    },
+    "categoryHints": {
+      "lessons": "Réservations, rappels, annulations, problèmes signalés.",
+      "messages": "Quand quelqu'un vous écrit (une fois par conversation tant que vous n'avez pas lu).",
+      "payments": "Paiements, remboursements et retraits.",
+      "account": ""
+    }
+  },
+  "messages": {
+    "title": "Messages",
+    "subtitleStudent": "Posez vos questions aux professeurs avant de réserver.",
+    "subtitleTeacher": "Répondez vite aux élèves : cela les aide à vous choisir.",
+    "emptyStudent": "Aucune conversation. Ouvrez le profil d'un professeur et choisissez « Envoyer un message ».",
+    "emptyTeacher": "Aucune conversation. Les élèves peuvent vous écrire depuis votre profil.",
+    "findTeacher": "Trouver un professeur",
+    "you": "Vous",
+    "noMessagesYet": "Pas encore de message",
+    "unread": "non lus",
+    "back": "Retour aux messages",
+    "viewProfile": "Voir le profil",
+    "unavailable": "Ce compte n'est plus disponible. Vous ne pouvez pas répondre.",
+    "contactHidden": "Pour votre sécurité, les numéros, e-mails et liens sont masqués jusqu'à ce qu'un premier cours soit réservé et payé sur Learn Quick.",
+    "conversation": "Conversation",
+    "startHint": "Dites bonjour et expliquez ce que vous voulez apprendre.",
+    "redactedShort": "coordonnées masquées",
+    "redactedNotice": "Des coordonnées ont été masquées dans votre message. Gardez les cours et paiements sur Learn Quick : cela vous protège en cas de problème.",
+    "seen": "Vu",
+    "write": "Écrire un message",
+    "send": "Envoyer",
+    "report": "Signaler",
+    "reportWhy": "Quel est le problème avec cette conversation ?",
+    "reportReason": "Expliquez en quelques mots.",
+    "sendReport": "Envoyer le signalement",
+    "reported": "Signalé à l'équipe",
+    "errors": {
+      "not_allowed": "Vous ne pouvez pas écrire à cette personne.",
+      "too_many": "Trop de messages en peu de temps. Patientez quelques minutes.",
+      "not_found": "Conversation introuvable.",
+      "empty": "Écrivez d'abord quelque chose.",
+      "too_long": "Ce message est trop long (2 000 caractères au maximum).",
+      "failed": "Le message n'a pas pu être envoyé. Vérifiez votre connexion et réessayez."
+    }
+  },
+  "disputes": {
+    "reportProblem": "Signaler un problème avec ce cours",
+    "openHint": "Jusqu'au {deadline}. Les gains du professeur pour ce cours sont bloqués pendant que l'équipe vérifie.",
+    "whatHappened": "Que s'est-il passé ?",
+    "send": "Envoyer à l'équipe",
+    "opened": "Merci. L'équipe va examiner le cours et décider sous 3 jours. Le professeur peut donner sa version.",
+    "yourSide": "Votre version",
+    "sendResponse": "Envoyer ma réponse",
+    "responseSent": "Votre réponse a été transmise à l'équipe.",
+    "decision": "Décision",
+    "refund100": "Remboursement total à l'élève : {amount}",
+    "refund50": "Remboursement de moitié à l'élève : {amount}",
+    "refund0": "Pas de remboursement : le professeur est payé",
+    "noteLabel": "Explication envoyée aux deux",
+    "noteHint": "L'élève et le professeur reçoivent ce texte.",
+    "confirmDecision": "Confirmer la décision",
+    "resolved": "Décision enregistrée. L'argent a été transféré et les deux personnes ont été prévenues.",
+    "status": {
+      "OPEN": "Problème signalé : en cours d'examen",
+      "RESOLVED_REFUND": "Remboursé",
+      "RESOLVED_NO_REFUND": "Examiné : pas de remboursement"
+    },
+    "studentSaid": "Élève :",
+    "teacherSaid": "Professeur :",
+    "decisionNote": "Décision :",
+    "adminTitle": "Litiges",
+    "adminSubtitle": "Problèmes signalés par les élèves après un cours. Les gains restent bloqués jusqu'à votre décision.",
+    "toDecide": "À trancher ({count})",
+    "noneOpen": "Aucun litige en cours.",
+    "decided": "Tranchés récemment",
+    "detailTitle": "{student} et {teacher}",
+    "whatWasSaid": "Ce qu'ils disent",
+    "noResponse": "Pas encore de réponse.",
+    "facts": "Faits",
+    "lessonStatus": "Résultat du cours",
+    "price": "Prix",
+    "pack": "forfait",
+    "teacherShare": "Part du professeur bloquée",
+    "attendance": "Connexions",
+    "nobodyJoined": "Personne ne s'est connecté",
+    "chat": "Messages du chat",
+    "openRecord": "Ouvrir le compte rendu du cours",
+    "decide": "Décider",
+    "notFunded": "Ce cours n'a pas été payé : aucun argent à transférer.",
+    "errors": {
+      "reason_short": "Écrivez au moins 10 caractères.",
+      "not_allowed": "Ce n'est pas possible.",
+      "window_closed": "Le délai pour signaler un problème avec ce cours est passé.",
+      "already_open": "Un problème a déjà été signalé pour ce cours.",
+      "not_found": "Cours introuvable.",
+      "already_resolved": "Ce litige a déjà été tranché.",
+      "refund_required": "Choisissez une décision."
+    }
+  },
+  "adminUsers": {
+    "title": "Utilisateurs",
+    "subtitle": "{count} trouvé(s)",
+    "search": "Rechercher",
+    "searchPlaceholder": "Nom, e-mail ou téléphone",
+    "role": "Rôle",
+    "allRoles": "Tous les rôles",
+    "status": "Statut",
+    "allStatuses": "Tous les statuts",
+    "statuses": {
+      "ACTIVE": "Actif",
+      "SUSPENDED": "Suspendu",
+      "DELETED": "Supprimé"
+    },
+    "none": "Aucun utilisateur ne correspond.",
+    "pages": "Pages",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "back": "Tous les utilisateurs",
+    "verified": "Vérifié",
+    "notVerified": "Non vérifié",
+    "published": "Visible dans le catalogue",
+    "hidden": "Absent du catalogue",
+    "lessonsDone": "Cours terminés",
+    "upcoming": "Cours à venir",
+    "pending": "Gains en attente",
+    "available": "Gains disponibles",
+    "wallet": "Portefeuille",
+    "details": "Détails",
+    "joined": "Inscrit le",
+    "country": "Pays",
+    "language": "Langue",
+    "application": "Candidature",
+    "profile": "Profil",
+    "viewProfile": "Profil public",
+    "access": "Accès",
+    "cannotChange": "Les comptes administrateurs ne peuvent pas être suspendus ici.",
+    "payments": "Paiements récents",
+    "history": "Historique",
+    "reviews": "Avis",
+    "hideReview": "Masquer",
+    "showReview": "Réafficher",
+    "suspendHint": "{count, plural, =0 {La personne est déconnectée immédiatement et ne peut plus se connecter.} other {La personne est déconnectée immédiatement. Ses # cours à venir seront annulés et les élèves remboursés.}}",
+    "reactivateHint": "La personne peut à nouveau se connecter. Un professeur approuvé réapparaît dans le catalogue.",
+    "confirmSuspend": "Suspendre ce compte ? {count, plural, =0 {} other {# cours à venir seront annulés.}}",
+    "suspended": "Compte suspendu.{count, plural, =0 {} other { # cours annulés et remboursés.}}",
+    "reactivated": "Compte réactivé.",
+    "reason": "Motif (conservé dans l'historique)",
+    "suspend": "Suspendre le compte",
+    "reactivate": "Réactiver le compte",
+    "errors": {
+      "reason_required": "Indiquez un motif (au moins 5 caractères).",
+      "not_found": "Utilisateur introuvable.",
+      "not_allowed": "Impossible pour ce compte."
+    }
+  },
+  "audit": {
+    "title": "Journal d'audit",
+    "subtitle": "Chaque action importante, qui l'a faite et quand.",
+    "none": "Rien d'enregistré pour l'instant.",
+    "by": "par {name}",
+    "system": "le système",
+    "filter": "Filtrer",
+    "all": "Toutes les actions",
+    "pages": "Pages",
+    "newer": "Plus récentes",
+    "older": "Plus anciennes",
+    "actions": {
+      "USER_REGISTERED": "Compte créé",
+      "USER_SUSPENDED": "Utilisateur suspendu",
+      "USER_REACTIVATED": "Utilisateur réactivé",
+      "SETTINGS_CHANGED": "Réglages modifiés",
+      "DISPUTE_OPENED": "Litige ouvert",
+      "DISPUTE_RESOLVED": "Litige tranché",
+      "CONVERSATION_REPORTED": "Conversation signalée",
+      "REPORT_CLOSED": "Signalement clôturé",
+      "REVIEW_HIDDEN": "Avis masqué",
+      "REVIEW_SHOWN": "Avis réaffiché",
+      "BOOKING_CANCELLED": "Cours annulé",
+      "APPLICATION_SUBMITTED": "Candidature envoyée",
+      "APPLICATION_RESUBMITTED": "Candidature renvoyée",
+      "APPLICATION_APPROVED": "Candidature approuvée",
+      "APPLICATION_REJECTED": "Candidature refusée"
+    }
+  },
+  "reports": {
+    "title": "Conversations signalées",
+    "subtitle": "Lisez la conversation, puis suspendez un compte ou clôturez le signalement.",
+    "none": "Aucun signalement.",
+    "reportedBy": "Signalé par {name} :",
+    "closed": "Ce signalement est clôturé.",
+    "openUser": "Ouvrir le compte de {name}",
+    "redacted": "coordonnées masquées",
+    "close": "Clôturer le signalement"
+  },
+  "adminSettings": {
+    "title": "Réglages",
+    "subtitle": "Règles de la plateforme. Les changements s'appliquent aux nouvelles réservations et sont enregistrés dans le journal.",
+    "saved": "Réglages enregistrés.",
+    "fix": "Certaines valeurs sont hors limites.",
+    "outOfRange": "Hors des limites autorisées.",
+    "save": "Enregistrer",
+    "groups": {
+      "lessons": "Cours",
+      "money": "Argent",
+      "other": "Candidatures et bibliothèque"
+    },
+    "keys": {
+      "commissionPct": {
+        "label": "Commission de la plateforme (%)",
+        "hint": "Prélevée sur le prix de chaque nouveau cours."
+      },
+      "freeCancelHours": {
+        "label": "Annulation gratuite (heures avant)",
+        "hint": "Les élèves sont remboursés s'ils annulent avant ce délai."
+      },
+      "minBookingNoticeHours": {
+        "label": "Délai minimum pour réserver (heures)",
+        "hint": "Combien de temps à l'avance un cours doit être réservé."
+      },
+      "slotHoldMinutes": {
+        "label": "Créneau retenu pendant le paiement (minutes)",
+        "hint": "Durée pendant laquelle l'horaire choisi reste réservé."
+      },
+      "paymentTimeoutMinutes": {
+        "label": "Délai de validation Mobile Money (minutes)",
+        "hint": "Au-delà, un paiement non validé sur le téléphone expire."
+      },
+      "escrowReleaseHours": {
+        "label": "Délai de réclamation (heures après le cours)",
+        "hint": "Les gains deviennent disponibles pour les professeurs après ce délai."
+      },
+      "minPayoutXaf": {
+        "label": "Retrait minimum (FCFA)",
+        "hint": "Le plus petit montant qu'un professeur peut retirer."
+      },
+      "payoutRequiresApproval": {
+        "label": "Les retraits doivent être approuvés",
+        "hint": "Recommandé. Sinon, les retraits sont envoyés immédiatement."
+      },
+      "applicationReviewDays": {
+        "label": "Délai d'examen des candidatures (jours)",
+        "hint": "Indiqué aux professeurs qui envoient leur candidature."
+      },
+      "libraryAiGradesPerDay": {
+        "label": "Corrections IA par personne et par jour",
+        "hint": "Au-delà, la bibliothèque utilise la note simple."
+      }
+    }
+  },
+  "teacherReviews": {
+    "title": "Avis",
+    "subtitle": "Ce que vos élèves disent après leurs cours.",
+    "average": "Note moyenne",
+    "count": "Avis",
+    "none": "Pas encore d'avis. Les élèves peuvent noter un cours après l'avoir suivi.",
+    "stars": "{n} étoiles sur 5"
   }
 }

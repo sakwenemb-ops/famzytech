@@ -1,8 +1,9 @@
 import { createHash } from "node:crypto";
 import bcrypt from "bcryptjs";
-import type { Page } from "@playwright/test";
+import { execSync } from "node:child_process";
+import { expect, type Page } from "@playwright/test";
+import { TEST_ENV } from "./test-env";
 import { PrismaClient } from "@prisma/client";
-import "./test-env";
 export const db = new PrismaClient();
 
 /**
@@ -76,3 +77,32 @@ export async function payInSandbox(page: Page, opts: { decline?: boolean; phone?
   await page.getByRole("button", { name: /^Payer / }).click();
   await page.getByRole("button", { name: opts.decline ? "Refuser sur le téléphone" : "Valider sur le téléphone" }).click();
 }
+
+/** Run the money background job against the test database. */
+export const runMoneyJobs = () => execSync("npm run -s jobs:money", { env: { ...process.env, ...TEST_ENV }, stdio: "pipe" }).toString();
+
+export async function bookableTeacher(price: number) {
+  const { user, teacher } = await createTeacher({ published: true });
+  await db.teacherProfile.update({
+    where: { id: teacher.id },
+    data: { hourlyRateXaf: price, trialRateXaf: price, availability: { create: [0, 1, 2, 3, 4, 5, 6].map((weekday) => ({ weekday, startMin: 0, endMin: 1440 })) } },
+  });
+  return { user, teacher };
+}
+
+export async function holdSingleLesson(page: Page, teacherId: string, nextWeek = false) {
+  await page.goto(`/fr/teachers/${teacherId}`);
+  await expect(page.locator("button[data-slot]").first()).toBeVisible();
+  if (nextWeek) {
+    await page.getByRole("button", { name: "Plus tard" }).click();
+    await expect(page.locator("button[data-slot]").first()).toBeVisible();
+  }
+  await page.locator("button[data-slot]").first().click();
+  await page.getByRole("radio", { name: /Cours à l'unité/ }).check();
+  await page.getByRole("button", { name: "Continuer" }).click();
+  await expect(page).toHaveURL(/\/checkout\//);
+}
+
+export const account = async (type: string, userId?: string) =>
+  (await db.ledgerAccount.findFirst({ where: userId ? { userId, type: type as never } : { id: `platform_${type.toLowerCase()}` } }))?.balanceXaf ?? 0;
+

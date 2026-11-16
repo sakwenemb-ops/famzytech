@@ -597,9 +597,14 @@ model Dispute {
   openedById String
   reason     String        @db.Text
   status     DisputeStatus @default(OPEN)
+  teacherResponse String?  @db.Text
+  refundPct  Int? // 0, 50 or 100 when resolved
   resolution String?       @db.Text
+  resolvedById String?
   resolvedAt DateTime?
   createdAt  DateTime      @default(now())
+
+  @@index([status, createdAt])
 }
 
 // ─────────────────────────────── Payments & ledger ───────────────────────────────
@@ -818,10 +823,15 @@ model Conversation {
   // Contact details are blocked until the student's first booking is confirmed
   contactUnlocked Boolean @default(false)
   lastMessageAt DateTime @default(now())
+  reportedAt    DateTime? // someone reported this conversation to the admins
+  reportedById  String?
+  reportReason  String?
 
   messages Message[]
 
   @@unique([studentId, teacherId])
+  @@index([studentId, lastMessageAt])
+  @@index([teacherId, lastMessageAt])
 }
 
 model Message {
@@ -850,6 +860,7 @@ model Notification {
   createdAt DateTime  @default(now())
 
   @@index([userId, readAt])
+  @@index([userId, createdAt])
 }
 
 model NotificationPreference {
@@ -883,4 +894,5 @@ model AuditLog {
 
   @@index([targetType, targetId])
   @@index([actorId, createdAt])
+  @@index([action, createdAt])
 }

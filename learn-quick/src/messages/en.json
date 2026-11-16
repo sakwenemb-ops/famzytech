@@ -177,7 +177,8 @@
     "references_required": "Add at least one accepted answer.",
     "gap_invalid": "Put exactly one ___ where the blank goes.",
     "options_invalid": "Give at least 2 choices and mark exactly one with *.",
-    "json_invalid": "This is not a valid list of exercises."
+    "json_invalid": "This is not a valid list of exercises.",
+    "too_many_attempts": "Too many attempts. Please wait a few minutes and try again."
   },
   "dashboard": {
     "hello": "Hello, {name}",
@@ -250,8 +251,15 @@
       "verified": "Verified",
       "yes": "Yes",
       "no": "No",
-      "name": "Name"
-    }
+      "name": "Name",
+      "todo": "To do",
+      "todoApplications": "{count, plural, one {# application to review} other {# applications to review}}",
+      "todoDisputes": "{count, plural, one {# dispute to decide} other {# disputes to decide}}",
+      "todoReports": "{count, plural, one {# reported conversation} other {# reported conversations}}",
+      "todoPayouts": "{count, plural, one {# withdrawal to approve} other {# withdrawals to approve}}"
+    },
+    "disputes": "Disputes",
+    "reports": "Reports"
   },
   "roles": {
     "STUDENT": "Student",
@@ -392,7 +400,8 @@
       "CERTIFIED": "Teaching certificate checked by our team.",
       "PROFESSIONAL": "Degree or at least 2 years of teaching experience.",
       "TOP_RATED": "Rated 4.8 or more after 20+ lessons."
-    }
+    },
+    "sendMessage": "Send a message"
   },
   "application": {
     "title": "Teacher application",
@@ -803,7 +812,8 @@
       "not_allowed": "This lesson can't be changed.",
       "too_late": "It's too late to move this lesson.",
       "slot_taken": "This time is no longer free. Choose another."
-    }
+    },
+    "message": "Message {name}"
   },
   "calendar": {
     "title": "Calendar",
@@ -1156,5 +1166,282 @@
     "teacherNote": "Your exercises are saved as drafts. An admin checks and publishes them.",
     "filterAll": "All",
     "empty": "No exercises."
+  },
+  "notifications": {
+    "title": "Notifications",
+    "subtitle": "{count, plural, =0 {You're all caught up.} one {# unread} other {# unread}}",
+    "preferences": "Choose what you also get by email or SMS",
+    "markAllRead": "Mark all as read",
+    "empty": "No notifications yet.",
+    "unread": "unread",
+    "pages": "Pages",
+    "newer": "Newer",
+    "older": "Older",
+    "messagesLabel": "Messages ({count} unread)",
+    "bellLabel": "Notifications ({count} unread)",
+    "prefsTitle": "Notifications",
+    "prefsHint": "You always see notifications on the site. Choose which ones are also sent by {via, select, email {email} other {SMS}}.",
+    "prefsSaved": "Preferences saved.",
+    "savePrefs": "Save preferences",
+    "alwaysSent": "Always sent: important for your account.",
+    "categories": {
+      "lessons": "Lessons",
+      "messages": "Messages",
+      "payments": "Payments and earnings",
+      "account": "Account and application"
+    },
+    "categoryHints": {
+      "lessons": "Bookings, reminders, cancellations, problems reported.",
+      "messages": "When someone writes to you (once per conversation until you read it).",
+      "payments": "Payments, refunds and withdrawals.",
+      "account": ""
+    }
+  },
+  "messages": {
+    "title": "Messages",
+    "subtitleStudent": "Ask teachers questions before you book.",
+    "subtitleTeacher": "Answer students quickly: it helps them choose you.",
+    "emptyStudent": "No conversations yet. Open a teacher's profile and choose \"Send a message\".",
+    "emptyTeacher": "No conversations yet. Students can write to you from your profile.",
+    "findTeacher": "Find a teacher",
+    "you": "You",
+    "noMessagesYet": "No messages yet",
+    "unread": "unread",
+    "back": "Back to messages",
+    "viewProfile": "View profile",
+    "unavailable": "This account is not available any more. You can't reply.",
+    "contactHidden": "For your safety, phone numbers, emails and links are hidden until a first lesson is booked and paid on Learn Quick.",
+    "conversation": "Conversation",
+    "startHint": "Say hello and explain what you want to learn.",
+    "redactedShort": "contact details hidden",
+    "redactedNotice": "Contact details were hidden from your message. Please keep lessons and payments on Learn Quick: it protects you if something goes wrong.",
+    "seen": "Seen",
+    "write": "Write a message",
+    "send": "Send",
+    "report": "Report",
+    "reportWhy": "What is wrong with this conversation?",
+    "reportReason": "Please explain in a few words.",
+    "sendReport": "Send report",
+    "reported": "Reported to the team",
+    "errors": {
+      "not_allowed": "You can't message this person.",
+      "too_many": "Too many messages in a short time. Please wait a few minutes.",
+      "not_found": "Conversation not found.",
+      "empty": "Write something first.",
+      "too_long": "This message is too long (2,000 characters at most).",
+      "failed": "The message could not be sent. Check your connection and try again."
+    }
+  },
+  "disputes": {
+    "reportProblem": "Report a problem with this lesson",
+    "openHint": "Until {deadline}. The teacher's earnings for this lesson are held while the team checks what happened.",
+    "whatHappened": "What happened?",
+    "send": "Send to the team",
+    "opened": "Thank you. The team will look at the lesson and decide within 3 days. The teacher can give their side.",
+    "yourSide": "Your side of the story",
+    "sendResponse": "Send my answer",
+    "responseSent": "Your answer was sent to the team.",
+    "decision": "Decision",
+    "refund100": "Full refund to the student: {amount}",
+    "refund50": "Half refund to the student: {amount}",
+    "refund0": "No refund: the teacher is paid",
+    "noteLabel": "Explanation sent to both",
+    "noteHint": "Both the student and the teacher receive this text.",
+    "confirmDecision": "Confirm decision",
+    "resolved": "Decision saved. Money has moved and both people were notified.",
+    "status": {
+      "OPEN": "Problem reported: under review",
+      "RESOLVED_REFUND": "Refunded",
+      "RESOLVED_NO_REFUND": "Reviewed: no refund"
+    },
+    "studentSaid": "Student:",
+    "teacherSaid": "Teacher:",
+    "decisionNote": "Decision:",
+    "adminTitle": "Disputes",
+    "adminSubtitle": "Problems students reported after a lesson. Earnings stay on hold until you decide.",
+    "toDecide": "To decide ({count})",
+    "noneOpen": "No open disputes.",
+    "decided": "Recently decided",
+    "detailTitle": "{student} and {teacher}",
+    "whatWasSaid": "What they say",
+    "noResponse": "No answer yet.",
+    "facts": "Facts",
+    "lessonStatus": "Lesson result",
+    "price": "Price",
+    "pack": "pack",
+    "teacherShare": "Teacher's share on hold",
+    "attendance": "Connections",
+    "nobodyJoined": "Nobody joined",
+    "chat": "Chat messages",
+    "openRecord": "Open the lesson record",
+    "decide": "Decide",
+    "notFunded": "This lesson was not paid, so there is no money to move.",
+    "errors": {
+      "reason_short": "Please write at least 10 characters.",
+      "not_allowed": "This is not possible.",
+      "window_closed": "The time to report a problem with this lesson has passed.",
+      "already_open": "A problem was already reported for this lesson.",
+      "not_found": "Lesson not found.",
+      "already_resolved": "This dispute was already decided.",
+      "refund_required": "Choose a decision."
+    }
+  },
+  "adminUsers": {
+    "title": "Users",
+    "subtitle": "{count} found",
+    "search": "Search",
+    "searchPlaceholder": "Name, email or phone",
+    "role": "Role",
+    "allRoles": "All roles",
+    "status": "Status",
+    "allStatuses": "All statuses",
+    "statuses": {
+      "ACTIVE": "Active",
+      "SUSPENDED": "Suspended",
+      "DELETED": "Deleted"
+    },
+    "none": "No users match.",
+    "pages": "Pages",
+    "previous": "Previous",
+    "next": "Next",
+    "back": "All users",
+    "verified": "Verified",
+    "notVerified": "Not verified",
+    "published": "Visible in catalogue",
+    "hidden": "Not in catalogue",
+    "lessonsDone": "Lessons completed",
+    "upcoming": "Upcoming lessons",
+    "pending": "Earnings on hold",
+    "available": "Earnings available",
+    "wallet": "Wallet",
+    "details": "Details",
+    "joined": "Joined",
+    "country": "Country",
+    "language": "Language",
+    "application": "Application",
+    "profile": "Profile",
+    "viewProfile": "Public profile",
+    "access": "Access",
+    "cannotChange": "Admin accounts can't be suspended here.",
+    "payments": "Recent payments",
+    "history": "History",
+    "reviews": "Reviews",
+    "hideReview": "Hide",
+    "showReview": "Show again",
+    "suspendHint": "{count, plural, =0 {The person is signed out at once and can't sign in.} other {The person is signed out at once. Their # upcoming lessons will be cancelled and students refunded.}}",
+    "reactivateHint": "The person can sign in again. A teacher with an approved application returns to the catalogue.",
+    "confirmSuspend": "Suspend this account? {count, plural, =0 {} other {# upcoming lessons will be cancelled.}}",
+    "suspended": "Account suspended.{count, plural, =0 {} other { # lessons cancelled and refunded.}}",
+    "reactivated": "Account reactivated.",
+    "reason": "Reason (kept in the history)",
+    "suspend": "Suspend account",
+    "reactivate": "Reactivate account",
+    "errors": {
+      "reason_required": "Give a reason (at least 5 characters).",
+      "not_found": "User not found.",
+      "not_allowed": "Not possible for this account."
+    }
+  },
+  "audit": {
+    "title": "Audit log",
+    "subtitle": "Every important action, who did it and when.",
+    "none": "Nothing recorded yet.",
+    "by": "by {name}",
+    "system": "the system",
+    "filter": "Filter",
+    "all": "All actions",
+    "pages": "Pages",
+    "newer": "Newer",
+    "older": "Older",
+    "actions": {
+      "USER_REGISTERED": "Account created",
+      "USER_SUSPENDED": "User suspended",
+      "USER_REACTIVATED": "User reactivated",
+      "SETTINGS_CHANGED": "Settings changed",
+      "DISPUTE_OPENED": "Dispute opened",
+      "DISPUTE_RESOLVED": "Dispute decided",
+      "CONVERSATION_REPORTED": "Conversation reported",
+      "REPORT_CLOSED": "Report closed",
+      "REVIEW_HIDDEN": "Review hidden",
+      "REVIEW_SHOWN": "Review shown again",
+      "BOOKING_CANCELLED": "Lesson cancelled",
+      "APPLICATION_SUBMITTED": "Application submitted",
+      "APPLICATION_RESUBMITTED": "Application resubmitted",
+      "APPLICATION_APPROVED": "Application approved",
+      "APPLICATION_REJECTED": "Application rejected"
+    }
+  },
+  "reports": {
+    "title": "Reported conversations",
+    "subtitle": "Read the conversation, then suspend an account or close the report.",
+    "none": "No reports.",
+    "reportedBy": "Reported by {name}:",
+    "closed": "This report is closed.",
+    "openUser": "Open {name}'s account",
+    "redacted": "contact details hidden",
+    "close": "Close the report"
+  },
+  "adminSettings": {
+    "title": "Settings",
+    "subtitle": "Rules of the platform. Changes apply to new bookings and are recorded in the audit log.",
+    "saved": "Settings saved.",
+    "fix": "Some values are out of range.",
+    "outOfRange": "Out of the allowed range.",
+    "save": "Save settings",
+    "groups": {
+      "lessons": "Lessons",
+      "money": "Money",
+      "other": "Applications and library"
+    },
+    "keys": {
+      "commissionPct": {
+        "label": "Platform fee (%)",
+        "hint": "Taken from each lesson price for new bookings."
+      },
+      "freeCancelHours": {
+        "label": "Free cancellation (hours before)",
+        "hint": "Students get a refund if they cancel earlier than this."
+      },
+      "minBookingNoticeHours": {
+        "label": "Minimum notice to book (hours)",
+        "hint": "How far ahead a lesson must be booked."
+      },
+      "slotHoldMinutes": {
+        "label": "Time held during checkout (minutes)",
+        "hint": "How long a chosen time stays reserved while paying."
+      },
+      "paymentTimeoutMinutes": {
+        "label": "Mobile Money approval time (minutes)",
+        "hint": "After this, a payment not approved on the phone expires."
+      },
+      "escrowReleaseHours": {
+        "label": "Dispute window (hours after the lesson)",
+        "hint": "Earnings become available to teachers after this."
+      },
+      "minPayoutXaf": {
+        "label": "Minimum withdrawal (FCFA)",
+        "hint": "The smallest amount teachers can withdraw."
+      },
+      "payoutRequiresApproval": {
+        "label": "Withdrawals need admin approval",
+        "hint": "Recommended. When off, withdrawals are sent at once."
+      },
+      "applicationReviewDays": {
+        "label": "Application review time (days)",
+        "hint": "Shown to teachers who submit an application."
+      },
+      "libraryAiGradesPerDay": {
+        "label": "AI corrections per person per day",
+        "hint": "After this, the library uses the basic score."
+      }
+    }
+  },
+  "teacherReviews": {
+    "title": "Reviews",
+    "subtitle": "What your students say after their lessons.",
+    "average": "Average rating",
+    "count": "Reviews",
+    "none": "No reviews yet. Students can rate a lesson after it happens.",
+    "stars": "{n} out of 5 stars"
   }
 }

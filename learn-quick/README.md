@@ -16,7 +16,7 @@ Design and data model: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 | 5 | Payments (MTN / Orange via Campay), wallet, ledger, escrow, payouts | ✅ Done |
 | 6 | Live classroom (video, chat, whiteboard, notes, files), attendance, reviews | ✅ Done |
 | 7 | Translation library and AI grading | ✅ Done |
-| 8 | Admin tools, notifications, messaging, hardening | Next |
+| 8 | Admin tools, notifications, messaging, disputes, hardening | ✅ Done |
 
 ## Run it locally
 
@@ -192,6 +192,64 @@ Run this every 5 minutes (retries AI corrections, closes exams whose time is up)
 ```bash
 npm run jobs:library
 ```
+
+## Messages
+
+- Students can write to any published teacher from their profile ("Send a message"). Teachers can write to students who booked them (from "My lessons"). Admins don't take part, but they can read a conversation that was reported.
+- **Phone numbers, emails, links and app names (WhatsApp, Telegram…) are hidden** until the student has paid for a lesson with that teacher, so lessons and payments stay on the platform. The sender is told when this happens.
+- New messages appear live (no reload), with an unread badge in the header and "Seen" receipts. The other person gets one email or SMS per conversation until they read it, not one per message.
+- Limits: 20 messages per 5 minutes per person; students can open 10 new conversations a day.
+- Anyone can **report** a conversation. Admins see it in **Admin → Reports**, read it, then suspend an account or close the report.
+
+## Notifications
+
+- The bell in the header shows unread notifications and updates live. `/notifications` lists them; opening one marks it read and goes to the related page (only links inside the site are followed).
+- In **Settings → Notifications**, people choose which kinds (lessons, messages, payments) are also sent by email (or SMS when they have no email). Account notices are always sent.
+
+## Disputes
+
+- Until the end of the 24-hour window after a lesson, the student can **report a problem** from "My lessons". The teacher's earnings for that lesson stay on hold, even after the window ends.
+- The teacher is notified and can give their side once.
+- In **Admin → Disputes**, the admin sees both statements, who joined the classroom and when, and the lesson record, then chooses:
+  - **full refund**: the price goes back to the student's wallet (taken from the teacher's pending earnings and the platform fee);
+  - **half refund**: half back to the student, the other half paid to the teacher at once;
+  - **no refund**: the teacher is paid at once.
+- The decision is one database transaction in the ledger, can only be made once, and both people are notified with the admin's explanation.
+
+## Admin tools
+
+| Page | What it does |
+|---|---|
+| Overview | Counts, and a "to do" list: applications, disputes, reports, withdrawals |
+| Users | Search by name, email or phone; filter by role and status. A user page shows balances, lessons, payments, reviews and history. **Suspend** signs the person out at once, hides a teacher from the catalogue and cancels their upcoming lessons with a full refund to students. Admins can hide unfair reviews (the rating is recalculated). |
+| Disputes / Reports | See above |
+| Settings | Platform fee, cancellation and booking rules, payment and withdrawal rules, review time, AI corrections per day. Values are checked against safe limits. |
+| Audit log | Every important action (sign-ups, approvals, cancellations, suspensions, refunds, setting changes…) with who did it and when |
+
+## Security
+
+- **Security headers** on every page: Content Security Policy (only this site's scripts and connections; no embedding in other sites), `nosniff`, strict referrer, camera/microphone only for this site, and HSTS when the site runs on https.
+- **Limits against abuse:** 10 sign-in tries per account and 50 per network every 15 minutes; 10 new accounts per network per hour; 8 verification codes per person per day; message limits above. They are kept in the server's memory (one server; use Redis if you run several). `RATE_LIMITS=off` is only for automated tests on a local computer and is ignored on a live site.
+- Role, status and verification are read from the database on every request; money movements are double-entry and can't be posted twice; webhooks are never trusted; uploaded documents are encrypted.
+- `GET /api/health` returns `{"ok":true}` when the app and the database answer (for uptime monitoring).
+
+## Going live checklist
+
+1. A server (or platform) running Node.js 20+ and **PostgreSQL 16**. Run `npx prisma migrate deploy` and `npx prisma db seed` (creates the admin, settings and library).
+2. Set `NEXT_PUBLIC_SITE_URL=https://your-domain`, a strong `AUTH_SECRET`, `FILE_ENCRYPTION_KEY` (and keep a copy safe), `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD`.
+3. Email (`RESEND_API_KEY`, `EMAIL_FROM`) and SMS (`AT_USERNAME`, `AT_API_KEY`, `AT_SENDER_ID`).
+4. Campay (`PAYMENT_PROVIDER=campay` and the `CAMPAY_*` values), webhook URL set in the Campay dashboard. Test one small payment and one withdrawal.
+5. A TURN server for video calls (`TURN_URL`, `TURN_USERNAME`, `TURN_CREDENTIAL`).
+6. `ANTHROPIC_API_KEY` for AI correction in the library (optional).
+7. Background jobs with cron:
+   ```
+   */5  * * * *  npm run jobs:money
+   */10 * * * *  npm run jobs:bookings
+   */5  * * * *  npm run jobs:library
+   0    3 * * *  npm run jobs:purge-files
+   ```
+8. Run **one** app server (live messages and limits are kept in memory), behind https. Back up the database and the upload folder every day.
+9. Point an uptime monitor at `/api/health`.
 
 ## How sign-up works
 

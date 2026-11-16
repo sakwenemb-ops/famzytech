@@ -17,6 +17,8 @@ import { buttonVariants } from "@/components/ui/button";
 import { Stars } from "@/components/ui/stars";
 import { FavoriteButton } from "@/components/teacher/favorite-button";
 import { BookingWidget } from "@/components/booking/booking-widget";
+import { startConversationAction } from "@/server/message-actions";
+import { MessageSquare } from "lucide-react";
 import { packWithCredit, priceFor, trialAvailable, type BookingOption } from "@/server/booking";
 
 type Params = { params: Promise<{ locale: string; id: string }> };
@@ -148,6 +150,14 @@ export default async function TeacherProfilePage({ params }: Params) {
                 <p className="text-sm text-muted">{t("bookingSoon")}</p>
               )}
             </div>
+            {studentProfile && teacher.isPublished && (
+              <form action={startConversationAction.bind(null, teacher.user.id)} className="mt-3">
+                <button className={buttonVariants({ variant: "secondary", block: true })}>
+                  <MessageSquare className="size-4" aria-hidden />
+                  {t("sendMessage")}
+                </button>
+              </form>
+            )}
             {studentProfile ? (
               <div className="mt-3"><FavoriteButton teacherId={teacher.id} initialSaved={isSaved} /></div>
             ) : !viewer ? (

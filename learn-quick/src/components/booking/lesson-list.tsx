@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
-import { CalendarPlus } from "lucide-react";
+import { CalendarPlus, MessageSquare } from "lucide-react";
+import { startConversationAction } from "@/server/message-actions";
 import type { User } from "@prisma/client";
 import { Link } from "@/i18n/navigation";
 import { db } from "@/lib/db";
@@ -11,6 +12,8 @@ import { EmptyState } from "@/components/dashboard/shell";
 import { LessonActions } from "./lesson-actions";
 import { JoinButton } from "./join-button";
 import { NotesForm, ReviewForm } from "./after-lesson";
+import { OpenDisputeForm, RespondDisputeForm } from "./dispute-forms";
+import { canDispute } from "@/server/disputes";
 import { CLOSE_AFTER_MIN, roomWindow } from "@/server/lesson-room";
 
 const tone = { CONFIRMED: "success", COMPLETED: "neutral", HELD: "warning", NO_SHOW_STUDENT: "warning", NO_SHOW_TEACHER: "danger" } as const;
@@ -27,7 +30,7 @@ export async function LessonList({ user, role }: { user: User; role: "student" |
   if (!profile) return null;
   const mine = role === "student" ? { studentId: profile.id } : { teacherId: profile.id };
   const now = new Date();
-  const include = { student: { include: { user: true } }, teacher: { include: { user: true } }, lesson: true, review: true } as const;
+  const include = { student: { include: { user: true } }, teacher: { include: { user: true } }, lesson: true, review: true, dispute: true } as const;
   // A lesson stays in "upcoming" until its classroom closes (30 minutes after the end)
   const roomClosed = new Date(now.getTime() - CLOSE_AFTER_MIN * 60_000);
   const [upcoming, past] = await Promise.all([
@@ -40,6 +43,8 @@ export async function LessonList({ user, role }: { user: User; role: "student" |
     }),
   ]);
   const { freeCancelHours } = await cancelPolicy();
+  const td = await getTranslations("disputes");
+  const disputable = new Set(role === "student" ? (await Promise.all(past.filter((b) => !b.dispute).map(async (b) => ((await canDispute(b, now)) ? b.id : null)))).filter(Boolean) : []);
   const fmt = new Intl.DateTimeFormat(user.locale, { dateStyle: "full", timeStyle: "short", timeZone: user.timeZone });
 
   const row = (b: (typeof upcoming)[number], isUpcoming: boolean) => {
@@ -66,6 +71,12 @@ export async function LessonList({ user, role }: { user: User; role: "student" |
                 <CalendarPlus className="size-4" aria-hidden />
                 {t("addToCalendar")}
               </a>
+              <form action={startConversationAction.bind(null, other.id)}>
+                <button className="inline-flex items-center gap-1.5 text-primary hover:underline">
+                  <MessageSquare className="size-4" aria-hidden />
+                  {t("message", { name: other.name })}
+                </button>
+              </form>
               <JoinButton bookingId={b.id} opensAt={roomWindow(b).opensAt.toISOString()} closesAt={roomWindow(b).closesAt.toISOString()} />
             </div>
             {b.startsAt > now && <LessonActions
@@ -78,6 +89,17 @@ export async function LessonList({ user, role }: { user: User; role: "student" |
             />}
           </>
         )}
+        {!isUpcoming && b.dispute && (
+          <div className="space-y-2 rounded-[var(--radius-md)] border border-warning/40 bg-warning-soft px-3 py-2 text-sm" data-dispute={b.dispute.status}>
+            <p className="font-medium">{td(`status.${b.dispute.status}`)}{b.dispute.refundPct ? ` (${b.dispute.refundPct} %)` : ""}</p>
+            <p className="text-muted">{td("studentSaid")} « {b.dispute.reason} »</p>
+            {b.dispute.teacherResponse && <p className="text-muted">{td("teacherSaid")} « {b.dispute.teacherResponse} »</p>}
+            {b.dispute.resolution && <p>{td("decisionNote")} {b.dispute.resolution}</p>}
+            {role === "student" && b.dispute.status === "OPEN" && <p className="text-muted">{td("opened")}</p>}
+            {role === "teacher" && b.dispute.status === "OPEN" && !b.dispute.teacherResponse && <RespondDisputeForm disputeId={b.dispute.id} />}
+          </div>
+        )}
+        {!isUpcoming && disputable.has(b.id) && b.releaseAt && <OpenDisputeForm bookingId={b.id} deadline={fmt.format(b.releaseAt)} />}
         {!isUpcoming && b.lesson && ["COMPLETED", "NO_SHOW_STUDENT", "NO_SHOW_TEACHER"].includes(b.status) && (
           <div className="space-y-3 text-sm">
             {b.status === "NO_SHOW_TEACHER" && <p className="text-muted">{ta(role === "student" ? "noShowTeacher" : "noShowTeacherTeacher")}</p>}

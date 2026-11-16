@@ -4,12 +4,15 @@ import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { getCurrentUser, dashboardPath } from "@/server/session";
 import { logoutAction } from "@/server/auth-actions";
+import { unreadCounts } from "@/server/counts";
+import { LiveBadges } from "@/components/live/live-badges";
 import { LocaleSwitcher } from "./locale-switcher";
 import { Logo } from "./logo";
 
 export async function SiteHeader() {
   const t = await getTranslations("nav");
   const user = await getCurrentUser();
+  const counts = user ? await unreadCounts(user.id) : null;
   const links = [
     { href: "/teachers", label: t("findTeacher") },
     { href: "/library", label: t("library") },
@@ -32,6 +35,7 @@ export async function SiteHeader() {
         </nav>
         <div className="ml-auto flex items-center gap-1.5">
           <LocaleSwitcher />
+          {user && counts && <LiveBadges initial={counts} messagesHref={user.role === "ADMIN" ? null : "/messages"} />}
           {user ? (
             <>
               <Link href={dashboardPath(user.role)} className={buttonVariants({ variant: "secondary", size: "sm", className: "hidden sm:inline-flex" })}>

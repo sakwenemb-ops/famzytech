@@ -48,7 +48,18 @@ test("no horizontal scroll on the catalogue, a profile, the lessons page and the
   const { teacher } = await createTeacher({ published: true });
   const s = await createUser("STUDENT", { learning: true });
   await login(page, s.email);
-  for (const path of ["/fr/teachers", `/fr/teachers/${teacher.id}`, "/fr/student/lessons", "/fr/library", "/fr/library/history"]) {
+  for (const path of ["/fr/teachers", `/fr/teachers/${teacher.id}`, "/fr/student/lessons", "/fr/library", "/fr/library/history", "/fr/messages", "/fr/notifications"]) {
+    await page.goto(path);
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(overflow, path).toBeLessThanOrEqual(0);
+  }
+});
+
+test("no horizontal scroll on the admin pages", async ({ page }) => {
+  const { login } = await import("./helpers");
+  const { TEST_ENV } = await import("./test-env");
+  await login(page, TEST_ENV.SEED_ADMIN_EMAIL, TEST_ENV.SEED_ADMIN_PASSWORD);
+  for (const path of ["/fr/admin", "/fr/admin/users", "/fr/admin/disputes", "/fr/admin/reports", "/fr/admin/settings", "/fr/admin/audit"]) {
     await page.goto(path);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, path).toBeLessThanOrEqual(0);

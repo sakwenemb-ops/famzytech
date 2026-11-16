@@ -1,35 +1,6 @@
-import { execSync } from "node:child_process";
-import { expect, test, type Page } from "@playwright/test";
-import { createTeacher, createUser, db, login, payInSandbox } from "./helpers";
+import { expect, test } from "@playwright/test";
+import { account, bookableTeacher, createUser, db, holdSingleLesson, login, payInSandbox, runMoneyJobs } from "./helpers";
 import { TEST_ENV } from "./test-env";
-
-/** Run the money background job against the test database. */
-const runMoneyJobs = () => execSync("npm run -s jobs:money", { env: { ...process.env, ...TEST_ENV }, stdio: "pipe" }).toString();
-
-async function bookableTeacher(price: number) {
-  const { user, teacher } = await createTeacher({ published: true });
-  await db.teacherProfile.update({
-    where: { id: teacher.id },
-    data: { hourlyRateXaf: price, trialRateXaf: price, availability: { create: [0, 1, 2, 3, 4, 5, 6].map((weekday) => ({ weekday, startMin: 0, endMin: 1440 })) } },
-  });
-  return { user, teacher };
-}
-
-async function holdSingleLesson(page: Page, teacherId: string, nextWeek = false) {
-  await page.goto(`/fr/teachers/${teacherId}`);
-  await expect(page.locator("button[data-slot]").first()).toBeVisible();
-  if (nextWeek) {
-    await page.getByRole("button", { name: "Plus tard" }).click();
-    await expect(page.locator("button[data-slot]").first()).toBeVisible();
-  }
-  await page.locator("button[data-slot]").first().click();
-  await page.getByRole("radio", { name: /Cours à l'unité/ }).check();
-  await page.getByRole("button", { name: "Continuer" }).click();
-  await expect(page).toHaveURL(/\/checkout\//);
-}
-
-const account = async (type: string, userId?: string) =>
-  (await db.ledgerAccount.findFirst({ where: userId ? { userId, type: type as never } : { id: `platform_${type.toLowerCase()}` } }))?.balanceXaf ?? 0;
 
 async function ledgerBalanced() {
   const sum = await db.ledgerLine.aggregate({ _sum: { amountXaf: true } });

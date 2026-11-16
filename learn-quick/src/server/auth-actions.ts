@@ -10,6 +10,8 @@ import { fieldErrors, loginSchema, onboardingSchema, otpSchema, registerSchema }
 import { redirect } from "@/i18n/navigation";
 import { sendOtp, verifyOtp, type OtpChannel } from "./otp";
 import { dashboardPath, getCurrentUser, isVerified } from "./session";
+import { headers } from "next/headers";
+import { clientIp, rateLimit } from "./rate-limit";
 
 export type FormState =
   | { errors?: Record<string, string>; message?: string; ok?: boolean; values?: Record<string, string> }
@@ -38,6 +40,8 @@ async function createProfiles(tx: Prisma.TransactionClient, userId: string, role
 export async function registerAction(_: FormState, fd: FormData): Promise<FormState> {
   const parsed = registerSchema.safeParse(formObject(fd));
   if (!parsed.success) return { errors: fieldErrors(parsed.error), values: keep(fd) };
+  // At most 10 new accounts per hour from one network (stops scripted sign-ups and SMS costs)
+  if (!rateLimit(`register:${clientIp(await headers())}`, 10, 3_600_000)) return { message: "too_many_attempts", values: keep(fd) };
   const d = parsed.data;
 
   const clash = await db.user.findFirst({
@@ -86,6 +90,11 @@ export async function registerAction(_: FormState, fd: FormData): Promise<FormSt
 export async function loginAction(_: FormState, fd: FormData): Promise<FormState> {
   const parsed = loginSchema.safeParse(formObject(fd));
   if (!parsed.success) return { message: "invalid_credentials", values: keep(fd) };
+  // Slow down password guessing: 10 tries per account and 50 per network every 15 minutes
+  const ip = clientIp(await headers());
+  if (!rateLimit(`login:${parsed.data.identifier.toLowerCase()}`, 10, 900_000) || !rateLimit(`login-ip:${ip}`, 50, 900_000)) {
+    return { message: "too_many_attempts", values: keep(fd) };
+  }
   const locale = await getLocale();
   try {
     await signIn("credentials", { ...parsed.data, redirectTo: `/${locale}/dashboard` });
@@ -122,6 +131,8 @@ export async function resendCodeAction(_: FormState, fd: FormData): Promise<Form
   const user = await getCurrentUser();
   if (!user) return { message: "session_expired" };
   const channel = (fd.get("channel") === "email" ? "email" : "phone") as OtpChannel;
+  // Each code costs an SMS: at most 8 a day per person
+  if (!rateLimit(`otp:${user.id}`, 8, 86_400_000)) return { message: "too_many_attempts" };
   const res = await sendOtp(user, channel);
   return res.ok ? { ok: true, message: "code_sent" } : { message: `code_${res.error}` };
 }
