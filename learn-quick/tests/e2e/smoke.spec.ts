@@ -65,3 +65,14 @@ test("no horizontal scroll on the admin pages", async ({ page }) => {
     expect(overflow, path).toBeLessThanOrEqual(0);
   }
 });
+
+test("privacy policy in French and English, readable on a phone", async ({ page }) => {
+  await page.goto("/fr/privacy");
+  await expect(page.getByRole("heading", { level: 1, name: "Politique de confidentialité" })).toBeVisible();
+  await expect(page.getByText(/Supprimés automatiquement 90 jours après la décision/)).toBeVisible();
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  expect(overflow).toBeLessThanOrEqual(0);
+  await page.goto("/en/privacy");
+  await expect(page.getByRole("heading", { level: 1, name: "Privacy policy" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "10. Your rights" })).toBeVisible();
+});
