@@ -58,6 +58,16 @@ Copy the printed line. On GitHub, open the repository → **Settings → Deploy 
 mkdir -p /opt/learn-quick && cd /opt/learn-quick && git clone git@github.com:sakwenemb-ops/famzytech.git . && cd learn-quick/deploy
 ```
 
+## Quick way: the installer
+
+After steps 1, 2 and 4 (server, domain, code downloaded), one command does steps 3, 5, 6 and 8 for you: it asks your domain, admin login and service keys, generates the secrets, installs Docker, starts the site with HTTPS, creates the admin account and sets up nightly backups.
+
+```bash
+cd /opt/learn-quick/learn-quick/deploy && sudo ./install.sh
+```
+
+Then continue with step 7 (Campay webhook). The detailed steps below do the same by hand.
+
 ## 5. Fill in the settings
 
 ```bash
