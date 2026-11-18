@@ -85,7 +85,7 @@ async function fillApplication(page: Page) {
 
 async function submit(page: Page, button: string) {
   await expect(page.getByText("Terminez ces étapes avant d'envoyer")).toHaveCount(0);
-  for (const label of [/J'accepte les conditions des enseignants/, /code de conduite/, /payé après chaque cours/]) {
+  for (const label of [/J'accepte les conditions d'utilisation de Learn Quick/, /code de conduite/, /payé après chaque cours/]) {
     await page.getByLabel(label).check();
   }
   await page.getByRole("button", { name: button }).click();

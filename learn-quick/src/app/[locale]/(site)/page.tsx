@@ -2,11 +2,14 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BadgeCheck, BookOpenText, Smartphone, Video } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
+import { Alert } from "@/components/ui/alert";
 
-export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
+export default async function HomePage({ params, searchParams }: { params: Promise<{ locale: string }>; searchParams: Promise<{ accountDeleted?: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("home");
+  const ta = await getTranslations("account");
+  const { accountDeleted } = await searchParams;
 
   const features = [
     { key: "verified", icon: BadgeCheck },
@@ -17,6 +20,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
   return (
     <>
+      {accountDeleted && (
+        <div className="mx-auto max-w-6xl px-4 pt-6">
+          <Alert tone="success" role="status">{ta("deleted")}</Alert>
+        </div>
+      )}
       {/* Hero */}
       <section className="mx-auto grid max-w-6xl gap-12 px-4 pb-16 pt-14 md:grid-cols-[1.15fr_1fr] md:items-center md:pt-20">
         <div>

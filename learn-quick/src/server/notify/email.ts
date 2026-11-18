@@ -1,6 +1,6 @@
 import "server-only";
 
-type Email = { to: string; subject: string; text: string; html?: string };
+type Email = { to: string; subject: string; text: string; html?: string; replyTo?: string };
 
 /** Sends with Resend when RESEND_API_KEY is set; otherwise logs (development). */
 export async function sendEmail(msg: Email) {
@@ -18,6 +18,7 @@ export async function sendEmail(msg: Email) {
       subject: msg.subject,
       text: msg.text,
       html: msg.html,
+      ...(msg.replyTo && { reply_to: msg.replyTo }),
     }),
   });
   if (!res.ok) throw new Error(`Email send failed: ${res.status}`);

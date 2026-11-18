@@ -60,6 +60,7 @@ export const onboardingSchema = z.object({
   country: z.string().length(2).default("CM"),
   city: z.string().trim().max(80).optional(),
   timeZone: z.string().max(64).default("Africa/Douala"),
+  acceptTerms: z.literal("on", { errorMap: () => ({ message: "terms_required" }) }),
 });
 
 /** Turn a ZodError into { field: messageKey } for the form. */

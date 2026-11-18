@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { submitApplicationAction } from "@/server/application-actions";
 import { Link } from "@/i18n/navigation";
 import { Alert } from "@/components/ui/alert";
@@ -11,6 +11,7 @@ import { FieldError } from "../step-buttons";
 
 export function AgreementStep({ missing, resubmission }: { missing: { slug: string; title: string }[]; resubmission: boolean }) {
   const t = useTranslations("application.agreement");
+  const locale = useLocale();
   const err = useErrorText();
   const [state, action] = useActionState(submitApplicationAction, undefined);
   const e = state?.errors ?? {};
@@ -34,7 +35,11 @@ export function AgreementStep({ missing, resubmission }: { missing: { slug: stri
           <div key={k}>
             <label className="flex items-start gap-2.5 text-sm">
               <input type="checkbox" name={k} className="mt-0.5 size-4 shrink-0 accent-[var(--color-primary)]" />
-              <span>{t(k)}</span>
+              <span>
+                {k === "acceptTerms"
+                  ? t.rich(k, { link: (c) => <a href={`/${locale}/terms#s8`} target="_blank" rel="noopener" className="text-primary underline">{c}</a> })
+                  : t(k)}
+              </span>
             </label>
             <FieldError message={err(e[k])} />
           </div>

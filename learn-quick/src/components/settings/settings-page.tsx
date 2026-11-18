@@ -7,6 +7,9 @@ import { PageTitle } from "@/components/dashboard/shell";
 import { AccountForm } from "./account-form";
 import { PasswordForm } from "./password-form";
 import { NotificationPrefs } from "./notification-prefs";
+import { DeleteAccount } from "./delete-account";
+import { deletionBlockers } from "@/server/account";
+import { Download } from "lucide-react";
 import { db } from "@/lib/db";
 import { CATEGORIES } from "@/lib/notification-categories";
 
@@ -15,6 +18,8 @@ export async function SettingsContent({ user, extra }: { user: User; extra?: Rea
   const t = await getTranslations("settings");
   const ta = await getTranslations("auth");
   const tn = await getTranslations("notifications");
+  const tacc = await getTranslations("account");
+  const blockers = await deletionBlockers(user);
   const prefs = await db.notificationPreference.findMany({ where: { userId: user.id, channel: "EMAIL" } });
   const enabled = Object.fromEntries(CATEGORIES.map((c) => [c, prefs.find((p) => p.type === c)?.enabled ?? true])) as Record<(typeof CATEGORIES)[number], boolean>;
 
@@ -72,6 +77,25 @@ export async function SettingsContent({ user, extra }: { user: User; extra?: Rea
             <PasswordForm hasPassword={Boolean(user.passwordHash)} />
           </CardBody>
         </Card>
+
+        {user.role !== "ADMIN" && (
+          <Card id="data">
+            <CardHeader><CardTitle>{tacc("title")}</CardTitle></CardHeader>
+            <CardBody className="space-y-5">
+              <div>
+                <p className="text-sm text-muted">{tacc("exportHint")}</p>
+                <a href="/api/me/export" className="mt-2 inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline" download>
+                  <Download className="size-4" aria-hidden />
+                  {tacc("export")}
+                </a>
+              </div>
+              <div className="border-t border-border pt-5">
+                <h3 className="mb-1 text-sm font-semibold">{tacc("deleteTitle")}</h3>
+                <DeleteAccount blockers={blockers} hasPassword={Boolean(user.passwordHash)} />
+              </div>
+            </CardBody>
+          </Card>
+        )}
       </div>
     </>
   );

@@ -41,6 +41,13 @@ else
   ask TURN_USERNAME "TURN username"
   ask TURN_CREDENTIAL "TURN password" "" secret
   ask ANTHROPIC_API_KEY "Anthropic API key for AI grading (optional)" "" secret
+  say "Legal pages and contact (shown on the site)."
+  ask LEGAL_COMPANY_NAME "Company name (e.g. Learn Quick SARL)"
+  ask LEGAL_ADDRESS "Company address (street, city)"
+  ask LEGAL_REGISTRATION "RCCM / NIU numbers"
+  ask SUPPORT_EMAIL "Support email" "support@$DOMAIN"
+  ask PRIVACY_EMAIL "Privacy email" "privacy@$DOMAIN"
+  ask SUPPORT_WHATSAPP "Support WhatsApp number (optional, e.g. +237670000000)"
 
   umask 077
   cat > .env <<EOF
@@ -65,6 +72,14 @@ TURN_URL=$TURN_URL
 TURN_USERNAME=$TURN_USERNAME
 TURN_CREDENTIAL=$TURN_CREDENTIAL
 ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY
+LEGAL_COMPANY_NAME="$LEGAL_COMPANY_NAME"
+LEGAL_ADDRESS="$LEGAL_ADDRESS"
+LEGAL_REGISTRATION="$LEGAL_REGISTRATION"
+SUPPORT_EMAIL=$SUPPORT_EMAIL
+PRIVACY_EMAIL=$PRIVACY_EMAIL
+SUPPORT_WHATSAPP=$SUPPORT_WHATSAPP
+HOSTING_PROVIDER="OVHcloud (France)"
+LEGAL_COURT_CITY=Douala
 EOF
   say "Settings saved in deploy/.env (readable by root only)."
   echo "IMPORTANT: copy the FILE_ENCRYPTION_KEY line from deploy/.env into a password manager."

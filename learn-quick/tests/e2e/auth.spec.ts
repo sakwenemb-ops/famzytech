@@ -1,5 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
-import { setKnownCode } from "./helpers";
+import { db, setKnownCode } from "./helpers";
 
 const uniquePhone = () => `6${String(Date.now()).slice(-8)}`; // 9 digits starting with 6
 const uniqueEmail = () => `t${Date.now()}@example.test`;
@@ -11,7 +11,7 @@ async function register(page: Page, opts: { role: "Apprendre" | "Enseigner"; pho
   if (opts.phone) await page.getByLabel("Numéro de mobile").fill(opts.phone);
   if (opts.email) await page.getByLabel("E-mail").fill(opts.email);
   await page.getByLabel("Mot de passe").fill("secret123");
-  await page.getByLabel(/J'accepte/).check();
+  await page.getByLabel(/j'accepte les conditions d'utilisation/i).check();
   await page.getByRole("button", { name: "Créer mon compte" }).click();
 }
 
@@ -21,6 +21,10 @@ test("student signs up with phone, confirms code, sees dashboard, logs out and i
 
   await expect(page).toHaveURL(/\/fr\/verify$/);
   await expect(page.getByRole("heading", { level: 1 })).toContainText("numéro de téléphone");
+  // The acceptance of the terms is recorded, with the version
+  const created = await db.user.findUniqueOrThrow({ where: { phone: `+237${phone}` } });
+  expect(created.termsAcceptedAt).not.toBeNull();
+  expect(created.termsVersion).toMatch(/^\d{4}-\d{2}-\d{2}$/);
 
   await page.getByLabel("Code").fill("000000");
   await page.getByRole("button", { name: "Confirmer" }).click();

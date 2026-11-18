@@ -66,10 +66,18 @@ test("no horizontal scroll on the admin pages", async ({ page }) => {
   }
 });
 
+test("no horizontal scroll on the legal and information pages", async ({ page }) => {
+  for (const path of ["/fr/terms", "/fr/contact", "/fr/become-a-teacher", "/en/terms"]) {
+    await page.goto(path);
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(overflow, path).toBeLessThanOrEqual(0);
+  }
+});
+
 test("privacy policy in French and English, readable on a phone", async ({ page }) => {
   await page.goto("/fr/privacy");
   await expect(page.getByRole("heading", { level: 1, name: "Politique de confidentialité" })).toBeVisible();
-  await expect(page.getByText(/Supprimés automatiquement 90 jours après la décision/)).toBeVisible();
+  await expect(page.locator("body")).toContainText("Supprimés automatiquement 90 jours après la décision");
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(0);
   await page.goto("/en/privacy");

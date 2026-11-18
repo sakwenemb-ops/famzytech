@@ -12,6 +12,7 @@ import { sendOtp, verifyOtp, type OtpChannel } from "./otp";
 import { dashboardPath, getCurrentUser, isVerified } from "./session";
 import { headers } from "next/headers";
 import { clientIp, rateLimit } from "./rate-limit";
+import { TERMS_UPDATED } from "@/lib/legal";
 
 export type FormState =
   | { errors?: Record<string, string>; message?: string; ok?: boolean; values?: Record<string, string> }
@@ -69,6 +70,8 @@ export async function registerAction(_: FormState, fd: FormData): Promise<FormSt
         city: d.city,
         timeZone: d.timeZone,
         locale: d.locale,
+        termsAcceptedAt: new Date(),
+        termsVersion: TERMS_UPDATED,
       },
     });
     await createProfiles(tx, u.id, d.role);
@@ -155,7 +158,7 @@ export async function onboardingAction(_: FormState, fd: FormData): Promise<Form
   await db.$transaction(async (tx) => {
     await tx.user.update({
       where: { id: user.id },
-      data: { role: d.role, phone: d.phone, country: d.country, city: d.city, timeZone: d.timeZone, onboarded: true, locale: locale === "en" ? "en" : "fr" },
+      data: { role: d.role, phone: d.phone, country: d.country, city: d.city, timeZone: d.timeZone, onboarded: true, locale: locale === "en" ? "en" : "fr", termsAcceptedAt: new Date(), termsVersion: TERMS_UPDATED },
     });
     await createProfiles(tx, user.id, d.role);
   });

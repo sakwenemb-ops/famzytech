@@ -65,6 +65,18 @@ export function OnboardingForm() {
         </Field>
       </div>
       {role === "TEACHER" && <Alert tone="info">{t("teacherNote")}</Alert>}
+      <div>
+        <label className="flex items-start gap-2.5 text-sm">
+          <input type="checkbox" name="acceptTerms" className="mt-0.5 size-4 shrink-0 accent-[var(--color-primary)]" aria-invalid={e.acceptTerms ? true : undefined} />
+          <span>
+            {t.rich("acceptTerms", {
+              terms: (c) => <a href={`/${locale}/terms`} target="_blank" rel="noopener" className="text-primary underline">{c}</a>,
+              privacy: (c) => <a href={`/${locale}/privacy`} target="_blank" rel="noopener" className="text-primary underline">{c}</a>,
+            })}
+          </span>
+        </label>
+        {e.acceptTerms && <p className="mt-1 text-[13px] text-danger" role="alert">{err(e.acceptTerms)}</p>}
+      </div>
       <SubmitButton>{t("continue")}</SubmitButton>
     </form>
   );

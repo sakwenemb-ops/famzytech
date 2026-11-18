@@ -96,7 +96,7 @@ function fr(l: Legal): Policy {
           head: ["Données", "Durée"],
           rows: [
             ["Pièces d'identité et selfie des enseignants", "Supprimés automatiquement 90 jours après la décision sur la candidature"],
-            ["Compte et profil", "Tant que le compte existe, puis supprimés ou anonymisés dans les 30 jours après la suppression du compte"],
+            ["Compte et profil", "Tant que le compte existe ; coordonnées, profil et documents effacés dès la suppression du compte (les fichiers partagés pendant un cours restent visibles par l'autre participant)"],
             ["Paiements, remboursements, retraits et comptabilité", "10 ans (obligation comptable)"],
             ["Cours, chat de classe, messages, avis", "Tant que le compte existe ; plus longtemps seulement en cas de litige en cours"],
             ["Journal de sécurité (actions importantes)", "Jusqu'à 1 an"],
@@ -135,9 +135,9 @@ function fr(l: Legal): Policy {
         h: "10. Vos droits",
         p: ["Vous pouvez à tout moment :"],
         list: [
-          "accéder à vos données et en obtenir une copie ;",
+          "accéder à vos données et en obtenir une copie (bouton « Télécharger mes données » dans Paramètres) ;",
           "faire corriger des données inexactes (la plupart se modifient dans Paramètres) ;",
-          "demander la suppression de votre compte et de vos données (sauf celles que la loi nous oblige à garder, comme la comptabilité) ;",
+          "supprimer votre compte et vos données (bouton « Supprimer mon compte » dans Paramètres), sauf ce que la loi nous oblige à garder, comme la comptabilité ;",
           "vous opposer à certains traitements ou en demander la limitation ;",
           "retirer votre consentement (par exemple désactiver les e-mails et SMS facultatifs) ;",
           "recevoir vos données dans un format réutilisable (portabilité).",
@@ -242,7 +242,7 @@ function en(l: Legal): Policy {
           head: ["Data", "How long"],
           rows: [
             ["Teachers' identity documents and selfie", "Deleted automatically 90 days after the decision on the application"],
-            ["Account and profile", "As long as the account exists, then deleted or anonymised within 30 days of account deletion"],
+            ["Account and profile", "As long as the account exists; contact details, profile and documents are erased as soon as the account is deleted (files shared during a lesson stay visible to the other participant)"],
             ["Payments, refunds, withdrawals and accounting", "10 years (accounting obligation)"],
             ["Lessons, classroom chat, messages, reviews", "As long as the account exists; longer only while a dispute is open"],
             ["Security log (important actions)", "Up to 1 year"],
@@ -281,9 +281,9 @@ function en(l: Legal): Policy {
         h: "10. Your rights",
         p: ["At any time you can:"],
         list: [
-          "access your data and get a copy of it;",
+          "access your data and get a copy of it (\"Download my data\" button in Settings);",
           "have inaccurate data corrected (most of it can be changed in Settings);",
-          "ask for your account and data to be deleted (except what the law requires us to keep, such as accounting records);",
+          "delete your account and your data (\"Delete my account\" button in Settings), except what the law requires us to keep, such as accounting records;",
           "object to some processing or ask for it to be limited;",
           "withdraw your consent (for example, turn off optional emails and SMS);",
           "receive your data in a reusable format (portability).",
