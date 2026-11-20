@@ -204,5 +204,55 @@ export async function seedDemo(db: PrismaClient) {
       ],
     });
   }
+  await seedDemoActivity(db, studentUser.id, student.id);
   console.log(`Demo data ready: ${TEACHERS.length} teachers, 1 student (password Demo12345, emails @demo.learnquick.test)`);
+}
+
+/** Upcoming lessons, a conversation and notifications, so the dashboards aren't empty. Runs once. */
+async function seedDemoActivity(db: PrismaClient, studentUserId: string, studentId: string) {
+  if (await db.conversation.findFirst({ where: { studentId: studentUserId } })) return;
+  const jp = await db.teacherProfile.findFirst({ where: { user: { email: "jeanpaul@demo.learnquick.test" } }, include: { user: true } });
+  if (!jp) return;
+  const at = (days: number, hour: number) => {
+    const d = new Date();
+    d.setDate(d.getDate() + days);
+    d.setHours(hour, 0, 0, 0);
+    return d;
+  };
+  for (const [days, status, homework] of [
+    [2, "CONFIRMED", null],
+    [6, "CONFIRMED", null],
+    [-2, "COMPLETED", "Write 10 sentences about your week using the present perfect."],
+  ] as const) {
+    const startsAt = at(days, 18);
+    await db.booking.create({
+      data: {
+        studentId,
+        teacherId: jp.id,
+        type: "SINGLE",
+        status,
+        startsAt,
+        endsAt: new Date(startsAt.getTime() + 50 * 60_000),
+        priceXaf: jp.hourlyRateXaf ?? 5000,
+        commissionPct: 18,
+        lesson: { create: { roomName: `demo-${Math.random().toString(36).slice(2, 12)}`, homework } },
+      },
+    });
+  }
+  const H = 3_600_000;
+  const conv = await db.conversation.create({ data: { studentId: studentUserId, teacherId: jp.userId, contactUnlocked: true, lastMessageAt: new Date(Date.now() - H) } });
+  for (const [from, body, hoursAgo] of [
+    [studentUserId, "Bonsoir ! J'ai mon entretien d'embauche en anglais dans un mois. Pouvons-nous travailler l'oral ?", 26],
+    [jp.userId, "Bonsoir Paul ! Bien sûr. Préparez une présentation de 2 minutes sur votre parcours, nous la travaillerons jeudi.", 25],
+    [studentUserId, "Parfait, merci !", 24],
+    [jp.userId, "À jeudi !", 1],
+  ] as const) {
+    await db.message.create({ data: { conversationId: conv.id, senderId: from, body, createdAt: new Date(Date.now() - hoursAgo * H), readAt: from === studentUserId ? new Date() : null } });
+  }
+  await db.notification.createMany({
+    data: [
+      { userId: studentUserId, type: "BOOKING_CONFIRMED", title: "Cours confirmé", body: `Votre cours avec ${jp.user.name} est réservé.`, link: "/student/lessons", createdAt: new Date(Date.now() - 2 * H) },
+      { userId: studentUserId, type: "LESSON_NOTES", title: "Devoirs ajoutés", body: `${jp.user.name} a ajouté des devoirs à votre dernier cours.`, link: "/student/lessons", createdAt: new Date(Date.now() - 40 * H) },
+    ],
+  });
 }

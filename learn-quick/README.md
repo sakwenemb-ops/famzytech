@@ -18,44 +18,35 @@ Design and data model: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 | 7 | Translation library and AI grading | ✅ Done |
 | 8 | Admin tools, notifications, messaging, disputes, hardening | ✅ Done |
 
-## Run it locally
+## Run it on your computer
 
-You need Node.js 20+ and PostgreSQL 16 (or Docker).
-
-```bash
-docker compose up -d db
-```
+You need **Node.js 22** (https://nodejs.org) and **Docker Desktop** (open and running).
+In the `learn-quick` folder:
 
 ```bash
-cp .env.example .env
-```
-
-Set `AUTH_SECRET` in `.env` (run `npx auth secret` to generate one) and an admin email and password, then:
-
-```bash
-npm install
-```
-
-```bash
-npx prisma migrate dev
-```
-
-```bash
-npm run db:seed
+npm run setup
 ```
 
 ```bash
 npm run dev
 ```
 
-Optional: add three demo teachers and a demo student (password `Demo12345`, emails ending in `@demo.learnquick.test`):
+Open http://localhost:3000. `npm run setup` creates `.env`, starts the database in Docker, installs
+everything, creates the tables and adds sample data. Run it again any time: your settings and data are kept.
+After the first time, `npm run dev` is all you need (with Docker Desktop open).
 
-```bash
-SEED_DEMO=1 npm run db:seed
-```
+Sample accounts:
 
-Open http://localhost:3000. Without email/SMS keys, verification codes are printed in the terminal.
-In development you can set `OTP_FIXED_CODE="123456"` in `.env` so every code is the same.
+| Role | Email | Password |
+|---|---|---|
+| Admin | `admin@learnquick.local` | `Admin12345` |
+| Student | `student@demo.learnquick.test` | `Demo12345` |
+| Teachers | `jeanpaul@`, `brenda@`, `aicha@demo.learnquick.test` | `Demo12345` |
+
+- Payments are pretend (`PAYMENT_PROVIDER="sandbox"`): checkout shows "approve / decline on the phone" buttons.
+- Every verification code is `123456` (`OTP_FIXED_CODE`, ignored on a live site).
+- Without email/SMS keys, messages that would be sent are printed in the terminal.
+- Already have PostgreSQL on port 5432? Setup uses it instead of Docker: make `DATABASE_URL` in `.env` match it.
 
 ## Tests
 
